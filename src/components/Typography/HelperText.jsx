@@ -1,0 +1,6 @@
+// eslint-disable-next-line react/prop-types
+function HelperText({ className, children }) {
+  return <div className={`text-slate-400 ${className}`}>{children}</div>;
+}
+
+export default HelperText;
