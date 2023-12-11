@@ -14,6 +14,7 @@ import headerSlice from "../features/common/headerSlice";
 import modalSlice from "../features/common/modalSlice";
 import rightDrawerSlice from "../features/common/rightDrawerSlice";
 import decreeSlice from "../features/decree/decreeSlice";
+import questionSlice from "../features/question/questionSlice";
 
 // Define your root reducer
 const rootReducer = combineReducers({
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   modal: modalSlice,
   rightDrawer: rightDrawerSlice,
   decree: decreeSlice,
+  question: questionSlice,
 });
 
 // Define your persist config

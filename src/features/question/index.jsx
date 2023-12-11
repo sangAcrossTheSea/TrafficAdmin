@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleCard from "../../components/Cards/TitleCard";
 import { openModal } from "../common/modalSlice";
-import { deleteDecree, getDecreesContent } from "./decreeSlice";
+import { deleteQuestion, getQuestionsContent } from "./questionSlice";
 import {
   CONFIRMATION_MODAL_CLOSE_TYPES,
   MODAL_BODY_TYPES,
@@ -13,6 +13,7 @@ import {
   ArchiveBoxArrowDownIcon,
   PencilSquareIcon,
   EyeIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { showNotification } from "../common/headerSlice";
 
@@ -22,8 +23,8 @@ const TopSideButtons = () => {
   const openAddNewLeadModal = () => {
     dispatch(
       openModal({
-        title: "Thêm nghị định",
-        bodyType: MODAL_BODY_TYPES.DECREE_ADD_NEW,
+        title: "Thêm câu hỏi",
+        bodyType: MODAL_BODY_TYPES.question_ADD_NEW,
       })
     );
   };
@@ -40,13 +41,13 @@ const TopSideButtons = () => {
   );
 };
 
-function Decree() {
-  const { decrees } = useSelector((state) => state.decree);
+function Question() {
+  const { questions } = useSelector((state) => state.question);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getDecreesContent());
-    console.log("decrees", decrees);
+    dispatch(getQuestionsContent());
+    console.log("questions", questions);
   }, []);
 
   const deleteCurrentLead = (index) => {
@@ -63,27 +64,52 @@ function Decree() {
     );
   };
 
+  const showImportant = (index) => {
+    if (index === true)
+      return <div className="badge badge-primary">Điểm liệt</div>;
+    else return <div></div>;
+  };
+
   return (
     <>
       <TitleCard
-        title="Danh sách nghị định"
+        title="Danh sách câu hỏi"
         topMargin="mt-2"
         TopSideButtons={<TopSideButtons />}
       >
         {/* Leads List in table format loaded from slice after api call */}
+        <section>
+          <div className="flex items-center">
+            <div className="flex">
+              <input
+                type="text"
+                className="input input-bordered w-full"
+                placeholder="Nhập từ khóa"
+              />
+            </div>
+            <div className="flex-initial ml-2">
+              <button className="btn btn-primary">
+                <span className="p-2 text-white">
+                  <MagnifyingGlassIcon className="w-4 h-4" />
+                </span>
+                Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </section>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
             <thead>
               <tr>
                 <th>Stt</th>
-                <th>Số</th>
-                <th>Tên</th>
-                <th>Chỉnh sửa lần cuối</th>
+                <th>Hạng giấy phép</th>
+                <th>Nhóm câu hỏi</th>
+                <th>Loại câu hỏi</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {decrees?.map((l, k) => {
+              {questions?.map((l, k) => {
                 return (
                   <tr key={l.id}>
                     <td>
@@ -95,20 +121,20 @@ function Decree() {
                           {k + 1}
                         </div>
                         {/* <div>
-                          <div className="font-bold">{l.DecreeName}</div>
+                          <div className="font-bold">{l.questionName}</div>
                           <div className="text-sm opacity-50">
                             {l.last_name}
                           </div>
                         </div> */}
                       </div>
                     </td>
-                    <td>{l.DecreeNumber}</td>
-                    <td>{l.DecreeName}</td>
+                    <td>{l.TestGroup}</td>
+                    <td>{l.QuestionType}</td>
                     <td>
                       {/* {moment(new Date())
                         .add(-5 * (k + 2), "days")
                         .format("DD MMM YY")} */}
-                      {new Date(l.DecreeDate).toLocaleDateString("vi-VN")}
+                      {showImportant(l.Important)}
                     </td>
                     <td>
                       <button
@@ -141,4 +167,4 @@ function Decree() {
   );
 }
 
-export default Decree;
+export default Question;

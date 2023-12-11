@@ -12,7 +12,7 @@ const INITIAL_LEAD_OBJ = {
   email: "",
 };
 
-function AddDecreeModalBody({ closeModal }) {
+function AddQuestionModalBody({ closeModal }) {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
@@ -85,4 +85,4 @@ function AddDecreeModalBody({ closeModal }) {
   );
 }
 
-export default AddDecreeModalBody;
+export default AddQuestionModalBody;

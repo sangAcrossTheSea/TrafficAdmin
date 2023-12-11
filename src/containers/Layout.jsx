@@ -13,7 +13,12 @@ import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
-import { HomeIcon, BookOpenIcon } from "@heroicons/react/20/solid";
+import {
+  HomeIcon,
+  BookOpenIcon,
+  QuestionMarkCircleIcon,
+  NewspaperIcon,
+} from "@heroicons/react/20/solid";
 import ModalLayout from "./ModalLayout";
 import { useSelector } from "react-redux";
 
@@ -113,15 +118,17 @@ const Layout = () => {
               <p>Nghị định</p>
             </MenuItem>
             <MenuItem
-              icon={<BookOpenIcon className="h-6 w-6 text-gray-300" />}
+              icon={
+                <QuestionMarkCircleIcon className="h-6 w-6 text-gray-300" />
+              }
               active
-              component={<Link to="/decree" />}
+              component={<Link to="/question" />}
               className=""
             >
               <p>Câu hỏi</p>
             </MenuItem>
             <MenuItem
-              icon={<BookOpenIcon className="h-6 w-6 text-gray-300" />}
+              icon={<NewspaperIcon className="h-6 w-6 text-gray-300" />}
               active
               component={<Link to="/decree" />}
               className=""

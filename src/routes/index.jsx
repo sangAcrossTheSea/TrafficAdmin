@@ -13,6 +13,7 @@ const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
 const Layout = lazy(() => import("../containers/Layout"));
 const Blank = lazy(() => import("../pages/admin/Blank"));
 const Decree = lazy(() => import("../pages/admin/Decree"));
+const Question = lazy(() => import("../pages/admin/Question"));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ export const router = createBrowserRouter(
         <Route path="/" element={<Home />} />
         <Route path="/blank" element={<Blank />} />
         <Route path="/decree" element={<Decree />} />
+        <Route path="/question" element={<Question />} />
       </Route>
 
       <Route path="/login" element={<Login />} />
