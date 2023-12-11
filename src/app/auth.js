@@ -3,7 +3,7 @@ import axios from "axios";
 const checkAuth = () => {
   /*  Getting token value stored in localstorage, if token is not present we will open login page 
     for all internal dashboard routes  */
-  const TOKEN = localStorage.getItem("token");
+  const TOKEN = localStorage.getItem("token") || "";
   const PUBLIC_ROUTES = ["login", "forgot-password", "register"];
 
   const isPublicPage = PUBLIC_ROUTES.some((r) =>
@@ -14,7 +14,7 @@ const checkAuth = () => {
     window.location.href = "/login";
     return;
   } else {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${TOKEN}`;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${TOKEN.token}`;
 
     axios.interceptors.request.use(
       function (config) {

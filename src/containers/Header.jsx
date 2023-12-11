@@ -108,7 +108,7 @@ export function Header() {
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeev2SxqqtAWK9ojyDr-4LhNLk1pqrKSpLew9E6rsdG0fA8zFv9Ck89e-yN0pbgrZjsh4&usqp=CAU"
+                  src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
                   alt="profile"
                 />
               </div>

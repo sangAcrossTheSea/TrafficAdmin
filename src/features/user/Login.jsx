@@ -1,33 +1,46 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LandingIntro from "./LandingIntro";
 import ErrorText from "../../components/Typography/ErrorText";
 import InputText from "../../components/Input/InputText";
+import InputPasswordText from "../../components/Input/InputPasswordText";
+import axios from "axios";
 
 function Login() {
   const INITIAL_LOGIN_OBJ = {
     password: "",
     emailId: "",
   };
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginObj, setLoginObj] = useState(INITIAL_LOGIN_OBJ);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     setErrorMessage("");
 
-    if (loginObj.emailId.trim() === "")
-      return setErrorMessage("Email Id is required! (use any value)");
+    if (loginObj.emailId.trim() === "") return setErrorMessage("Phải có email");
     if (loginObj.password.trim() === "")
-      return setErrorMessage("Password is required! (use any value)");
+      return setErrorMessage("Phải có mật khẩu");
     else {
       setLoading(true);
       // Call API to check user credentials and save token in localstorage
-      localStorage.setItem("token", "DumyTokenHere");
+      try {
+        const response = await axios.post("/login", {
+          Email: loginObj.emailId,
+          Password: loginObj.password,
+        });
+        localStorage.setItem("token", JSON.stringify(response.data));
+        console.log("response", response.data);
+        if (response.data.isAdmin === false) {
+          return setErrorMessage("Bạn không phải admin!");
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
       setLoading(false);
-      window.location.href = "/app/welcome";
+      navigate("/");
     }
   };
 
@@ -44,7 +57,9 @@ function Login() {
             <LandingIntro />
           </div>
           <div className="py-24 px-10">
-            <h2 className="text-2xl font-semibold mb-2 text-center">Login</h2>
+            <h2 className="text-2xl font-semibold mb-2 text-center">
+              Đăng nhập
+            </h2>
             <form onSubmit={(e) => submitForm(e)}>
               <div className="mb-4">
                 <InputText
@@ -52,13 +67,13 @@ function Login() {
                   defaultValue={loginObj.emailId}
                   updateType="emailId"
                   containerStyle="mt-4"
-                  labelTitle="Email Id"
+                  labelTitle="Email"
                   updateFormValue={updateFormValue}
                 />
 
-                <InputText
+                <InputPasswordText
                   defaultValue={loginObj.password}
-                  type="password"
+                  // type="password"
                   updateType="password"
                   containerStyle="mt-4"
                   labelTitle="Password"
@@ -66,13 +81,13 @@ function Login() {
                 />
               </div>
 
-              <div className="text-right text-primary">
+              {/* <div className="text-right text-primary">
                 <Link to="/forgot-password">
                   <span className="text-sm  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">
                     Forgot Password?
                   </span>
                 </Link>
-              </div>
+              </div> */}
 
               <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
               <button
@@ -84,14 +99,14 @@ function Login() {
                 Login
               </button>
 
-              <div className="text-center mt-4">
+              {/* <div className="text-center mt-4">
                 Don&apos;t have an account yet?
                 <Link to="/register">
                   <span className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">
                     Register
                   </span>
                 </Link>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

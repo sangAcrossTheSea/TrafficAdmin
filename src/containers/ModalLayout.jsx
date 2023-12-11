@@ -1,7 +1,7 @@
 import { MODAL_BODY_TYPES } from "../utils/globalConstantUtil";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../features/common/modalSlice";
-import AddLeadModalBody from "../features/decree/components/AddDecreeModalBody";
+import AddDecreeModalBody from "../features/decree/components/AddDecreeModalBody";
 import ConfirmationModalBody from "../features/common/components/ConfirmationModalBody";
 
 function ModalLayout() {
@@ -33,7 +33,7 @@ function ModalLayout() {
           {
             {
               [MODAL_BODY_TYPES.DECREE_ADD_NEW]: (
-                <AddLeadModalBody
+                <AddDecreeModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

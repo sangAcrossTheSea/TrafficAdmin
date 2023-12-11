@@ -112,8 +112,24 @@ const Layout = () => {
             >
               <p>Nghị định</p>
             </MenuItem>
+            <MenuItem
+              icon={<BookOpenIcon className="h-6 w-6 text-gray-300" />}
+              active
+              component={<Link to="/decree" />}
+              className=""
+            >
+              <p>Câu hỏi</p>
+            </MenuItem>
+            <MenuItem
+              icon={<BookOpenIcon className="h-6 w-6 text-gray-300" />}
+              active
+              component={<Link to="/decree" />}
+              className=""
+            >
+              <p>Bài báo</p>
+            </MenuItem>
             <SubMenu
-              label="Charts"
+              label="Quy định"
               rootStyles={{
                 ["& > ." + menuClasses.button]: {
                   backgroundColor: "#1a202c",
@@ -129,7 +145,14 @@ const Layout = () => {
                 component={<Link to="/employee/department" />}
                 className=""
               >
-                <p>Department</p>
+                <p>Biển báo</p>
+              </MenuItem>
+              <MenuItem
+                active
+                component={<Link to="/employee/department" />}
+                className=""
+              >
+                <p>Xử phạt</p>
               </MenuItem>
             </SubMenu>
             <div
@@ -147,7 +170,7 @@ const Layout = () => {
       </div>
 
       <div
-        className={`w-full h-screen bg-gray-100 drawer-content flex flex-col ${
+        className={`w-full h-screen  drawer-content flex flex-col ${
           clpSidebar ? "ml-[5rem]" : "ml-[15.6rem]"
         }`}
       >

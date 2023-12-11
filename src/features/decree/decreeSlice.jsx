@@ -6,8 +6,8 @@ export const getDecreesContent = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get("/decree/getAllDecrees", {});
-      console.log("response", response);
-      return response.data;
+      console.log("response", response.data);
+      return response;
     } catch (error) {
       console.log("error", error);
     }
@@ -17,7 +17,7 @@ export const getDecreesContent = createAsyncThunk(
 export const decreeSlice = createSlice({
   name: "decree",
   initialState: {
-    isLoading: false,
+    isLoading: true,
     decrees: [],
   },
   reducers: {
@@ -34,6 +34,7 @@ export const decreeSlice = createSlice({
 
   extraReducers: {
     [getDecreesContent.pending]: (state) => {
+      state.decrees = [];
       state.isLoading = true;
     },
     [getDecreesContent.fulfilled]: (state, action) => {
@@ -41,6 +42,7 @@ export const decreeSlice = createSlice({
       state.isLoading = false;
     },
     [getDecreesContent.rejected]: (state) => {
+      state.decrees = [];
       state.isLoading = false;
     },
   },
