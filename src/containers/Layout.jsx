@@ -130,7 +130,7 @@ const Layout = () => {
             <MenuItem
               icon={<NewspaperIcon className="h-6 w-6 text-gray-300" />}
               active
-              component={<Link to="/decree" />}
+              component={<Link to="/news" />}
               className=""
             >
               <p>Bài báo</p>

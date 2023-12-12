@@ -14,6 +14,19 @@ export const getDecreesContent = createAsyncThunk(
   }
 );
 
+export const getDecreesContentById = createAsyncThunk(
+  "/decrees/contentById",
+  async () => {
+    try {
+      const response = await axios.get("/decree/getAllDecrees", {});
+      console.log("response", response.data);
+      return response;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+);
+
 export const decreeSlice = createSlice({
   name: "decree",
   initialState: {

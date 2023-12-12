@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Outlet, Navigate } from "react-router-dom";
 import checkAuth from "../app/auth";
 

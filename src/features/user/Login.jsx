@@ -33,14 +33,15 @@ function Login() {
         });
         localStorage.setItem("token", JSON.stringify(response.data));
         console.log("response", response.data);
+        setLoading(false);
         if (response.data.isAdmin === false) {
           return setErrorMessage("Bạn không phải admin!");
-        }
+        } else navigate("/");
       } catch (error) {
         console.log("error", error);
+        setLoading(false);
+        return setErrorMessage("Sai email hoặc mật khẩu!");
       }
-      setLoading(false);
-      navigate("/");
     }
   };
 

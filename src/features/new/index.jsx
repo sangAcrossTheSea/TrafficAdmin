@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleCard from "../../components/Cards/TitleCard";
 import { openModal } from "../common/modalSlice";
-import { deleteQuestion, getQuestionsContent } from "./questionSlice";
+import { deleteNew, getNewsContent } from "./newSlice";
 import {
   CONFIRMATION_MODAL_CLOSE_TYPES,
   MODAL_BODY_TYPES,
@@ -13,7 +13,6 @@ import {
   ArchiveBoxArrowDownIcon,
   PencilSquareIcon,
   EyeIcon,
-  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { showNotification } from "../common/headerSlice";
 
@@ -23,8 +22,8 @@ const TopSideButtons = () => {
   const openAddNewLeadModal = () => {
     dispatch(
       openModal({
-        title: "Thêm câu hỏi",
-        bodyType: MODAL_BODY_TYPES.question_ADD_NEW,
+        title: "Thêm nghị định",
+        bodyType: MODAL_BODY_TYPES.NEW_ADD_NEW,
       })
     );
   };
@@ -41,14 +40,13 @@ const TopSideButtons = () => {
   );
 };
 
-function Question() {
-  const { questions } = useSelector((state) => state.question);
+function New() {
+  const { news } = useSelector((state) => state.new);
   const dispatch = useDispatch();
-  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    dispatch(getQuestionsContent());
-    console.log("questions", questions);
+    dispatch(getNewsContent());
+    console.log("News", news);
   }, []);
 
   const deleteCurrentLead = (index) => {
@@ -65,75 +63,29 @@ function Question() {
     );
   };
 
-  const showImportant = (index) => {
-    if (index === true)
-      return <div className="badge badge-primary">Điểm liệt</div>;
-    else return <div></div>;
-  };
-
-  const onSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const search = (items) => {
-    if (!Array.isArray(items)) {
-      return [];
-    }
-
-    if (searchTerm === "") {
-      return items;
-    } else {
-      return items.filter((item) =>
-        item.QuestionContent.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-  };
-
   return (
     <>
       <TitleCard
-        title="Danh sách câu hỏi"
+        title="Danh sách tin tức"
         topMargin="mt-2"
         TopSideButtons={<TopSideButtons />}
       >
         {/* Leads List in table format loaded from slice after api call */}
-        <section>
-          <div className="flex items-center">
-            <div className="flex">
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                placeholder="Nhập từ khóa"
-                value={searchTerm}
-                onChange={onSearch}
-              />
-            </div>
-            <div className="flex-initial ml-2">
-              <button className="btn btn-primary" onClick={search}>
-                <span className="p-2 text-white">
-                  <MagnifyingGlassIcon className="w-4 h-4" />
-                </span>
-                Tìm kiếm
-              </button>
-            </div>
-          </div>
-        </section>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
             <thead>
               <tr>
                 <th>Stt</th>
-                <th>Nội dung</th>
-                <th>Hạng giấy phép</th>
-                <th>Nhóm câu hỏi</th>
-                <th>Loại câu hỏi</th>
+                <th>Tiêu đề</th>
+                <th>Mô tả</th>
+                <th>Chỉnh sửa lần cuối</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {questions?.map((l, k) => {
+              {news?.map((l, k) => {
                 return (
-                  <tr key={k}>
+                  <tr key={l.id}>
                     <td>
                       <div className="flex items-center space-x-3">
                         <div className="">
@@ -143,21 +95,18 @@ function Question() {
                           {k + 1}
                         </div>
                         {/* <div>
-                          <div className="font-bold">{l.questionName}</div>
+                          <div className="font-bold">{l.NewName}</div>
                           <div className="text-sm opacity-50">
                             {l.last_name}
                           </div>
                         </div> */}
                       </div>
                     </td>
-                    <td className="truncate max-w-md">{l.QuestionContent}</td>
-                    <td>{l.TestGroup}</td>
-                    <td>{l.QuestionType}</td>
+                    <td className="truncate max-w-sm">{l.NewsTitle}</td>
+                    <td className="truncate max-w-sm">{l.NewsClarify}</td>
                     <td>
-                      {/* {moment(new Date())
-                        .add(-5 * (k + 2), "days")
-                        .format("DD MMM YY")} */}
-                      {showImportant(l.Important)}
+                      {moment(new Date()).format("DD MMM YY")}
+                      {/* {new Date(l.NewDate).toLocaleDateString("vi-VN")} */}
                     </td>
                     <td>
                       <button
@@ -190,4 +139,4 @@ function Question() {
   );
 }
 
-export default Question;
+export default New;
