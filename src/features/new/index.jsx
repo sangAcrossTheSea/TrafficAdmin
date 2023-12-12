@@ -22,7 +22,7 @@ const TopSideButtons = () => {
   const openAddNewLeadModal = () => {
     dispatch(
       openModal({
-        title: "Thêm nghị định",
+        title: "Thêm bài báo",
         bodyType: MODAL_BODY_TYPES.NEW_ADD_NEW,
       })
     );

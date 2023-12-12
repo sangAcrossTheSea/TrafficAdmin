@@ -6,7 +6,7 @@ import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
 import { addNewDecree } from "../decreeSlice";
 
-const INITIAL_LEAD_OBJ = {
+const INITIAL_NEW_OBJ = {
   first_name: "",
   last_name: "",
   email: "",
@@ -17,7 +17,7 @@ function AddNewModalBody({ closeModal }) {
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
+  const [leadObj, setLeadObj] = useState(INITIAL_NEW_OBJ);
 
   const saveNewNew = () => {
     if (leadObj.first_name.trim() === "")
@@ -33,7 +33,7 @@ function AddNewModalBody({ closeModal }) {
         avatar: "https://reqres.in/img/faces/1-image.jpg",
       };
       dispatch(addNewDecree({ newLeadObj }));
-      dispatch(showNotification({ message: "New Lead Added!", status: 1 }));
+      dispatch(showNotification({ message: "Đã thêm bài báo!", status: 1 }));
       closeModal();
     }
   };
