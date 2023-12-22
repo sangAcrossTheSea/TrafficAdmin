@@ -6,8 +6,9 @@ export const getDecreesContent = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get("/decree/getAllDecrees", {});
-      console.log("response", response.data);
-      return response;
+      console.log("response decregniknsifin", response.data);
+      const decrees = response.data;
+      return decrees;
     } catch (error) {
       console.log("error", error);
     }
@@ -20,7 +21,8 @@ export const getDecreesContentById = createAsyncThunk(
     try {
       const response = await axios.get("/decree/getAllDecrees", {});
       console.log("response", response.data);
-      return response;
+      const decrees = response.data;
+      return decrees;
     } catch (error) {
       console.log("error", error);
     }
@@ -51,7 +53,7 @@ export const decreeSlice = createSlice({
       state.isLoading = true;
     },
     [getDecreesContent.fulfilled]: (state, action) => {
-      state.decrees = action.payload.data;
+      state.decrees = action.payload;
       state.isLoading = false;
     },
     [getDecreesContent.rejected]: (state) => {

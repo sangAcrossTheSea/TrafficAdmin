@@ -49,14 +49,14 @@ function Decree() {
     console.log("decrees", decrees);
   }, []);
 
-  const deleteCurrentLead = (index) => {
+  const deleteCurrentDecree = (index) => {
     dispatch(
       openModal({
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
           message: `Bạn chắc chắn muốn vô hiệu nghị định này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
           index,
         },
       })
@@ -111,21 +111,15 @@ function Decree() {
                       {new Date(l.DecreeDate).toLocaleDateString("vi-VN")}
                     </td>
                     <td>
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
-                      >
+                      <button className="btn btn-square btn-ghost">
                         <EyeIcon lSquareIcon className="w-5 text-green-800" />
                       </button>
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
-                      >
+                      <button className="btn btn-square btn-ghost">
                         <PencilSquareIcon className="w-5" />
                       </button>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
+                        onClick={() => deleteCurrentDecree(l.Id)}
                       >
                         <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
                       </button>

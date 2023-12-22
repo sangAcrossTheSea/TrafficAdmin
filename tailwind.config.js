@@ -5,7 +5,7 @@ export default {
     extend: {},
   },
   daisyui: {
-    themes: ["lofi", "business"],
+    themes: ["cmyk", "business"],
   },
   // eslint-disable-next-line no-undef
   plugins: [require("@tailwindcss/typography"), require("daisyui")],

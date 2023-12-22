@@ -4,12 +4,11 @@ import { useDispatch } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { addNewDecree } from "../decreeSlice";
+import axios from "axios";
 
 const INITIAL_LEAD_OBJ = {
-  first_name: "",
-  last_name: "",
-  email: "",
+  DecreeName: "",
+  DecreeNumber: "",
 };
 
 function AddDecreeModalBody({ closeModal }) {
@@ -19,22 +18,27 @@ function AddDecreeModalBody({ closeModal }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
 
-  const saveNewLead = () => {
-    if (leadObj.first_name.trim() === "")
-      return setErrorMessage("First Name is required!");
-    else if (leadObj.email.trim() === "")
-      return setErrorMessage("Email id is required!");
+  const saveNewLead = async () => {
+    if (leadObj.DecreeName.trim() === "")
+      return setErrorMessage("Phải có tên!");
+    else if (leadObj.DecreeNumber.trim() === "")
+      return setErrorMessage("Phải có số hiệu nghị định!");
     else {
-      let newLeadObj = {
-        id: 7,
-        email: leadObj.email,
-        first_name: leadObj.first_name,
-        last_name: leadObj.last_name,
-        avatar: "https://reqres.in/img/faces/1-image.jpg",
+      setLoading(true);
+      const date = new Date();
+      let newDecreeObj = {
+        Id: "string",
+        DecreeName: leadObj.DecreeName,
+        DecreeDate: date.toISOString(),
+        DecreeNumber: leadObj.DecreeNumber,
       };
-      dispatch(addNewDecree({ newLeadObj }));
-      dispatch(showNotification({ message: "New Lead Added!", status: 1 }));
+      const response = await axios.post("/decree/createDecree", newDecreeObj);
+      console.log("response", response);
+      // dispatch(addNewDecree({ newDecreeObj }));
+      window.location.reload();
+      dispatch(showNotification({ message: "New Decree Added!", status: 1 }));
       closeModal();
+      setLoading(false);
     }
   };
 
@@ -47,8 +51,8 @@ function AddDecreeModalBody({ closeModal }) {
     <>
       <InputText
         type="text"
-        defaultValue={leadObj.first_name}
-        updateType="first_name"
+        defaultValue={leadObj.DecreeName}
+        updateType="DecreeName"
         containerStyle="mt-4"
         labelTitle="Tên nghị định"
         updateFormValue={updateFormValue}
@@ -56,21 +60,12 @@ function AddDecreeModalBody({ closeModal }) {
 
       <InputText
         type="text"
-        defaultValue={leadObj.last_name}
-        updateType="last_name"
+        defaultValue={leadObj.DecreeNumber}
+        updateType="DecreeNumber"
         containerStyle="mt-4"
         labelTitle="Số hiệu nghị định"
         updateFormValue={updateFormValue}
       />
-      {/* 
-      <InputText
-        type="email"
-        defaultValue={leadObj.email}
-        updateType="email"
-        containerStyle="mt-4"
-        labelTitle="Email Id"
-        updateFormValue={updateFormValue}
-      /> */}
 
       <ErrorText styleClass="mt-16">{errorMessage}</ErrorText>
       <div className="modal-action">
