@@ -50,6 +50,7 @@ function DecreeDetail() {
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isOpen } = useSelector((state) => state.modal);
 
   useEffect(() => {
     const getArticles = async () => {
@@ -60,7 +61,7 @@ function DecreeDetail() {
     };
 
     getArticles();
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     const searchArticles = () => {
@@ -69,8 +70,8 @@ function DecreeDetail() {
           searchText.toLowerCase()
         );
       });
-      if (searchText === "") setFilteredArticles(articles);
-      else setFilteredArticles(res);
+      setFilteredArticles(articles);
+      if (searchText) setFilteredArticles(res);
     };
     searchArticles();
   }, [searchText]);
@@ -81,7 +82,7 @@ function DecreeDetail() {
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Bạn chắc chắn muốn vô hiệu nghị định này?`,
+          message: `Bạn chắc chắn muốn xoá điều luật này?`,
           type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
           index,
         },
@@ -89,15 +90,14 @@ function DecreeDetail() {
     );
   };
 
-  const editCurrentDecree = (id, name, number) => {
+  const editCurrentDecree = (id, title) => {
     dispatch(
       openModal({
-        title: "Chỉnh sửa nghị định",
-        bodyType: MODAL_BODY_TYPES.DECREE_EDIT,
+        title: "Chỉnh sửa điều luật",
+        bodyType: MODAL_BODY_TYPES.ARTICLE_EDIT,
         extraObject: {
           id,
-          name,
-          number,
+          title,
         },
       })
     );
@@ -136,13 +136,11 @@ function DecreeDetail() {
                         className="btn btn-square btn-ghost"
                         onClick={() => navigate(`/decree/${l.Id}`)}
                       >
-                        <EyeIcon lSquareIcon className="w-5 text-green-800" />
+                        <EyeIcon className="w-5 text-green-800" />
                       </button>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() =>
-                          editCurrentDecree(l.Id, l.DecreeName, l.DecreeNumber)
-                        }
+                        onClick={() => editCurrentDecree(l.Id, l.ArticleTitle)}
                       >
                         <PencilSquareIcon className="w-5" />
                       </button>

@@ -1,55 +1,54 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const INITIAL_LEAD_OBJ = {
+let INITIAL_LEAD_OBJ = {
   ArticleTitle: "",
 };
 
-function AddArticleModalBody({ closeModal }) {
+function EditArticleModalBody({ closeModal, extraObject }) {
   const dispatch = useDispatch();
+  INITIAL_LEAD_OBJ = {
+    ArticleTitle: extraObject.title,
+  };
+
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
-  const { decreeId } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
+  const { decreeId } = useParams();
 
-  const AddArticle = async () => {
+  const EditDecree = async () => {
     setLoading(true);
-    const date = new Date();
-    const newArticleObject = {
-      Id: "string",
+    let newDecreeObj = {
+      Id: extraObject.id,
       DecreeId: decreeId,
       ArticleTitle: leadObj.ArticleTitle,
     };
-    const response = await axios.post(
-      "/article/createArticle",
-      newArticleObject
-    );
-    console.log("response", response);
-    closeModal();
-
-    if (response.data) {
-      // window.location.reload();
-      dispatch(
-        showNotification({ message: "Thêm mới thành công!", status: 1 })
+    try {
+      const response = await axios.put(
+        `/article/updateArticle/${extraObject.id}`,
+        newDecreeObj
       );
-      setLoading(false);
-    } else {
-      dispatch(showNotification({ message: "Thêm mới thất bại!", status: 0 }));
+      dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
+      closeModal();
+    } catch (error) {
+      console.log("error", error);
+      dispatch(showNotification({ message: "Sửa thất bại!", status: 0 }));
     }
+    setLoading(false);
   };
 
   const saveNewLead = async () => {
     if (leadObj.ArticleTitle.trim() === "")
       return setErrorMessage("Phải có tên!");
     else {
-      AddArticle();
+      EditDecree();
     }
   };
 
@@ -62,7 +61,7 @@ function AddArticleModalBody({ closeModal }) {
     <>
       <InputText
         type="text"
-        defaultValue={leadObj.ArticleTitle}
+        defaultValue={extraObject.title}
         updateType="ArticleTitle"
         containerStyle="mt-4"
         labelTitle="Tên điều luật"
@@ -82,4 +81,4 @@ function AddArticleModalBody({ closeModal }) {
   );
 }
 
-export default AddArticleModalBody;
+export default EditArticleModalBody;

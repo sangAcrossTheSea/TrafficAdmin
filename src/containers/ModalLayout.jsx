@@ -5,6 +5,7 @@ import AddDecreeModalBody from "../features/decree/components/AddDecreeModalBody
 import ConfirmationModalBody from "../features/common/components/ConfirmationModalBody";
 import EditDecreeModalBody from "../features/decree/components/EditDecreeModalBody";
 import AddArticleModalBody from "../features/article/components/AddArticleModalBody";
+import EditArticleModalBody from "../features/article/components/EditArticleModalBody";
 import AddQuestionModalBody from "../features/question/components/AddQuestionModalBody";
 
 function ModalLayout() {
@@ -51,6 +52,13 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.ARTICLE_ADD_NEW]: (
                 <AddArticleModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.ARTICLE_EDIT]: (
+                <EditArticleModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />
