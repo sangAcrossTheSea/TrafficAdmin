@@ -15,6 +15,8 @@ const Blank = lazy(() => import("../pages/admin/Blank"));
 const Decree = lazy(() => import("../pages/admin/Decree"));
 const DecreeDetail = lazy(() => import("../pages/admin/DecreeDetail"));
 const ArticleDetail = lazy(() => import("../pages/admin/ArticleDetail"));
+const Fine = lazy(() => import("../pages/admin/Fine"));
+const FineType = lazy(() => import("../pages/admin/FineType"));
 const Question = lazy(() => import("../pages/admin/Question"));
 const New = lazy(() => import("../pages/admin/New"));
 
@@ -27,6 +29,8 @@ export const router = createBrowserRouter(
         <Route path="decree" element={<Decree />} />
         <Route path="decree/:decreeId" element={<DecreeDetail />} />
         <Route path="article/:articleId" element={<ArticleDetail />} />
+        <Route path="fine" element={<Fine />} />
+        <Route path="fine-type" element={<FineType />} />
         <Route path="question" element={<Question />} />
         <Route path="news" element={<New />} />
       </Route>

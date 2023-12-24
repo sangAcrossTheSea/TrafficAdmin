@@ -18,6 +18,7 @@ import {
   BookOpenIcon,
   QuestionMarkCircleIcon,
   NewspaperIcon,
+  DocumentIcon,
 } from "@heroicons/react/20/solid";
 import ModalLayout from "./ModalLayout";
 import RightSidebar from "./RightSideBar";
@@ -144,6 +145,29 @@ const Layout = () => {
             >
               <p>Nghị định</p>
             </MenuItem>
+            <SubMenu
+              label="Xử phạt"
+              rootStyles={{
+                ["& > ." + menuClasses.button]: {
+                  backgroundColor: "#1a202c",
+                },
+                ["." + menuClasses.subMenuContent]: {
+                  backgroundColor: "#454545",
+                },
+              }}
+              icon={<DocumentIcon className="h-6 w-6 text-gray-300" />}
+            >
+              <MenuItem active component={<Link to="/fine" />} className="">
+                <p>Mức phạt</p>
+              </MenuItem>
+              <MenuItem
+                active
+                component={<Link to="/fine-type" />}
+                className=""
+              >
+                <p>Loại mức phạt</p>
+              </MenuItem>
+            </SubMenu>
             <MenuItem
               icon={
                 <QuestionMarkCircleIcon className="h-6 w-6 text-gray-300" />

@@ -8,6 +8,7 @@ import AddArticleModalBody from "../features/article/components/AddArticleModalB
 import EditArticleModalBody from "../features/article/components/EditArticleModalBody";
 import AddClauseModalBody from "../features/articleDetail/components/AddClauseModalBody";
 import EditClauseModalBody from "../features/articleDetail/components/EditClauseModalBody";
+import AddFineTypeModalBody from "../features/fineType/components/AddFineTypeModalBody";
 import AddQuestionModalBody from "../features/question/components/AddQuestionModalBody";
 
 function ModalLayout() {
@@ -75,6 +76,13 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.CLAUSE_EDIT]: (
                 <EditClauseModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.FINE_TYPE_ADD_NEW]: (
+                <AddFineTypeModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

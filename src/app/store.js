@@ -16,6 +16,8 @@ import rightDrawerSlice from "../features/common/rightDrawerSlice";
 import decreeSlice from "../features/decree/decreeSlice";
 import questionSlice from "../features/question/questionSlice";
 import newSlice from "../features/new/newSlice";
+import FineSlice from "../features/fine/fineSlice";
+import fineTypeSlice from "../features/fineType/fineTypeSlice";
 
 // Define your root reducer
 const rootReducer = combineReducers({
@@ -25,6 +27,8 @@ const rootReducer = combineReducers({
   decree: decreeSlice,
   question: questionSlice,
   new: newSlice,
+  fine: FineSlice,
+  fineType: fineTypeSlice,
 });
 
 // Define your persist config
