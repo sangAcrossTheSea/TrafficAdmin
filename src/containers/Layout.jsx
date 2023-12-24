@@ -21,7 +21,7 @@ import {
   DocumentIcon,
 } from "@heroicons/react/20/solid";
 import ModalLayout from "./ModalLayout";
-import RightSidebar from "./RightSideBar";
+import RightSidebar from "./RightSidebar";
 import { useSelector, useDispatch } from "react-redux";
 import { removeNotificationMessage } from "../features/common/headerSlice";
 import { ToastContainer, toast } from "react-toastify";
