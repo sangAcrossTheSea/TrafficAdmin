@@ -6,7 +6,6 @@ export const getDecreesContent = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get("/decree/getAllDecrees", {});
-      console.log("response decregniknsifin", response.data);
       const decrees = response.data;
       return decrees;
     } catch (error) {
@@ -20,7 +19,6 @@ export const getDecreesContentById = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get("/decree/getAllDecrees", {});
-      console.log("response", response.data);
       const decrees = response.data;
       return decrees;
     } catch (error) {
@@ -37,13 +35,18 @@ export const decreeSlice = createSlice({
   },
   reducers: {
     addNewDecree: (state, action) => {
-      let { newLeadObj } = action.payload;
+      let newLeadObj = action.payload;
       state.decrees = [...state.decrees, newLeadObj];
     },
 
     deleteDecree: (state, action) => {
       let { index } = action.payload;
       state.decrees.splice(index, 1);
+    },
+
+    updateDecree: (state, action) => {
+      let { index, newLeadObj } = action.payload;
+      state.decrees[index] = newLeadObj;
     },
   },
 
@@ -63,6 +66,6 @@ export const decreeSlice = createSlice({
   },
 });
 
-export const { addNewDecree, deleteDecree } = decreeSlice.actions;
+export const { addNewDecree, deleteDecree, updateDecree } = decreeSlice.actions;
 
 export default decreeSlice.reducer;

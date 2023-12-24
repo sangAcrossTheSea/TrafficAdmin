@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
+import { addNewDecree } from "../decreeSlice";
 import axios from "axios";
 
 const INITIAL_LEAD_OBJ = {
@@ -18,27 +19,38 @@ function AddDecreeModalBody({ closeModal }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
 
+  const AddDecree = async () => {
+    setLoading(true);
+    const date = new Date();
+    const newDecreeObj = {
+      Id: "string",
+      DecreeName: leadObj.DecreeName,
+      DecreeDate: date.toISOString(),
+      DecreeNumber: leadObj.DecreeNumber,
+    };
+    const response = await axios.post("/decree/createDecree", newDecreeObj);
+    console.log("response", response);
+    closeModal();
+
+    if (response.data) {
+      dispatch(addNewDecree(newDecreeObj));
+      // window.location.reload();
+      dispatch(
+        showNotification({ message: "Thêm mới thành công!", status: 1 })
+      );
+      setLoading(false);
+    } else {
+      dispatch(showNotification({ message: "Thêm mới thất bại!", status: 0 }));
+    }
+  };
+
   const saveNewLead = async () => {
     if (leadObj.DecreeName.trim() === "")
       return setErrorMessage("Phải có tên!");
     else if (leadObj.DecreeNumber.trim() === "")
       return setErrorMessage("Phải có số hiệu nghị định!");
     else {
-      setLoading(true);
-      const date = new Date();
-      let newDecreeObj = {
-        Id: "string",
-        DecreeName: leadObj.DecreeName,
-        DecreeDate: date.toISOString(),
-        DecreeNumber: leadObj.DecreeNumber,
-      };
-      const response = await axios.post("/decree/createDecree", newDecreeObj);
-      console.log("response", response);
-      // dispatch(addNewDecree({ newDecreeObj }));
-      window.location.reload();
-      dispatch(showNotification({ message: "New Decree Added!", status: 1 }));
-      closeModal();
-      setLoading(false);
+      AddDecree();
     }
   };
 
@@ -70,10 +82,10 @@ function AddDecreeModalBody({ closeModal }) {
       <ErrorText styleClass="mt-16">{errorMessage}</ErrorText>
       <div className="modal-action">
         <button className="btn btn-ghost" onClick={() => closeModal()}>
-          Cancel
+          Huỷ
         </button>
         <button className="btn btn-primary px-6" onClick={() => saveNewLead()}>
-          Save
+          Lưu
         </button>
       </div>
     </>

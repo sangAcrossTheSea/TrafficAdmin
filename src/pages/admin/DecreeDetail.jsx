@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setPageTitle } from "../../features/common/headerSlice";
-import Decree from "../../features/decree/index";
+import DecreeDetail from "../../features/article/index";
 
 function InternalPage() {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function InternalPage() {
 
   return (
     <div className="">
-      <Decree />
+      <DecreeDetail />
     </div>
   );
 }

@@ -24,7 +24,7 @@ const TopSideButtons = () => {
     dispatch(
       openModal({
         title: "Thêm câu hỏi",
-        bodyType: MODAL_BODY_TYPES.question_ADD_NEW,
+        bodyType: MODAL_BODY_TYPES.QUESTION_ADD_NEW,
       })
     );
   };
@@ -67,7 +67,7 @@ function Question() {
 
   const showImportant = (index) => {
     if (index === true)
-      return <div className="badge badge-primary">Điểm liệt</div>;
+      return <div className="badge badge-neutral">Điểm liệt</div>;
     else return <div></div>;
   };
 
@@ -150,14 +150,16 @@ function Question() {
                         </div> */}
                       </div>
                     </td>
-                    <td className="truncate max-w-md">{l.QuestionContent}</td>
-                    <td>{l.TestGroup}</td>
-                    <td>{l.QuestionType}</td>
+                    <td className="truncate max-w-md">
+                      {l.Question.QuestionContent}
+                    </td>
+                    <td>{l.License.LicenseName}</td>
+                    <td>{l.Title.TitleName}</td>
                     <td>
                       {/* {moment(new Date())
                         .add(-5 * (k + 2), "days")
                         .format("DD MMM YY")} */}
-                      {showImportant(l.Important)}
+                      {showImportant(l.Question.Important)}
                     </td>
                     <td>
                       <button

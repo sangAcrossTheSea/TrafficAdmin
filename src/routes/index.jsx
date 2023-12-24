@@ -22,17 +22,16 @@ export const router = createBrowserRouter(
     <Route path="/" element={<RootPage />}>
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/blank" element={<Blank />} />
-        <Route path="/decree" element={<Decree />}>
-          <Route path="decree/:decreeId" element={<DecreeDetail />} />
-        </Route>
-        <Route path="/question" element={<Question />} />
-        <Route path="/news" element={<New />} />
+        <Route path="blank" element={<Blank />} />
+        <Route path="decree" element={<Decree />} />
+        <Route path="decree/:decreeId" element={<DecreeDetail />} />
+        <Route path="question" element={<Question />} />
+        <Route path="news" element={<New />} />
       </Route>
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+      <Route path="forgot-password" element={<ForgotPassword />} />
 
       <Route path="*" element={<NotFound />} />
     </Route>

@@ -3,50 +3,54 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
-import CheckBox from "../../../components/Input/CheckBox";
 import { showNotification } from "../../common/headerSlice";
+import { addNewDecree } from "../decreeSlice";
 import axios from "axios";
 
 const INITIAL_LEAD_OBJ = {
-  QuestionContent: "",
-  QuestionMedia: "",
-  Important: false,
-  Explanation: "",
+  ArticleTitle: "",
 };
 
-function AddQuestionModalBody({ closeModal }) {
+function AddArticleModalBody({ closeModal }) {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
+  const { decreeId } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
 
-  const AddDecree = async () => {
+  const AddArticle = async () => {
     setLoading(true);
     const date = new Date();
-    let newDecreeObj = {
+    const newArticleObject = {
       Id: "string",
-      LicenseTitleId: "string",
-      QuestionContent: leadObj.QuestionContent,
-      QuestionMedia: "string",
-      Important: leadObj.Important,
+      DecreeId: decreeId,
+      ArticleTitle: leadObj.ArticleTitle,
     };
-    const response = await axios.post("/decree/createDecree", newDecreeObj);
+    const response = await axios.post(
+      "/article/createArticle",
+      newArticleObject
+    );
     console.log("response", response);
-    // dispatch(addNewDecree({ newDecreeObj }));
-    window.location.reload();
-    dispatch(showNotification({ message: "Thêm mới thành công!", status: 1 }));
     closeModal();
-    setLoading(false);
+
+    if (response.data) {
+      dispatch(addNewDecree(newArticleObject));
+      // window.location.reload();
+      dispatch(
+        showNotification({ message: "Thêm mới thành công!", status: 1 })
+      );
+      setLoading(false);
+    } else {
+      dispatch(showNotification({ message: "Thêm mới thất bại!", status: 0 }));
+    }
   };
 
   const saveNewLead = async () => {
-    if (leadObj.QuestionContent.trim() === "")
+    if (leadObj.ArticleTitle.trim() === "")
       return setErrorMessage("Phải có tên!");
-    else if (leadObj.QuestionNumber.trim() === "")
-      return setErrorMessage("Phải có số hiệu nghị định!");
     else {
-      AddDecree();
+      AddArticle();
     }
   };
 
@@ -59,28 +63,10 @@ function AddQuestionModalBody({ closeModal }) {
     <>
       <InputText
         type="text"
-        defaultValue={leadObj.QuestionContent}
-        updateType="QuestionContent"
+        defaultValue={leadObj.ArticleTitle}
+        updateType="ArticleTitle"
         containerStyle="mt-4"
-        labelTitle="Nội dung câu hỏi"
-        updateFormValue={updateFormValue}
-      />
-
-      <InputText
-        type="text"
-        defaultValue={leadObj.Explanation}
-        updateType="Explanation"
-        containerStyle="mt-4"
-        labelTitle="Giải thích"
-        updateFormValue={updateFormValue}
-      />
-
-      <CheckBox
-        type="checkbox"
-        defaultValue={leadObj.Important}
-        updateType="Important"
-        containerStyle="mt-4"
-        labelTitle="Điểm liệt"
+        labelTitle="Tên điều luật"
         updateFormValue={updateFormValue}
       />
 
@@ -97,4 +83,4 @@ function AddQuestionModalBody({ closeModal }) {
   );
 }
 
-export default AddQuestionModalBody;
+export default AddArticleModalBody;

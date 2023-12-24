@@ -20,14 +20,41 @@ import {
   NewspaperIcon,
 } from "@heroicons/react/20/solid";
 import ModalLayout from "./ModalLayout";
-import { useSelector } from "react-redux";
+import RightSidebar from "./RightSideBar";
+import { useSelector, useDispatch } from "react-redux";
+import { removeNotificationMessage } from "../features/common/headerSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = () => {
+  const dispatch = useDispatch();
   const [clpSidebar, setClpSidebar] = useState(false);
   const navigate = useNavigate();
   const [arrow, setArrow] = useState(true);
   const mainContentRef = useRef(null);
   const { pageTitle } = useSelector((state) => state.header);
+  const { newNotificationMessage, newNotificationStatus } = useSelector(
+    (state) => state.header
+  );
+
+  useEffect(() => {
+    if (newNotificationMessage) {
+      switch (newNotificationStatus) {
+        case 1:
+          toast.success(newNotificationMessage);
+          break;
+        case 0:
+          toast.error(newNotificationMessage);
+          break;
+        case 2:
+          toast.warning(newNotificationMessage);
+          break;
+        default:
+          break;
+      }
+    }
+    dispatch(removeNotificationMessage());
+  }, [newNotificationMessage]);
 
   // Scroll back to top on new page load
   useEffect(() => {
@@ -191,6 +218,18 @@ const Layout = () => {
           <Outlet />
         </main>
         <ModalLayout />
+        <RightSidebar />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </section>
   );
