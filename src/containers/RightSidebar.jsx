@@ -5,7 +5,7 @@ import { closeRightDrawer } from "../features/common/rightDrawerSlice";
 import { RIGHT_DRAWER_TYPES } from "../utils/globalConstantUtil";
 import CalendarEventsBodyRightDrawer from "../features/calendar/CalendarEventsBodyRightDrawer";
 
-function RightSidebar() {
+const RightSidebar = () => {
   const { isOpen, bodyType, extraObject, header } = useSelector(
     (state) => state.rightDrawer
   );
@@ -75,6 +75,6 @@ function RightSidebar() {
       ></section>
     </div>
   );
-}
+};
 
 export default RightSidebar;
