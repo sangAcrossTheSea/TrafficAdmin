@@ -14,6 +14,7 @@ const Layout = lazy(() => import("../containers/Layout"));
 const Blank = lazy(() => import("../pages/admin/Blank"));
 const Decree = lazy(() => import("../pages/admin/Decree"));
 const DecreeDetail = lazy(() => import("../pages/admin/DecreeDetail"));
+const ArticleDetail = lazy(() => import("../pages/admin/ArticleDetail"));
 const Question = lazy(() => import("../pages/admin/Question"));
 const New = lazy(() => import("../pages/admin/New"));
 
@@ -25,6 +26,7 @@ export const router = createBrowserRouter(
         <Route path="blank" element={<Blank />} />
         <Route path="decree" element={<Decree />} />
         <Route path="decree/:decreeId" element={<DecreeDetail />} />
+        <Route path="article/:articleId" element={<ArticleDetail />} />
         <Route path="question" element={<Question />} />
         <Route path="news" element={<New />} />
       </Route>

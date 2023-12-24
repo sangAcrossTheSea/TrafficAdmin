@@ -56,7 +56,7 @@ function New() {
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
           message: `Bạn chắc chắn muốn vô hiệu nghị định này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
           index,
         },
       })

@@ -12,9 +12,14 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
   const { message, type, _id, index } = extraObject;
 
   const proceedWithYes = async () => {
-    if (type === CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE) {
-      const response = await axios.delete(`/decree/deleteDecree/${_id}`);
-      console.log("response", response);
+    if (type) {
+      let response;
+      if (type === CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE) {
+        response = await axios.delete(`/decree/deleteDecree/${_id}`);
+      } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.ARTICLE_DELETE) {
+        response = await axios.delete(`/article/deleteArticle/${_id}`);
+      }
+
       if (response.data) {
         // window.location.reload();
         dispatch(showNotification({ message: "Xoá thành công!", status: 1 }));

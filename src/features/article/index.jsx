@@ -83,8 +83,8 @@ function DecreeDetail() {
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
           message: `Bạn chắc chắn muốn xoá điều luật này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
-          index,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.ARTICLE_DELETE,
+          _id: index,
         },
       })
     );
@@ -134,7 +134,7 @@ function DecreeDetail() {
                     <td>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => navigate(`/decree/${l.Id}`)}
+                        onClick={() => navigate(`/article/${l.Id}`)}
                       >
                         <EyeIcon className="w-5 text-green-800" />
                       </button>
