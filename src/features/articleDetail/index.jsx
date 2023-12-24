@@ -75,7 +75,7 @@ function ArticleDetail() {
         extraObject: {
           message: `Bạn chắc chắn muốn xoá khoản này?`,
           type: CONFIRMATION_MODAL_CLOSE_TYPES.CLAUSE_DELETE,
-          index,
+          _id: index,
         },
       })
     );
@@ -129,14 +129,17 @@ function ArticleDetail() {
                   <button
                     className="btn btn-square btn-ghost"
                     onClick={() =>
-                      editCurrentDecree(item?.Id, item?.ClauseTitle)
+                      editCurrentDecree(
+                        item?.Clause?.Id,
+                        item?.Clause?.ClauseTitle
+                      )
                     }
                   >
                     <PencilSquareIcon className="w-5" />
                   </button>
                   <button
                     className="btn btn-square btn-ghost"
-                    onClick={() => deleteCurrentDecree(l.Id)}
+                    onClick={() => deleteCurrentDecree(item?.Clause?.Id)}
                   >
                     <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
                   </button>

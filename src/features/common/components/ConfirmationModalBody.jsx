@@ -18,6 +18,9 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         response = await axios.delete(`/decree/deleteDecree/${_id}`);
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.ARTICLE_DELETE) {
         response = await axios.delete(`/article/deleteArticle/${_id}`);
+      } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.CLAUSE_DELETE) {
+        response = await axios.delete(`/clause/deleteClause/${_id}`);
+        console.log("response hello", response);
       }
 
       if (response.data) {
