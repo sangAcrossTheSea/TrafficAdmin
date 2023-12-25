@@ -33,7 +33,7 @@ const Content = () => {
   return (
     <>
       {!blogPost?.isHidden ? (
-        <div className="mx-auto flex min-w-full flex-col">
+        <div className="flex w-full flex-col">
           <div className="min-h-[12rem] min-w-[20rem] overflow-hidden max-md:h-[6rem] max-md:w-[10rem] md:max-h-[36rem] md:max-w-[60rem]">
             <img
               src={blogPost?.NewsThumbnail}
@@ -55,7 +55,7 @@ const Content = () => {
             </p> */}
             <p className="prose lg:prose-xl">{blogPost?.NewsClarify}</p>
           </div>
-          <div className="markdown prose space-y-4 lg:prose-xl ">
+          <div className="markdown prose lg:prose-xl ">
             {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {blogPost?.blogPostContent || ""}
             </ReactMarkdown> */}

@@ -33,7 +33,8 @@ function EditNewModalBody({ closeModal, extraObject }) {
     NewsThumbnail: extraObject.NewsThumbnail,
     IsHidden: false,
   });
-  const [imageURL, setImageURL] = useState("");
+  const [imageURL, setImageURL] = useState(extraObject.NewsThumbnail);
+  const [imageFile, setImageFile] = useState(null);
 
   const mdParser = new MarkdownIt();
 
@@ -46,6 +47,19 @@ function EditNewModalBody({ closeModal, extraObject }) {
 
       return updatedBlogPost;
     });
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageURL(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleUploadPostImage = async (file) => {
@@ -72,7 +86,7 @@ function EditNewModalBody({ closeModal, extraObject }) {
         NewsClarify: leadObj.NewsClarify,
         NewsDate: date.toISOString(),
         NewsContent: currentBlogPost.blogPostContent,
-        NewsThumbnail: "string",
+        NewsThumbnail: leadObj.NewsThumbnail,
         IsHidden: false,
       };
 
@@ -80,6 +94,15 @@ function EditNewModalBody({ closeModal, extraObject }) {
         `/news/updateNews/${extraObject.Id}`,
         newLeadObj
       );
+
+      // if (imageFile) {
+      //   const formData = new FormData();
+      //   formData.append("file", imageFile);
+      //   const imageUrl = await axios.post(
+      //     `/news/uploadNewsThumbnail/${extraObject.Id}`,
+      //     formData
+      //   );
+      // }
 
       dispatch(updateNew({ index: extraObject.index, newLeadObj: newLeadObj }));
 
@@ -140,8 +163,15 @@ function EditNewModalBody({ closeModal, extraObject }) {
           type="file"
           className="file-input w-full max-w-xs"
           accept="image/*"
-          onChange={(e) => setImageURL(e.target.files[0])}
+          onChange={handleFileChange}
         />
+        {imageURL && (
+          <img
+            src={imageURL}
+            alt="Preview"
+            className="mt-4 object-cover w-48 h-48"
+          />
+        )}
       </div>
 
       <div className="w-full my-4">

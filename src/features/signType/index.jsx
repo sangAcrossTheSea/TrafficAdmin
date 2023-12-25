@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleCard from "../../components/Cards/TitleCard";
 import { openModal } from "../common/modalSlice";
-import { deleteFine, getFinesContent } from "./fineSlice";
+import { deleteSignType, getSignTypesContent } from "./signTypeSlice";
 import {
   CONFIRMATION_MODAL_CLOSE_TYPES,
   MODAL_BODY_TYPES,
@@ -23,8 +23,8 @@ const TopSideButtons = () => {
   const openAddNewLeadModal = () => {
     dispatch(
       openModal({
-        title: "Thêm mức phạt",
-        bodyType: MODAL_BODY_TYPES.FINE_ADD_NEW,
+        title: "Thêm loại biển báo",
+        bodyType: MODAL_BODY_TYPES.SIGN_TYPE_ADD_NEW,
       })
     );
   };
@@ -41,16 +41,14 @@ const TopSideButtons = () => {
   );
 };
 
-function Fine() {
-  const { fines } = useSelector((state) => state.fine);
+function SignType() {
+  const { signTypes } = useSelector((state) => state.signType);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
-    dispatch(getFinesContent());
-    console.log("fines", fines);
-  }, [isChange]);
+    dispatch(getSignTypesContent());
+  }, []);
 
   const deleteCurrentDecree = (index, _id) => {
     dispatch(
@@ -58,24 +56,23 @@ function Fine() {
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Bạn chắc chắn muốn xoá nghị định này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
-          _id,
-          index,
+          message: `Bạn chắc chắn muốn xoá loại biển báo này?`,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.SIGN_TYPE_DELETE,
+          _id: _id,
+          index: index,
         },
       })
     );
   };
 
-  const editCurrentDecree = (index, id, name, number) => {
+  const editCurrentDecree = (index, id, name) => {
     dispatch(
       openModal({
-        title: "Chỉnh sửa nghị định",
-        bodyType: MODAL_BODY_TYPES.DECREE_EDIT,
+        title: "Chỉnh sửa loại mức phạt",
+        bodyType: MODAL_BODY_TYPES.Sign_TYPE_EDIT,
         extraObject: {
           id,
           name,
-          number,
           index,
         },
       })
@@ -85,7 +82,7 @@ function Fine() {
   return (
     <>
       <TitleCard
-        title="Danh sách mức phạt"
+        title="Danh sách loại biển báo"
         topMargin="mt-2"
         TopSideButtons={<TopSideButtons />}
       >
@@ -100,7 +97,7 @@ function Fine() {
               </tr>
             </thead>
             <tbody>
-              {fines?.map((l, k) => {
+              {signTypes?.map((l, k) => {
                 return (
                   <tr key={l.Id}>
                     <td>
@@ -108,7 +105,7 @@ function Fine() {
                         <div className="">{k + 1}</div>
                       </div>
                     </td>
-                    <td>{l.FineName}</td>
+                    <td>{l.SignType}</td>
                     <td>
                       {/* <button
                         className="btn btn-square btn-ghost"
@@ -118,14 +115,7 @@ function Fine() {
                       </button> */}
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() =>
-                          editCurrentDecree(
-                            k,
-                            l.Id,
-                            l.DecreeName,
-                            l.DecreeNumber
-                          )
-                        }
+                        onClick={() => editCurrentDecree(k, l.Id, l.SignType)}
                       >
                         <PencilSquareIcon className="w-5" />
                       </button>
@@ -147,4 +137,4 @@ function Fine() {
   );
 }
 
-export default Fine;
+export default SignType;

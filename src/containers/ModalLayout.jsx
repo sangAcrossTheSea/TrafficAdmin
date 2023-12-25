@@ -13,6 +13,10 @@ import EditFineTypeModalBody from "../features/fineType/components/EditFineTypeM
 import AddQuestionModalBody from "../features/question/components/AddQuestionModalBody";
 import AddNewModalBody from "../features/new/components/AddNewModalBody";
 import EditNewModalBody from "../features/new/components/EditNewModalBody";
+import AddSignTypeModalBody from "../features/signType/components/AddSignTypeModalBody";
+import EditSignTypeModalBody from "../features/signType/components/EditSignTypeModalBody";
+import AddSignModalBody from "../features/sign/components/AddSignModalBody";
+import AddFineModalBody from "../features/fine/components/AddFineModalBody";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -98,12 +102,40 @@ function ModalLayout() {
                 />
               ),
 
+              [MODAL_BODY_TYPES.FINE_ADD_NEW]: (
+                <AddFineModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
               [MODAL_BODY_TYPES.NEW_ADD_NEW]: (
                 <AddNewModalBody closeModal={close} extraObject={extraObject} />
               ),
 
               [MODAL_BODY_TYPES.NEW_EDIT]: (
                 <EditNewModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.SIGN_TYPE_ADD_NEW]: (
+                <AddSignTypeModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.SIGN_TYPE_EDIT]: (
+                <EditSignTypeModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.SIGN_ADD_NEW]: (
+                <AddSignModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

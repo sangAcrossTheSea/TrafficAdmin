@@ -19,6 +19,7 @@ import {
   QuestionMarkCircleIcon,
   NewspaperIcon,
   DocumentIcon,
+  ExclamationTriangleIcon,
 } from "@heroicons/react/20/solid";
 import ModalLayout from "./ModalLayout";
 import RightSidebar from "./RightSidebar";
@@ -146,7 +147,7 @@ const Layout = () => {
               <p>Nghị định</p>
             </MenuItem>
             <SubMenu
-              label="Xử phạt"
+              label="Mức phạt"
               rootStyles={{
                 ["& > ." + menuClasses.button]: {
                   backgroundColor: "#1a202c",
@@ -168,6 +169,31 @@ const Layout = () => {
                 <p>Loại mức phạt</p>
               </MenuItem>
             </SubMenu>
+            <SubMenu
+              label="Biển báo"
+              rootStyles={{
+                ["& > ." + menuClasses.button]: {
+                  backgroundColor: "#1a202c",
+                },
+                ["." + menuClasses.subMenuContent]: {
+                  backgroundColor: "#454545",
+                },
+              }}
+              icon={
+                <ExclamationTriangleIcon className="h-6 w-6 text-gray-300" />
+              }
+            >
+              <MenuItem active component={<Link to="/sign" />} className="">
+                <p>Biển báo</p>
+              </MenuItem>
+              <MenuItem
+                active
+                component={<Link to="/sign-type" />}
+                className=""
+              >
+                <p>Loại biển báo</p>
+              </MenuItem>
+            </SubMenu>
             <MenuItem
               icon={
                 <QuestionMarkCircleIcon className="h-6 w-6 text-gray-300" />
@@ -186,33 +212,7 @@ const Layout = () => {
             >
               <p>Bài báo</p>
             </MenuItem>
-            <SubMenu
-              label="Quy định"
-              rootStyles={{
-                ["& > ." + menuClasses.button]: {
-                  backgroundColor: "#1a202c",
-                },
-                ["." + menuClasses.subMenuContent]: {
-                  backgroundColor: "#454545",
-                },
-              }}
-              // icon={<FaPeopleGroup />}
-            >
-              <MenuItem
-                active
-                component={<Link to="/employee/department" />}
-                className=""
-              >
-                <p>Biển báo</p>
-              </MenuItem>
-              <MenuItem
-                active
-                component={<Link to="/employee/department" />}
-                className=""
-              >
-                <p>Xử phạt</p>
-              </MenuItem>
-            </SubMenu>
+
             <div
               className=" absolute bottom-0 left-0 w-full text-white text-center py-2 cursor-pointer"
               onClick={handleSidebar}

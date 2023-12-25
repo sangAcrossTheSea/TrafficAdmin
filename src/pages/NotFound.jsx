@@ -23,7 +23,7 @@ function InternalPage() {
           </p>
           <div className="mt-6">
             <button
-              className="btn btn-primary  hover:bg-gray-700"
+              className="btn btn-neutral  hover:bg-gray-700"
               onClick={() => navigate("/")}
             >
               Go back home

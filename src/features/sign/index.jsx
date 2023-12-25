@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleCard from "../../components/Cards/TitleCard";
 import { openModal } from "../common/modalSlice";
-import { deleteFine, getFinesContent } from "./fineSlice";
+import { deleteSign, getSignsContent } from "./signSlice";
 import {
   CONFIRMATION_MODAL_CLOSE_TYPES,
   MODAL_BODY_TYPES,
@@ -23,7 +23,7 @@ const TopSideButtons = () => {
   const openAddNewLeadModal = () => {
     dispatch(
       openModal({
-        title: "Thêm mức phạt",
+        title: "Thêm loại xử phạt",
         bodyType: MODAL_BODY_TYPES.FINE_ADD_NEW,
       })
     );
@@ -41,15 +41,15 @@ const TopSideButtons = () => {
   );
 };
 
-function Fine() {
-  const { fines } = useSelector((state) => state.fine);
+function Sign() {
+  const { signs } = useSelector((state) => state.sign);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
-    dispatch(getFinesContent());
-    console.log("fines", fines);
+    dispatch(getSignsContent());
+    console.log("signs", signs);
   }, [isChange]);
 
   const deleteCurrentDecree = (index, _id) => {
@@ -85,7 +85,7 @@ function Fine() {
   return (
     <>
       <TitleCard
-        title="Danh sách mức phạt"
+        title="Danh sách biển báo"
         topMargin="mt-2"
         TopSideButtons={<TopSideButtons />}
       >
@@ -96,11 +96,13 @@ function Fine() {
               <tr>
                 <th>Stt</th>
                 <th>Tên</th>
+                <th>Ảnh</th>
+                <th>Giải thích</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {fines?.map((l, k) => {
+              {signs?.map((l, k) => {
                 return (
                   <tr key={l.Id}>
                     <td>
@@ -108,7 +110,15 @@ function Fine() {
                         <div className="">{k + 1}</div>
                       </div>
                     </td>
-                    <td>{l.FineName}</td>
+                    <td>{l.SignName}</td>
+                    <td>
+                      <img
+                        src={l.SignImage}
+                        alt="sign"
+                        className="h-24 w-24 object-cover"
+                      />
+                    </td>
+                    <td className="max-w-sm">{l.SignExplanation}</td>
                     <td>
                       {/* <button
                         className="btn btn-square btn-ghost"
@@ -147,4 +157,4 @@ function Fine() {
   );
 }
 
-export default Fine;
+export default Sign;

@@ -26,6 +26,7 @@ function AddNewModalBody({ closeModal }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_NEW_OBJ);
   const [imageURL, setImageURL] = useState("");
+  const [imageFile, setImageFile] = useState(null);
 
   const mdParser = new MarkdownIt();
 
@@ -38,6 +39,19 @@ function AddNewModalBody({ closeModal }) {
 
       return updatedBlogPost;
     });
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageURL(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleUploadPostImage = async (file) => {
@@ -128,8 +142,15 @@ function AddNewModalBody({ closeModal }) {
           type="file"
           className="file-input w-full max-w-xs"
           accept="image/*"
-          onChange={(e) => setImageURL(e.target.files[0])}
+          onChange={handleFileChange}
         />
+        {imageURL && (
+          <img
+            src={imageURL}
+            alt="Preview"
+            className="mt-4 object-cover w-48 h-48"
+          />
+        )}
       </div>
 
       <div className="w-full my-4">

@@ -18,6 +18,8 @@ import questionSlice from "../features/question/questionSlice";
 import newSlice from "../features/new/newSlice";
 import FineSlice from "../features/fine/fineSlice";
 import fineTypeSlice from "../features/fineType/fineTypeSlice";
+import signSlice from "../features/sign/signSlice";
+import signTypeSlice from "../features/signType/signTypeSlice";
 
 // Define your root reducer
 const rootReducer = combineReducers({
@@ -29,6 +31,8 @@ const rootReducer = combineReducers({
   new: newSlice,
   fine: FineSlice,
   fineType: fineTypeSlice,
+  sign: signSlice,
+  signType: signTypeSlice,
 });
 
 // Define your persist config

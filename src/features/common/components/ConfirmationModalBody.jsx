@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
 import { CONFIRMATION_MODAL_CLOSE_TYPES } from "../../../utils/globalConstantUtil";
+import axios from "axios";
+import { showNotification } from "../headerSlice";
 import { deleteDecree } from "../../decree/decreeSlice";
 import { deleteFineType } from "../../fineType/fineTypeSlice";
 import { deleteNew } from "../../new/newSlice";
-import { showNotification } from "../headerSlice";
-import axios from "axios";
+import { deleteSignType } from "../../signType/signTypeSlice";
 
 function ConfirmationModalBody({ extraObject, closeModal }) {
   const dispatch = useDispatch();
@@ -28,6 +29,10 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         );
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.NEW_DELETE) {
         response = await axios.delete(`/news/deleteNews/${_id}`);
+      } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.SIGN_TYPE_DELETE) {
+        response = await axios.delete(
+          `/trafficSignType/deleteTrafficSignType/${_id}`
+        );
       }
 
       if (response.data) {
@@ -43,6 +48,8 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         //   dispatch(deleteFineType(index));
         else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.NEW_DELETE)
           dispatch(deleteNew(index));
+        else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.SIGN_TYPE_DELETE)
+          dispatch(deleteSignType(index));
       } else {
         dispatch(showNotification({ message: "Xoá thất bại!", status: 0 }));
       }
