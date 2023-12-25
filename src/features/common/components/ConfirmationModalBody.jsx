@@ -2,6 +2,8 @@
 import { useDispatch } from "react-redux";
 import { CONFIRMATION_MODAL_CLOSE_TYPES } from "../../../utils/globalConstantUtil";
 import { deleteDecree } from "../../decree/decreeSlice";
+import { deleteFineType } from "../../fineType/fineTypeSlice";
+import { deleteNew } from "../../new/newSlice";
 import { showNotification } from "../headerSlice";
 import axios from "axios";
 
@@ -20,13 +22,27 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         response = await axios.delete(`/article/deleteArticle/${_id}`);
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.CLAUSE_DELETE) {
         response = await axios.delete(`/clause/deleteClause/${_id}`);
-        console.log("response hello", response);
+      } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.FINE_TYPE_DELETE) {
+        response = await axios.delete(
+          `/trafficFineType/deleteTrafficFineType/${_id}`
+        );
+      } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.NEW_DELETE) {
+        response = await axios.delete(`/news/deleteNews/${_id}`);
       }
 
       if (response.data) {
         // window.location.reload();
         dispatch(showNotification({ message: "Xoá thành công!", status: 1 }));
-        dispatch(deleteDecree({ index }));
+        if (type === CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE)
+          dispatch(deleteDecree(index));
+        else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.FINE_TYPE_DELETE)
+          dispatch(deleteFineType(index));
+        // else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.ARTICLE_DELETE)
+        //   dispatch(deleteFineType(index));
+        // else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.CLAUSE_DELETE)
+        //   dispatch(deleteFineType(index));
+        else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.NEW_DELETE)
+          dispatch(deleteNew(index));
       } else {
         dispatch(showNotification({ message: "Xoá thất bại!", status: 0 }));
       }

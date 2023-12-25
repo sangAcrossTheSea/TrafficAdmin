@@ -30,7 +30,7 @@ export const fineTypeSlice = createSlice({
     },
 
     deleteFineType: (state, action) => {
-      let { index } = action.payload;
+      let index = action.payload;
       state.fineTypes.splice(index, 1);
     },
 

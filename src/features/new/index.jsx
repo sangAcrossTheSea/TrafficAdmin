@@ -15,6 +15,7 @@ import {
   EyeIcon,
 } from "@heroicons/react/24/outline";
 import { showNotification } from "../common/headerSlice";
+import { useNavigate } from "react-router-dom";
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const TopSideButtons = () => {
       openModal({
         title: "Thêm bài báo",
         bodyType: MODAL_BODY_TYPES.NEW_ADD_NEW,
+        size: "lg",
       })
     );
   };
@@ -43,21 +45,50 @@ const TopSideButtons = () => {
 function New() {
   const { news } = useSelector((state) => state.new);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getNewsContent());
     console.log("News", news);
   }, []);
 
-  const deleteCurrentLead = (index) => {
+  const deleteCurrentLead = (_id, index) => {
     dispatch(
       openModal({
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Bạn chắc chắn muốn vô hiệu nghị định này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
+          message: `Bạn chắc chắn muốn xoá bài báo này?`,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.NEW_DELETE,
+          _id,
           index,
+        },
+      })
+    );
+  };
+
+  const editCurrentLead = (
+    Id,
+    NewsTitle,
+    NewsClarify,
+    NewsContent,
+    NewsThumbnail,
+    isHidden,
+    index
+  ) => {
+    dispatch(
+      openModal({
+        title: "Chỉnh sửa bài báo",
+        bodyType: MODAL_BODY_TYPES.NEW_EDIT,
+        size: "lg",
+        extraObject: {
+          Id: Id,
+          NewsTitle: NewsTitle,
+          NewsClarify: NewsClarify,
+          NewsContent: NewsContent,
+          NewsThumbnail: NewsThumbnail,
+          isHidden: isHidden,
+          index: index,
         },
       })
     );
@@ -85,7 +116,7 @@ function New() {
             <tbody>
               {news?.map((l, k) => {
                 return (
-                  <tr key={l.id}>
+                  <tr key={l.Id}>
                     <td>
                       <div className="flex items-center space-x-3">
                         <div className="">
@@ -111,19 +142,29 @@ function New() {
                     <td>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
+                        onClick={() => navigate("/new/" + l.Id)}
                       >
-                        <EyeIcon lSquareIcon className="w-5 text-green-800" />
+                        <EyeIcon className="w-5 text-green-800" />
                       </button>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
+                        onClick={() =>
+                          editCurrentLead(
+                            l.Id,
+                            l.NewsTitle,
+                            l.NewsClarify,
+                            l.NewsContent,
+                            l.NewsThumbnail,
+                            l.isHidden,
+                            k
+                          )
+                        }
                       >
                         <PencilSquareIcon className="w-5" />
                       </button>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
+                        onClick={() => deleteCurrentLead(l.Id, k)}
                       >
                         <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
                       </button>

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import moment from "moment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleCard from "../../components/Cards/TitleCard";
 import { openModal } from "../common/modalSlice";
@@ -45,13 +45,14 @@ function Decree() {
   const { decrees } = useSelector((state) => state.decree);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     dispatch(getDecreesContent());
-    console.log("decrees", decrees);
-  }, []);
+  }, [isChange]);
 
   const deleteCurrentDecree = (index, _id) => {
+    setIsChange(!isChange);
     dispatch(
       openModal({
         title: "Xác nhận",
@@ -67,6 +68,7 @@ function Decree() {
   };
 
   const editCurrentDecree = (index, id, name, number) => {
+    setIsChange(!isChange);
     dispatch(
       openModal({
         title: "Chỉnh sửa nghị định",
@@ -133,7 +135,7 @@ function Decree() {
                         className="btn btn-square btn-ghost"
                         onClick={() => navigate(`/decree/${l.Id}`)}
                       >
-                        <EyeIcon lSquareIcon className="w-5 text-green-800" />
+                        <EyeIcon className="w-5 text-green-800" />
                       </button>
                       <button
                         className="btn btn-square btn-ghost"
@@ -150,7 +152,9 @@ function Decree() {
                       </button>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentDecree(k, l.Id)}
+                        onClick={() => {
+                          deleteCurrentDecree(k, l.Id);
+                        }}
                       >
                         <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
                       </button>

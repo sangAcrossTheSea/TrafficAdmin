@@ -9,7 +9,10 @@ import EditArticleModalBody from "../features/article/components/EditArticleModa
 import AddClauseModalBody from "../features/articleDetail/components/AddClauseModalBody";
 import EditClauseModalBody from "../features/articleDetail/components/EditClauseModalBody";
 import AddFineTypeModalBody from "../features/fineType/components/AddFineTypeModalBody";
+import EditFineTypeModalBody from "../features/fineType/components/EditFineTypeModalBody";
 import AddQuestionModalBody from "../features/question/components/AddQuestionModalBody";
+import AddNewModalBody from "../features/new/components/AddNewModalBody";
+import EditNewModalBody from "../features/new/components/EditNewModalBody";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -83,6 +86,24 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.FINE_TYPE_ADD_NEW]: (
                 <AddFineTypeModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.FINE_TYPE_EDIT]: (
+                <EditFineTypeModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.NEW_ADD_NEW]: (
+                <AddNewModalBody closeModal={close} extraObject={extraObject} />
+              ),
+
+              [MODAL_BODY_TYPES.NEW_EDIT]: (
+                <EditNewModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

@@ -166,7 +166,7 @@ function Question() {
                         className="btn btn-square btn-ghost"
                         onClick={() => deleteCurrentLead(k)}
                       >
-                        <EyeIcon lSquareIcon className="w-5 text-green-800" />
+                        <EyeIcon className="w-5 text-green-800" />
                       </button>
                       <button
                         className="btn btn-square btn-ghost"

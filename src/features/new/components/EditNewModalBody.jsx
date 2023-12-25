@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { addNewNew } from "../newSlice";
+import { updateNew } from "../newSlice";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
@@ -18,13 +18,21 @@ const INITIAL_NEW_OBJ = {
   IsHidden: false,
 };
 
-function AddNewModalBody({ closeModal }) {
+function EditNewModalBody({ closeModal, extraObject }) {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
-  const [currentBlogPost, setCurrentBlogPost] = useState([]);
+  const [currentBlogPost, setCurrentBlogPost] = useState({
+    blogPostContent: extraObject.NewsContent,
+  });
   const [errorMessage, setErrorMessage] = useState("");
-  const [leadObj, setLeadObj] = useState(INITIAL_NEW_OBJ);
+  const [leadObj, setLeadObj] = useState({
+    NewsTitle: extraObject.NewsTitle,
+    NewsClarify: extraObject.NewsClarify,
+    NewsContent: extraObject.NewsContent,
+    NewsThumbnail: extraObject.NewsThumbnail,
+    IsHidden: false,
+  });
   const [imageURL, setImageURL] = useState("");
 
   const mdParser = new MarkdownIt();
@@ -54,12 +62,12 @@ function AddNewModalBody({ closeModal }) {
     }
   };
 
-  const addNew = async () => {
+  const changeNew = async () => {
     try {
       setLoading(true);
       const date = new Date();
       const newLeadObj = {
-        Id: "string",
+        Id: extraObject.Id,
         NewsTitle: leadObj.NewsTitle,
         NewsClarify: leadObj.NewsClarify,
         NewsDate: date.toISOString(),
@@ -68,8 +76,12 @@ function AddNewModalBody({ closeModal }) {
         IsHidden: false,
       };
 
-      const newNew = await axios.post("/news/createNews", newLeadObj);
-      dispatch(addNewNew({ newLeadObj }));
+      const newNew = await axios.put(
+        `/news/updateNews/${extraObject.Id}`,
+        newLeadObj
+      );
+
+      dispatch(updateNew({ index: extraObject.index, newLeadObj: newLeadObj }));
 
       setLoading(false);
       dispatch(
@@ -78,7 +90,7 @@ function AddNewModalBody({ closeModal }) {
           status: 1,
         })
       );
-      window.location.reload();
+      //   window.location.reload();
       closeModal();
     } catch (error) {
       console.log(error);
@@ -91,7 +103,7 @@ function AddNewModalBody({ closeModal }) {
     else if (leadObj.NewsClarify.trim() === "")
       return setErrorMessage("Cần có mô tả!");
     else {
-      addNew();
+      changeNew();
       // dispatch(showNotification({ message: "Đã thêm bài báo!", status: 1 }));
       closeModal();
     }
@@ -106,7 +118,7 @@ function AddNewModalBody({ closeModal }) {
     <>
       <InputText
         type="text"
-        defaultValue={leadObj.NewsTitle}
+        defaultValue={extraObject.NewsTitle}
         updateType="NewsTitle"
         containerStyle="mt-4"
         labelTitle="Tiều đề bài báo"
@@ -115,7 +127,7 @@ function AddNewModalBody({ closeModal }) {
 
       <InputText
         type="text"
-        defaultValue={leadObj.NewsClarify}
+        defaultValue={extraObject.NewsClarify}
         updateType="NewsClarify"
         containerStyle="mt-4"
         labelTitle="Mô tả"
@@ -156,4 +168,4 @@ function AddNewModalBody({ closeModal }) {
   );
 }
 
-export default AddNewModalBody;
+export default EditNewModalBody;

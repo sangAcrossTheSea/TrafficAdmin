@@ -24,8 +24,13 @@ export const newSlice = createSlice({
     },
 
     deleteNew: (state, action) => {
-      let { index } = action.payload;
+      let index = action.payload;
       state.news.splice(index, 1);
+    },
+
+    updateNew: (state, action) => {
+      let { index, newLeadObj } = action.payload;
+      state.news[index] = newLeadObj;
     },
   },
 
@@ -45,6 +50,6 @@ export const newSlice = createSlice({
   },
 });
 
-export const { addNewNew, deleteNew } = newSlice.actions;
+export const { addNewNew, deleteNew, updateNew } = newSlice.actions;
 
 export default newSlice.reducer;

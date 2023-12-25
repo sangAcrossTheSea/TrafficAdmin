@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setPageTitle } from "../../features/common/headerSlice";
-import New from "../../features/new/index";
+import NewDetail from "../../features/new/NewDetail";
 
 function InternalPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setPageTitle({ title: "Bài báo" }));
+    dispatch(setPageTitle({ title: "Chi tiết bài báo" }));
   }, [dispatch]);
 
   return (
     <div className="">
-      <New />
+      <NewDetail />
     </div>
   );
 }

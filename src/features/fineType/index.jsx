@@ -56,24 +56,23 @@ function FineType() {
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Bạn chắc chắn muốn xoá nghị định này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
-          _id,
-          index,
+          message: `Bạn chắc chắn muốn xoá loại mức phạt này?`,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.FINE_TYPE_DELETE,
+          _id: _id,
+          index: index,
         },
       })
     );
   };
 
-  const editCurrentDecree = (index, id, name, number) => {
+  const editCurrentDecree = (index, id, name) => {
     dispatch(
       openModal({
-        title: "Chỉnh sửa nghị định",
-        bodyType: MODAL_BODY_TYPES.DECREE_EDIT,
+        title: "Chỉnh sửa loại mức phạt",
+        bodyType: MODAL_BODY_TYPES.FINE_TYPE_EDIT,
         extraObject: {
           id,
           name,
-          number,
           index,
         },
       })
@@ -112,18 +111,11 @@ function FineType() {
                         className="btn btn-square btn-ghost"
                         onClick={() => navigate(`/decree/${l.Id}`)}
                       >
-                        <EyeIcon lSquareIcon className="w-5 text-green-800" />
+                        <EyeIcon className="w-5 text-green-800" />
                       </button> */}
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() =>
-                          editCurrentDecree(
-                            k,
-                            l.Id,
-                            l.DecreeName,
-                            l.DecreeNumber
-                          )
-                        }
+                        onClick={() => editCurrentDecree(k, l.Id, l.FineType)}
                       >
                         <PencilSquareIcon className="w-5" />
                       </button>

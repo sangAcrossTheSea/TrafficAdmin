@@ -1,53 +1,56 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { addNewFineType, getFineTypesContent } from "../fineTypeSlice";
+import { updateFineType } from "../fineTypeSlice";
 import axios from "axios";
 
-const INITIAL_LEAD_OBJ = {
+let INITIAL_LEAD_OBJ = {
   FineType: "",
 };
 
-function AddFineTypeModalBody({ closeModal }) {
+function EditFineTypeModalBody({ closeModal, extraObject }) {
   const dispatch = useDispatch();
+  INITIAL_LEAD_OBJ = {
+    FineType: extraObject.name,
+  };
+
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
 
-  const AddFineType = async () => {
+  const EditDecree = async () => {
     setLoading(true);
-    const newFineTypeObj = {
-      Id: "string",
+    let newDecreeObj = {
+      Id: extraObject.id,
       FineType: leadObj.FineType,
     };
-    const response = await axios.post(
-      "/trafficFineType/createTrafficFineType",
-      newFineTypeObj
-    );
-    console.log("response", response);
-    closeModal();
-
-    if (response.data) {
-      dispatch(addNewFineType(newFineTypeObj));
-      dispatch(getFineTypesContent());
-      // window.location.reload();
-      dispatch(
-        showNotification({ message: "Thêm mới thành công!", status: 1 })
+    try {
+      const response = await axios.put(
+        `/trafficFineType/updateTrafficFineType/${extraObject.id}`,
+        newDecreeObj
       );
+      console.log("response", response);
+      dispatch(
+        updateFineType({ index: extraObject.index, newLeadObj: newDecreeObj })
+      );
+      // window.location.reload();
+      dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
+      closeModal();
       setLoading(false);
-    } else {
-      dispatch(showNotification({ message: "Thêm mới thất bại!", status: 0 }));
+    } catch (error) {
+      console.log("error", error);
+      dispatch(showNotification({ message: "Sửa thất bại!", status: 0 }));
     }
   };
 
   const saveNewLead = async () => {
     if (leadObj.FineType.trim() === "") return setErrorMessage("Phải có tên!");
     else {
-      AddFineType();
+      EditDecree();
     }
   };
 
@@ -60,10 +63,10 @@ function AddFineTypeModalBody({ closeModal }) {
     <>
       <InputText
         type="text"
-        defaultValue={leadObj.FineType}
+        defaultValue={extraObject.name}
         updateType="FineType"
         containerStyle="mt-4"
-        labelTitle="Tên loại xử phạt"
+        labelTitle="Tên loại mức phạt"
         updateFormValue={updateFormValue}
       />
 
@@ -80,4 +83,4 @@ function AddFineTypeModalBody({ closeModal }) {
   );
 }
 
-export default AddFineTypeModalBody;
+export default EditFineTypeModalBody;

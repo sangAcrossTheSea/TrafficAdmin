@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { addNewDecree } from "../decreeSlice";
+import { addNewDecree, getDecreesContent } from "../decreeSlice";
 import axios from "axios";
 
 const INITIAL_LEAD_OBJ = {
@@ -34,6 +34,7 @@ function AddDecreeModalBody({ closeModal }) {
 
     if (response.data) {
       dispatch(addNewDecree(newDecreeObj));
+      dispatch(getDecreesContent());
       // window.location.reload();
       dispatch(
         showNotification({ message: "Thêm mới thành công!", status: 1 })

@@ -19,6 +19,7 @@ const Fine = lazy(() => import("../pages/admin/Fine"));
 const FineType = lazy(() => import("../pages/admin/FineType"));
 const Question = lazy(() => import("../pages/admin/Question"));
 const New = lazy(() => import("../pages/admin/New"));
+const NewContent = lazy(() => import("../pages/admin/NewContent"));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +34,7 @@ export const router = createBrowserRouter(
         <Route path="fine-type" element={<FineType />} />
         <Route path="question" element={<Question />} />
         <Route path="news" element={<New />} />
+        <Route path="new/:id" element={<NewContent />} />
       </Route>
 
       <Route path="login" element={<Login />} />

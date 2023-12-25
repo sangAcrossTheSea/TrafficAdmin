@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import moment from "moment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleCard from "../../components/Cards/TitleCard";
 import { openModal } from "../common/modalSlice";
@@ -45,11 +45,12 @@ function Fine() {
   const { fines } = useSelector((state) => state.fine);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     dispatch(getFinesContent());
     console.log("fines", fines);
-  }, []);
+  }, [isChange]);
 
   const deleteCurrentDecree = (index, _id) => {
     dispatch(
@@ -113,7 +114,7 @@ function Fine() {
                         className="btn btn-square btn-ghost"
                         onClick={() => navigate(`/decree/${l.Id}`)}
                       >
-                        <EyeIcon lSquareIcon className="w-5 text-green-800" />
+                        <EyeIcon className="w-5 text-green-800" />
                       </button> */}
                       <button
                         className="btn btn-square btn-ghost"
