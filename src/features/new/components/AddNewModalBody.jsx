@@ -71,6 +71,7 @@ function AddNewModalBody({ closeModal }) {
   const addNew = async () => {
     try {
       setLoading(true);
+
       const date = new Date();
       const newLeadObj = {
         Id: "string",
@@ -83,7 +84,27 @@ function AddNewModalBody({ closeModal }) {
       };
 
       const newNew = await axios.post("/news/createNews", newLeadObj);
-      dispatch(addNewNew({ newLeadObj }));
+      console.log("newNew", newNew.data);
+
+      if (newNew.data && imageFile) {
+        const dataForm = new FormData();
+        dataForm.append("file", imageFile);
+        const imageURL = await axios.post(
+          `/news/uploadNewsThumbnail/${newNew.data.newsId}`,
+          dataForm
+        );
+        const newNewObj = {
+          Id: newNew.data.newsId,
+          NewsTitle: leadObj.NewsTitle,
+          NewsClarify: leadObj.NewsClarify,
+          NewsDate: date.toISOString(),
+          NewsContent: currentBlogPost.blogPostContent,
+          NewsThumbnail: imageURL.data.imageURL,
+          IsHidden: false,
+        };
+
+        dispatch(addNewNew({ newLeadObj: newNewObj }));
+      }
 
       setLoading(false);
       dispatch(
@@ -92,7 +113,7 @@ function AddNewModalBody({ closeModal }) {
           status: 1,
         })
       );
-      window.location.reload();
+      // window.location.reload();
       closeModal();
     } catch (error) {
       console.log(error);
