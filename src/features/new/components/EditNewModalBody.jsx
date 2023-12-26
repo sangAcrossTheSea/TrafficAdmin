@@ -79,6 +79,20 @@ function EditNewModalBody({ closeModal, extraObject }) {
   const changeNew = async () => {
     try {
       setLoading(true);
+
+      let url;
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("file", imageFile);
+        const imageUrl = await axios.post(
+          `/news/uploadNewsThumbnail/${extraObject.Id}`,
+          formData
+        );
+
+        url = imageUrl.data.imageURL;
+      }
+
       const date = new Date();
       const newLeadObj = {
         Id: extraObject.Id,
@@ -86,7 +100,7 @@ function EditNewModalBody({ closeModal, extraObject }) {
         NewsClarify: leadObj.NewsClarify,
         NewsDate: date.toISOString(),
         NewsContent: currentBlogPost.blogPostContent,
-        NewsThumbnail: leadObj.NewsThumbnail,
+        NewsThumbnail: url || leadObj.NewsThumbnail,
         IsHidden: false,
       };
 

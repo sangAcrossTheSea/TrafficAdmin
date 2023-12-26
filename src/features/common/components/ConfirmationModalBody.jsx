@@ -7,6 +7,7 @@ import { deleteDecree } from "../../decree/decreeSlice";
 import { deleteFineType } from "../../fineType/fineTypeSlice";
 import { deleteNew } from "../../new/newSlice";
 import { deleteSignType } from "../../signType/signTypeSlice";
+import { deleteSign } from "../../sign/signSlice";
 
 function ConfirmationModalBody({ extraObject, closeModal }) {
   const dispatch = useDispatch();
@@ -33,6 +34,8 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         response = await axios.delete(
           `/trafficSignType/deleteTrafficSignType/${_id}`
         );
+      } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.SIGN_DELETE) {
+        response = await axios.delete(`/trafficSign/deleteTrafficSign/${_id}`);
       }
 
       if (response.data) {
@@ -50,6 +53,8 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
           dispatch(deleteNew(index));
         else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.SIGN_TYPE_DELETE)
           dispatch(deleteSignType(index));
+        else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.SIGN_DELETE)
+          dispatch(deleteSign(index));
       } else {
         dispatch(showNotification({ message: "Xoá thất bại!", status: 0 }));
       }

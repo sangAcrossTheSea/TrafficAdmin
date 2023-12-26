@@ -16,6 +16,7 @@ import EditNewModalBody from "../features/new/components/EditNewModalBody";
 import AddSignTypeModalBody from "../features/signType/components/AddSignTypeModalBody";
 import EditSignTypeModalBody from "../features/signType/components/EditSignTypeModalBody";
 import AddSignModalBody from "../features/sign/components/AddSignModalBody";
+import EditSignModalBody from "../features/sign/components/EditSignModalBody";
 import AddFineModalBody from "../features/fine/components/AddFineModalBody";
 
 function ModalLayout() {
@@ -136,6 +137,13 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.SIGN_ADD_NEW]: (
                 <AddSignModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.SIGN_EDIT]: (
+                <EditSignModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

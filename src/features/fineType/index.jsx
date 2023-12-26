@@ -23,7 +23,7 @@ const TopSideButtons = () => {
   const openAddNewLeadModal = () => {
     dispatch(
       openModal({
-        title: "Thêm loại xử phạt",
+        title: "Thêm loại mức phạt",
         bodyType: MODAL_BODY_TYPES.FINE_TYPE_ADD_NEW,
       })
     );

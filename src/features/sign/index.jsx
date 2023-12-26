@@ -23,8 +23,8 @@ const TopSideButtons = () => {
   const openAddNewLeadModal = () => {
     dispatch(
       openModal({
-        title: "Thêm loại xử phạt",
-        bodyType: MODAL_BODY_TYPES.FINE_ADD_NEW,
+        title: "Thêm loại biển báo",
+        bodyType: MODAL_BODY_TYPES.SIGN_ADD_NEW,
       })
     );
   };
@@ -58,8 +58,8 @@ function Sign() {
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Bạn chắc chắn muốn xoá nghị định này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
+          message: `Bạn chắc chắn muốn xoá biển báo này?`,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.SIGN_DELETE,
           _id,
           index,
         },
@@ -67,16 +67,25 @@ function Sign() {
     );
   };
 
-  const editCurrentDecree = (index, id, name, number) => {
+  const editCurrentDecree = (
+    index,
+    Id,
+    SignName,
+    SignTypeId,
+    SignImage,
+    SignExplanation
+  ) => {
     dispatch(
       openModal({
-        title: "Chỉnh sửa nghị định",
-        bodyType: MODAL_BODY_TYPES.DECREE_EDIT,
+        title: "Chỉnh sửa biển báo",
+        bodyType: MODAL_BODY_TYPES.SIGN_EDIT,
         extraObject: {
-          id,
-          name,
-          number,
           index,
+          Id,
+          SignName,
+          SignTypeId,
+          SignImage,
+          SignExplanation,
         },
       })
     );
@@ -132,8 +141,10 @@ function Sign() {
                           editCurrentDecree(
                             k,
                             l.Id,
-                            l.DecreeName,
-                            l.DecreeNumber
+                            l.SignName,
+                            l.SignTypeId,
+                            l.SignImage,
+                            l.SignExplanation
                           )
                         }
                       >

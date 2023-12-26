@@ -20,7 +20,7 @@ function AddSignTypeModalBody({ closeModal }) {
 
   const AddSignType = async () => {
     setLoading(true);
-    const newSignTypeObj = {
+    let newSignTypeObj = {
       Id: "string",
       SignType: leadObj.signType,
     };
@@ -32,9 +32,12 @@ function AddSignTypeModalBody({ closeModal }) {
     closeModal();
 
     if (response.data) {
-      dispatch(addNewSignType(newSignTypeObj));
-      dispatch(getSignTypesContent());
-      // window.location.reload();
+      // newSignTypeObj = {
+      //   ...newSignTypeObj,
+      //   Id: response.data.Id,
+      // };
+      // dispatch(addNewSignType(newSignTypeObj));
+      window.location.reload();
       dispatch(
         showNotification({ message: "Thêm mới thành công!", status: 1 })
       );

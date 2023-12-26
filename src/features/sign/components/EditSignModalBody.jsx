@@ -5,27 +5,32 @@ import SelectBox from "../../../components/Input/SelectBox";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { addNewSign } from "../signSlice";
+import { updateSign } from "../signSlice";
 import axios from "axios";
-import newSlice from "../../new/newSlice";
 
 const INITIAL_LEAD_OBJ = {
   Id: "",
   SignName: "",
-  SignTypeId: "6551aab56d606f4ee5d4d93d",
+  SignTypeId: "",
   SignImage: "",
   SignExplanation: "",
 };
 
-function AddSignModalBody({ closeModal }) {
+function EditSignModalBody({ closeModal, extraObject }) {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
+  const [leadObj, setLeadObj] = useState({
+    Id: extraObject.Id,
+    SignName: extraObject.SignName,
+    SignTypeId: extraObject.SignTypeId,
+    SignImage: extraObject.SignImage,
+    SignExplanation: extraObject.SignExplanation,
+  });
   const [signTypes, setSignTypes] = useState([]);
-  const [imageURL, setImageURL] = useState("");
-  const [imageFile, setImageFile] = useState(null);
+  const [imageURL, setImageURL] = useState(extraObject.SignImage);
+  const [imageFile, setImageFile] = useState(0);
 
   useEffect(() => {
     const getSignTypes = async () => {
@@ -70,14 +75,16 @@ function AddSignModalBody({ closeModal }) {
     return response2.data.imageURL;
   };
 
-  const AddSign = async () => {
+  const EditSign = async () => {
     setLoading(true);
     let newSignObj = {
       ...leadObj,
     };
 
-    const response = await axios.post(
-      "/trafficSign/createTrafficSign",
+    console.log("newSignObj", newSignObj);
+
+    const response = await axios.put(
+      `/trafficSign/updateTrafficSign/${extraObject.Id}`,
       newSignObj
     );
     console.log("response", response);
@@ -86,22 +93,25 @@ function AddSignModalBody({ closeModal }) {
     if (response.data) {
       const trafficSignId = response.data.trafficSignId;
 
-      const imgURL = await uploadImage(trafficSignId);
-      const response2 = imgURL;
+      let response2 = extraObject.SignImage;
+
+      if (imageFile !== 0) {
+        const imgURL = await uploadImage(trafficSignId);
+        response2 = imgURL;
+      }
 
       newSignObj = {
         ...newSignObj,
-        Id: trafficSignId,
         SignImage: response2,
       };
-      dispatch(addNewSign(newSignObj));
-      // window.location.reload();
       dispatch(
-        showNotification({ message: "Thêm mới thành công!", status: 1 })
+        updateSign({ index: extraObject.index, newLeadObj: newSignObj })
       );
+      // window.location.reload();
+      dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
       setLoading(false);
     } else {
-      dispatch(showNotification({ message: "Thêm mới thất bại!", status: 0 }));
+      dispatch(showNotification({ message: "Sửa thất bại!", status: 0 }));
     }
   };
 
@@ -111,7 +121,7 @@ function AddSignModalBody({ closeModal }) {
       return setErrorMessage("Phải có mô tả!");
     else if (imageFile === null) return setErrorMessage("Phải có ảnh!");
     else {
-      AddSign();
+      EditSign();
     }
   };
 
@@ -124,7 +134,7 @@ function AddSignModalBody({ closeModal }) {
     <>
       <InputText
         type="text"
-        defaultValue={leadObj.SignName}
+        defaultValue={leadObj.SignName || ""}
         updateType="SignName"
         containerStyle="mt-4"
         labelTitle="Tên biển báo"
@@ -133,7 +143,7 @@ function AddSignModalBody({ closeModal }) {
 
       <SelectBox
         type="text"
-        // defaultValue={signTypes[0] || ""}
+        defaultValue={leadObj.SignTypeId || ""}
         placeholder="Chọn loại biển báo"
         options={signTypes}
         updateType="SignTypeId"
@@ -165,7 +175,7 @@ function AddSignModalBody({ closeModal }) {
         <textarea
           className="textarea textarea-bordered w-full"
           placeholder="Nội dung"
-          value={leadObj.SignExplanation}
+          value={leadObj.SignExplanation || ""}
           onChange={(e) =>
             setLeadObj({ ...leadObj, SignExplanation: e.target.value })
           }
@@ -185,4 +195,4 @@ function AddSignModalBody({ closeModal }) {
   );
 }
 
-export default AddSignModalBody;
+export default EditSignModalBody;
