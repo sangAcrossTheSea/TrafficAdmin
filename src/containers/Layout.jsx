@@ -130,14 +130,14 @@ const Layout = () => {
               },
             }}
           >
-            <MenuItem
+            {/* <MenuItem
               icon={<HomeIcon className="h-6 w-6 text-gray-300" />}
               active
               component={<Link to="/" />}
               className=""
             >
               <p>Trang chủ</p>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               icon={<BookOpenIcon className="h-6 w-6 text-gray-300" />}
               active

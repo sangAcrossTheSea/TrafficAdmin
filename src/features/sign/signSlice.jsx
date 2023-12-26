@@ -28,7 +28,7 @@ export const signSlice = createSlice({
     },
 
     deleteSign: (state, action) => {
-      let { index } = action.payload;
+      let index = action.payload;
       state.signs.splice(index, 1);
     },
 

@@ -8,13 +8,13 @@ import { updateSignType } from "../signTypeSlice";
 import axios from "axios";
 
 let INITIAL_LEAD_OBJ = {
-  FineType: "",
+  SignType: "",
 };
 
-function EditFineTypeModalBody({ closeModal, extraObject }) {
+function EditSignTypeModalBody({ closeModal, extraObject }) {
   const dispatch = useDispatch();
   INITIAL_LEAD_OBJ = {
-    FineType: extraObject.name,
+    SignType: extraObject.name,
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -26,11 +26,11 @@ function EditFineTypeModalBody({ closeModal, extraObject }) {
     setLoading(true);
     let newDecreeObj = {
       Id: extraObject.id,
-      FineType: leadObj.FineType,
+      SignType: leadObj.SignType,
     };
     try {
       const response = await axios.put(
-        `/trafficFineType/updateTrafficFineType/${extraObject.id}`,
+        `/trafficSignType/updateTrafficSignType/${extraObject.id}`,
         newDecreeObj
       );
       console.log("response", response);
@@ -48,7 +48,7 @@ function EditFineTypeModalBody({ closeModal, extraObject }) {
   };
 
   const saveNewLead = async () => {
-    if (leadObj.FineType.trim() === "") return setErrorMessage("Phải có tên!");
+    if (leadObj.SignType.trim() === "") return setErrorMessage("Phải có tên!");
     else {
       EditDecree();
     }
@@ -64,9 +64,9 @@ function EditFineTypeModalBody({ closeModal, extraObject }) {
       <InputText
         type="text"
         defaultValue={extraObject.name}
-        updateType="FineType"
+        updateType="SignType"
         containerStyle="mt-4"
-        labelTitle="Tên loại mức phạt"
+        labelTitle="Tên loại biển báo"
         updateFormValue={updateFormValue}
       />
 
@@ -83,4 +83,4 @@ function EditFineTypeModalBody({ closeModal, extraObject }) {
   );
 }
 
-export default EditFineTypeModalBody;
+export default EditSignTypeModalBody;

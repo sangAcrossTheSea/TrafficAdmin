@@ -68,8 +68,8 @@ function SignType() {
   const editCurrentDecree = (index, id, name) => {
     dispatch(
       openModal({
-        title: "Chỉnh sửa loại mức phạt",
-        bodyType: MODAL_BODY_TYPES.Sign_TYPE_EDIT,
+        title: "Chỉnh sửa loại biển báo",
+        bodyType: MODAL_BODY_TYPES.SIGN_TYPE_EDIT,
         extraObject: {
           id,
           name,

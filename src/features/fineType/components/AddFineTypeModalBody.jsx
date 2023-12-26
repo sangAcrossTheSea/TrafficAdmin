@@ -63,7 +63,7 @@ function AddFineTypeModalBody({ closeModal }) {
         defaultValue={leadObj.FineType}
         updateType="FineType"
         containerStyle="mt-4"
-        labelTitle="Tên loại xử phạt"
+        labelTitle="Tên loại mức phạt"
         updateFormValue={updateFormValue}
       />
 
