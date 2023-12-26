@@ -59,11 +59,11 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-// persistor
-//   .purge()
-//   .then(() => {
-//     console.log("Data reset successful");
-//   })
-//   .catch(() => {
-//     console.log("Data reset failed");
-//   });
+persistor
+  .purge()
+  .then(() => {
+    console.log("Data reset successful");
+  })
+  .catch(() => {
+    console.log("Data reset failed");
+  });
