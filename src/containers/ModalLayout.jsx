@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../features/common/modalSlice";
 import AddDecreeModalBody from "../features/decree/components/AddDecreeModalBody";
 import ConfirmationModalBody from "../features/common/components/ConfirmationModalBody";
+import ArchiveModalBody from "../features/common/components/ArchiveModalBody";
 import EditDecreeModalBody from "../features/decree/components/EditDecreeModalBody";
 import AddArticleModalBody from "../features/article/components/AddArticleModalBody";
 import EditArticleModalBody from "../features/article/components/EditArticleModalBody";
@@ -158,6 +159,13 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.CONFIRMATION]: (
                 <ConfirmationModalBody
+                  extraObject={extraObject}
+                  closeModal={close}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.ARCHIVE]: (
+                <ArchiveModalBody
                   extraObject={extraObject}
                   closeModal={close}
                 />

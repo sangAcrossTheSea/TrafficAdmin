@@ -32,6 +32,11 @@ export const newSlice = createSlice({
       let { index, newLeadObj } = action.payload;
       state.news[index] = newLeadObj;
     },
+
+    updateNewStatus: (state, action) => {
+      let { index, IsHidden } = action.payload;
+      state.news[index].IsHidden = IsHidden;
+    },
   },
 
   extraReducers: {
@@ -50,6 +55,7 @@ export const newSlice = createSlice({
   },
 });
 
-export const { addNewNew, deleteNew, updateNew } = newSlice.actions;
+export const { addNewNew, deleteNew, updateNew, updateNewStatus } =
+  newSlice.actions;
 
 export default newSlice.reducer;

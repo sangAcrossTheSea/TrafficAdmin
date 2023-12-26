@@ -8,11 +8,14 @@ import { deleteNew, getNewsContent } from "./newSlice";
 import {
   CONFIRMATION_MODAL_CLOSE_TYPES,
   MODAL_BODY_TYPES,
+  ARCHIVE_MODAL_CLOSE_TYPES,
 } from "../../utils/globalConstantUtil";
 import {
   ArchiveBoxArrowDownIcon,
   PencilSquareIcon,
   EyeIcon,
+  XCircleIcon,
+  ArchiveBoxXMarkIcon,
 } from "@heroicons/react/24/outline";
 import { showNotification } from "../common/headerSlice";
 import { useNavigate } from "react-router-dom";
@@ -51,6 +54,22 @@ function New() {
     dispatch(getNewsContent());
     console.log("News", news);
   }, []);
+
+  const archiveCurrentLead = (_id, index, status) => {
+    dispatch(
+      openModal({
+        title: "Xác nhận",
+        bodyType: MODAL_BODY_TYPES.ARCHIVE,
+        extraObject: {
+          message: `Bạn chắc chắn muốn đưa bài báo này vào lưu trữ?`,
+          type: ARCHIVE_MODAL_CLOSE_TYPES.NEW_ARCHIVE,
+          _id,
+          index,
+          status,
+        },
+      })
+    );
+  };
 
   const deleteCurrentLead = (_id, index) => {
     dispatch(
@@ -155,7 +174,7 @@ function New() {
                             l.NewsClarify,
                             l.NewsContent,
                             l.NewsThumbnail,
-                            l.isHidden,
+                            l.IsHidden,
                             k
                           )
                         }
@@ -164,9 +183,19 @@ function New() {
                       </button>
                       <button
                         className="btn btn-square btn-ghost"
+                        onClick={() => archiveCurrentLead(l.Id, k, l.IsHidden)}
+                      >
+                        {l.IsHidden ? (
+                          <ArchiveBoxXMarkIcon className="w-5 text-gray-400" />
+                        ) : (
+                          <ArchiveBoxArrowDownIcon className="w-5 text-yellow-700" />
+                        )}
+                      </button>
+                      <button
+                        className="btn btn-square btn-ghost"
                         onClick={() => deleteCurrentLead(l.Id, k)}
                       >
-                        <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
+                        <XCircleIcon className="w-5 text-red-700" />
                       </button>
                     </td>
                   </tr>
