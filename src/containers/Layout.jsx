@@ -236,7 +236,7 @@ const Layout = () => {
           <Navbar />
         </header>
         <main
-          className="z-10 px-2 md:px-6 overflow-y-auto pt-8"
+          className="px-2 md:px-6 overflow-y-auto pt-8"
           ref={mainContentRef}
         >
           <Outlet />
