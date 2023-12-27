@@ -204,6 +204,38 @@ const Layout = () => {
             >
               <p>Câu hỏi</p>
             </MenuItem>
+            {/* <SubMenu
+              label="Câu hỏi"
+              rootStyles={{
+                ["& > ." + menuClasses.button]: {
+                  backgroundColor: "#1a202c",
+                },
+                ["." + menuClasses.subMenuContent]: {
+                  backgroundColor: "#454545",
+                },
+              }}
+              icon={
+                <QuestionMarkCircleIcon className="h-6 w-6 text-gray-300" />
+              }
+            >
+              <MenuItem active component={<Link to="/question" />} className="">
+                <p>Câu hỏi</p>
+              </MenuItem>
+              <MenuItem
+                active
+                component={<Link to="/question-group" />}
+                className=""
+              >
+                <p>Nhóm câu hỏi</p>
+              </MenuItem>
+              <MenuItem
+                active
+                component={<Link to="/sign-type" />}
+                className=""
+              >
+                <p>Bằng lái</p>
+              </MenuItem> 
+            </SubMenu> */}
             <MenuItem
               icon={<NewspaperIcon className="h-6 w-6 text-gray-300" />}
               active

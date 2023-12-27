@@ -25,6 +25,7 @@ const TopSideButtons = () => {
       openModal({
         title: "Thêm câu hỏi",
         bodyType: MODAL_BODY_TYPES.QUESTION_ADD_NEW,
+        size: "lg",
       })
     );
   };
@@ -43,12 +44,13 @@ const TopSideButtons = () => {
 
 function Question() {
   const { questions } = useSelector((state) => state.question);
+  const [questionList, setQuestionList] = useState(questions); //[{id: 1, name: "abc"}, {id: 2, name: "xyz"}
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     dispatch(getQuestionsContent());
-    console.log("questions", questions);
+    console.table("questionList", questionList);
   }, []);
 
   const deleteCurrentLead = (index) => {
@@ -75,19 +77,29 @@ function Question() {
     setSearchTerm(e.target.value);
   };
 
-  const search = (items) => {
-    if (!Array.isArray(items)) {
+  const search = () => {
+    if (!Array.isArray(questions)) {
       return [];
     }
 
     if (searchTerm === "") {
-      return items;
+      return questions;
     } else {
-      return items.filter((item) =>
-        item.QuestionContent.toLowerCase().includes(searchTerm.toLowerCase())
+      return questions.filter((item) =>
+        item.Question?.QuestionContent.toLowerCase().includes(
+          searchTerm.toLowerCase()
+        )
       );
     }
   };
+
+  useEffect(() => {
+    setQuestionList(search());
+  }, [searchTerm]);
+
+  useEffect(() => {
+    setQuestionList(questions);
+  }, [questions]);
 
   return (
     <>
@@ -109,7 +121,7 @@ function Question() {
               />
             </div>
             <div className="flex-initial ml-2">
-              <button className="btn btn-primary" onClick={search}>
+              <button className="btn btn-primary">
                 <span className="p-2 text-white">
                   <MagnifyingGlassIcon className="w-4 h-4" />
                 </span>
@@ -131,7 +143,7 @@ function Question() {
               </tr>
             </thead>
             <tbody>
-              {questions?.map((l, k) => {
+              {questionList?.map((l, k) => {
                 return (
                   <tr key={k}>
                     <td>

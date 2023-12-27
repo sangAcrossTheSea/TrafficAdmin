@@ -15,8 +15,9 @@ import {
   PencilSquareIcon,
   EyeIcon,
   XCircleIcon,
-  ArchiveBoxXMarkIcon,
 } from "@heroicons/react/24/outline";
+import { ArchiveBoxXMarkIcon } from "@heroicons/react/20/solid";
+
 import { showNotification } from "../common/headerSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -61,7 +62,9 @@ function New() {
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.ARCHIVE,
         extraObject: {
-          message: `Bạn chắc chắn muốn đưa bài báo này vào lưu trữ?`,
+          message: status
+            ? `Bạn chắc chắn muốn đưa bài báo này ra khỏi lưu trữ?`
+            : `Bạn chắc chắn muốn đưa bài báo này vào lưu trữ?`,
           type: ARCHIVE_MODAL_CLOSE_TYPES.NEW_ARCHIVE,
           _id,
           index,

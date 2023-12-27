@@ -19,7 +19,7 @@ function CheckBox({
   };
 
   return (
-    <div className={`form-control w-full ${containerStyle}`}>
+    <div className={`form-control w-[100px] ${containerStyle}`}>
       <label className="label">
         <span className={"label-text text-base-content " + labelStyle}>
           {labelTitle}

@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 const RootPage = lazy(() => import("../pages/RootPage"));
 const NotFound = lazy(() => import("../pages/NotFound"));
-const Home = lazy(() => import("../pages/admin/Home"));
+// const Home = lazy(() => import("../pages/admin/Home"));
 const Login = lazy(() => import("../pages/Login"));
 const Register = lazy(() => import("../pages/Register"));
 const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
@@ -27,7 +27,8 @@ export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootPage />}>
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        <Route index element={<Decree />} />
         <Route path="blank" element={<Blank />} />
         <Route path="decree" element={<Decree />} />
         <Route path="decree/:decreeId" element={<DecreeDetail />} />
