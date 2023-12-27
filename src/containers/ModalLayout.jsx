@@ -12,6 +12,7 @@ import EditClauseModalBody from "../features/articleDetail/components/EditClause
 import AddFineTypeModalBody from "../features/fineType/components/AddFineTypeModalBody";
 import EditFineTypeModalBody from "../features/fineType/components/EditFineTypeModalBody";
 import AddQuestionModalBody from "../features/question/components/AddQuestionModalBody";
+import EditQuestionModalBody from "../features/question/components/EditQuestionModalBody";
 import AddNewModalBody from "../features/new/components/AddNewModalBody";
 import EditNewModalBody from "../features/new/components/EditNewModalBody";
 import AddSignTypeModalBody from "../features/signType/components/AddSignTypeModalBody";
@@ -153,6 +154,13 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.QUESTION_ADD_NEW]: (
                 <AddQuestionModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.QUESTION_EDIT]: (
+                <EditQuestionModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

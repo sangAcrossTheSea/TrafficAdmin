@@ -47,21 +47,52 @@ function Question() {
   const [questionList, setQuestionList] = useState(questions); //[{id: 1, name: "abc"}, {id: 2, name: "xyz"}
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+  const [qq, setQq] = useState(questions.Question);
 
   useEffect(() => {
     dispatch(getQuestionsContent());
     console.table("questionList", questionList);
+    setQq(questions.Question);
   }, []);
 
-  const deleteCurrentLead = (index) => {
+  const deleteCurrentLead = (index, _id) => {
+    console.log("deleteCurrentLead", index, _id);
     dispatch(
       openModal({
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Bạn chắc chắn muốn vô hiệu nghị định này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
+          message: `Bạn chắc chắn muốn xoá câu hỏi này?`,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.QUESTION_DELETE,
           index,
+          _id,
+        },
+      })
+    );
+  };
+
+  const editCurrentLead = (
+    index,
+    Id,
+    LicenseTitleId,
+    QuestionContent,
+    QuestionMedia,
+    Important,
+    Explanation
+  ) => {
+    dispatch(
+      openModal({
+        title: "Sửa câu hỏi",
+        bodyType: MODAL_BODY_TYPES.QUESTION_EDIT,
+        size: "lg",
+        extraObject: {
+          index,
+          Id,
+          LicenseTitleId,
+          QuestionContent,
+          QuestionMedia,
+          Important,
+          Explanation,
         },
       })
     );
@@ -174,21 +205,42 @@ function Question() {
                       {showImportant(l.Question.Important)}
                     </td>
                     <td>
-                      <button
+                      {/* <button
                         className="btn btn-square btn-ghost"
                         onClick={() => deleteCurrentLead(k)}
                       >
                         <EyeIcon className="w-5 text-green-800" />
-                      </button>
+                      </button> */}
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
+                        onClick={() => {
+                          const id = l.Question.Id;
+                          editCurrentLead(
+                            k,
+                            l.Question.Id,
+                            l.Question.LicenseTitleId,
+                            l.Question.QuestionContent,
+                            l.Question.QuestionMedia,
+                            l.Question.Important,
+                            l.Question.Explanation
+                          );
+                        }}
                       >
                         <PencilSquareIcon className="w-5" />
                       </button>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
+                        onClick={() => {
+                          // {
+                          //   "Id": "string",
+                          //   "LicenseTitleId": "string",
+                          //   "QuestionContent": "string",
+                          //   "QuestionMedia": "string",
+                          //   "Important": true,
+                          //   "Explanation": "string"
+                          // }
+                          deleteCurrentLead(k, id);
+                        }}
                       >
                         <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
                       </button>

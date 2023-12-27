@@ -78,7 +78,7 @@ function Examination() {
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Bạn chắc chắn muốn xoá nghị định này?`,
+          message: `Bạn chắc chắn muốn xoá bài thi này?`,
           type: CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DELETE,
           _id,
           index,

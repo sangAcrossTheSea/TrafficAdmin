@@ -27,7 +27,7 @@ export const questionSlice = createSlice({
     },
 
     deleteQuestion: (state, action) => {
-      let { index } = action.payload;
+      let index = action.payload;
       state.questions.splice(index, 1);
     },
   },
