@@ -19,6 +19,7 @@ import EditSignTypeModalBody from "../features/signType/components/EditSignTypeM
 import AddSignModalBody from "../features/sign/components/AddSignModalBody";
 import EditSignModalBody from "../features/sign/components/EditSignModalBody";
 import AddFineModalBody from "../features/fine/components/AddFineModalBody";
+import AddExaminationModalBody from "../features/exam/components/AddExamModalBody";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -152,6 +153,13 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.QUESTION_ADD_NEW]: (
                 <AddQuestionModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.EXAM_ADD_NEW]: (
+                <AddExaminationModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

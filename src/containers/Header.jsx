@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import BellIcon from "@heroicons/react/24/outline/BellIcon";
+// import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import MoonIcon from "@heroicons/react/24/outline/MoonIcon";
 import SunIcon from "@heroicons/react/24/outline/SunIcon";
@@ -89,7 +89,7 @@ export function Header() {
           </label>
 
           {/* Notification icon */}
-          <button
+          {/* <button
             className="btn btn-ghost ml-4  btn-circle"
             onClick={() => openNotification()}
           >
@@ -101,7 +101,7 @@ export function Header() {
                 </span>
               ) : null}
             </div>
-          </button>
+          </button> */}
 
           {/* Profile icon, opening menu on click */}
           <div className="dropdown dropdown-end ml-4">

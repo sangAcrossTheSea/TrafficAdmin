@@ -20,6 +20,7 @@ import {
   NewspaperIcon,
   DocumentIcon,
   ExclamationTriangleIcon,
+  AcademicCapIcon,
 } from "@heroicons/react/20/solid";
 import ModalLayout from "./ModalLayout";
 import RightSidebar from "./RightSidebar";
@@ -203,6 +204,14 @@ const Layout = () => {
               className=""
             >
               <p>Câu hỏi</p>
+            </MenuItem>
+            <MenuItem
+              icon={<AcademicCapIcon className="h-6 w-6 text-gray-300" />}
+              active
+              component={<Link to="/exam" />}
+              className=""
+            >
+              <p>Bài thi</p>
             </MenuItem>
             {/* <SubMenu
               label="Câu hỏi"

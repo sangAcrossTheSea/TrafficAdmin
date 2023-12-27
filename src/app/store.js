@@ -20,6 +20,7 @@ import FineSlice from "../features/fine/fineSlice";
 import fineTypeSlice from "../features/fineType/fineTypeSlice";
 import signSlice from "../features/sign/signSlice";
 import signTypeSlice from "../features/signType/signTypeSlice";
+import examSlice from "../features/exam/examSlice";
 
 // Define your root reducer
 const rootReducer = combineReducers({
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   fineType: fineTypeSlice,
   sign: signSlice,
   signType: signTypeSlice,
+  exam: examSlice,
 });
 
 // Define your persist config

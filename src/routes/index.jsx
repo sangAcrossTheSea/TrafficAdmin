@@ -22,6 +22,7 @@ const SignType = lazy(() => import("../pages/admin/SignType"));
 const Question = lazy(() => import("../pages/admin/Question"));
 const New = lazy(() => import("../pages/admin/New"));
 const NewContent = lazy(() => import("../pages/admin/NewContent"));
+const Exam = lazy(() => import("../pages/admin/Exam"));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +41,7 @@ export const router = createBrowserRouter(
         <Route path="question" element={<Question />} />
         <Route path="news" element={<New />} />
         <Route path="new/:id" element={<NewContent />} />
+        <Route path="exam" element={<Exam />} />
       </Route>
 
       <Route path="login" element={<Login />} />
