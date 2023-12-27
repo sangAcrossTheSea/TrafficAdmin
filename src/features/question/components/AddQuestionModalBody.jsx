@@ -72,6 +72,10 @@ function AddQuestionModalBody({ closeModal }) {
   };
 
   useEffect(() => {
+    if (leadObj.License) getTitles(leadObj.License);
+  }, [leadObj.License]);
+
+  useEffect(() => {
     console.log("LicenseTitleId", LicenseTitleId);
   }, [LicenseTitleId]);
 
