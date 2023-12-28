@@ -174,14 +174,6 @@ function EditArticleModalBody({ closeModal, extraObject }) {
         <div className="flex flex-col gap-2">
           <span className="font-semibold">Danh sách điểm:</span>
           <div className="flex flex-col">
-            {/* <InputText
-              type="text"
-              updateType="PointTitle"
-              value={newPoint.PointTitle}
-              containerStyle="mt-0"
-              labelTitle="Tên điểm"
-              updateFormValue={updateNewPoint}
-            /> */}
             <input
               type="text"
               placeholder="Tên điểm"
@@ -191,14 +183,6 @@ function EditArticleModalBody({ closeModal, extraObject }) {
                 setNewPoint({ ...newPoint, PointTitle: e.target.value })
               }
             />
-            {/* <InputText
-              type="text"
-              updateType="PointContent"
-              value={newPoint.PointContent}
-              containerStyle="mt-0"
-              labelTitle="Nội dung"
-              updateFormValue={updateNewPoint}
-            /> */}
             <textarea
               className="textarea textarea-bordered"
               placeholder="Nội dung"

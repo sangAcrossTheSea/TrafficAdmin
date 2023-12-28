@@ -6,7 +6,7 @@ import { showNotification } from "../../common/headerSlice";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import SelectBox from "../../../components/Input/SelectBox";
-import { set } from "react-hook-form";
+import EditAnswerBody from "./EditAnswerBody";
 
 let INITIAL_LEAD_OBJ = {
   Id: "",
@@ -16,6 +16,7 @@ let INITIAL_LEAD_OBJ = {
   Important: false,
   Explanation: "",
   License: "",
+  LicenseId: "",
 };
 
 function AddQuestionModalBody({ closeModal, extraObject }) {
@@ -27,6 +28,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     Important: extraObject.Important,
     Explanation: extraObject.Explanation,
     License: extraObject.License,
+    LicenseId: extraObject.LicenseId,
   };
 
   const dispatch = useDispatch();
@@ -39,11 +41,23 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
   const [LicenseTitleId, setLicenseTitleId] = useState([]);
   const [imageURL, setImageURL] = useState(extraObject.QuestionMedia);
   const [imageFile, setImageFile] = useState(null);
+  const [refreshPoint, setRefreshPoint] = useState(false);
+
+  const [answers, setAnswers] = useState([]);
 
   const [licenseAndTitle, setLicenseAndTitle] = useState({
     License: "",
     LicenseTitleId: "",
   });
+
+  useEffect(() => {
+    const getAnswers = async () => {
+      const res = await axios.get(`/question/getAllAnswers/${extraObject.Id}`);
+      const dataRes = res.data;
+      setAnswers(dataRes);
+    };
+    getAnswers();
+  }, [refreshPoint]);
 
   useEffect(() => {
     const getLicenses = async () => {
@@ -185,7 +199,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
       <div className="flex flex-row gap-2">
         <SelectBox
           type="text"
-          // defaultValue={signTypes[0] || ""}
+          defaultValue={extraObject.LicenseId}
           placeholder="Chọn loại bằng lái"
           options={licenses}
           updateType="License"
@@ -241,14 +255,22 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
           <input
             type={"checkbox"}
             defaultValue={extraObject.Important}
-            checked={extraObject.Important}
-            value={LicenseTitleId.value}
+            checked={leadObj.Important}
+            value={leadObj.Important}
             className="checkbox"
             onClick={(e) =>
               setLeadObj({ ...leadObj, Important: e.target.checked })
             }
           />
         </label>
+      </div>
+
+      <div>
+        <EditAnswerBody
+          questionId={extraObject.Id}
+          answers={answers}
+          setRefreshPoint={setRefreshPoint}
+        />
       </div>
 
       <ErrorText styleClass="mt-16">{errorMessage}</ErrorText>

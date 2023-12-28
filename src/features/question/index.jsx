@@ -78,7 +78,9 @@ function Question() {
     QuestionContent,
     QuestionMedia,
     Important,
-    Explanation
+    Explanation,
+    LicenseId,
+    Answers
   ) => {
     dispatch(
       openModal({
@@ -93,6 +95,8 @@ function Question() {
           QuestionMedia,
           Important,
           Explanation,
+          LicenseId,
+          Answers,
         },
       })
     );
@@ -222,7 +226,9 @@ function Question() {
                             l.Question.QuestionContent,
                             l.Question.QuestionMedia,
                             l.Question.Important,
-                            l.Question.Explanation
+                            l.Question.Explanation,
+                            l.License.Id,
+                            l.Answers
                           );
                         }}
                       >

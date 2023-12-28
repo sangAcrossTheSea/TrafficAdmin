@@ -230,8 +230,8 @@ function AddQuestionModalBody({ closeModal }) {
           <span className={"label-text text-base-content "}>Điểm liệt</span>
           <input
             type={"checkbox"}
-            checked={LicenseTitleId.value}
-            value={LicenseTitleId.value}
+            checked={leadObj.Important}
+            value={leadObj.Important}
             className="checkbox"
             onClick={(e) =>
               setLeadObj({ ...leadObj, Important: e.target.checked })
