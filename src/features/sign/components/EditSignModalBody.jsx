@@ -30,7 +30,7 @@ function EditSignModalBody({ closeModal, extraObject }) {
   });
   const [signTypes, setSignTypes] = useState([]);
   const [imageURL, setImageURL] = useState(extraObject.SignImage);
-  const [imageFile, setImageFile] = useState(0);
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     const getSignTypes = async () => {
@@ -91,12 +91,10 @@ function EditSignModalBody({ closeModal, extraObject }) {
     closeModal();
 
     if (response.data) {
-      const trafficSignId = response.data.trafficSignId;
-
       let response2 = extraObject.SignImage;
 
-      if (imageFile !== 0) {
-        const imgURL = await uploadImage(trafficSignId);
+      if (imageFile !== null) {
+        const imgURL = await uploadImage(extraObject.Id);
         response2 = imgURL;
       }
 
