@@ -11,12 +11,13 @@ import {
 import {
   ArchiveBoxArrowDownIcon,
   PencilSquareIcon,
-  EyeIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { showNotification } from "@/features/common/headerSlice";
 import SearchBar from "@/components/Input/SearchBar";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { set } from "react-hook-form";
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -54,8 +55,8 @@ function ExamDetail() {
   const navigate = useNavigate();
   const { isOpen } = useSelector((state) => state.modal);
 
-  useEffect(() => {
-    const getExamDetail = async () => {
+  const getExamDetail = async () => {
+    try {
       const res = await axios.get(
         `/examination/getAllExaminationQuestions/${examId}`
       );
@@ -63,26 +64,42 @@ function ExamDetail() {
 
       setExamDetail(dataRes);
       setFilteredExamDetail(dataRes);
-
       setExamDetailTotal(res.data.total);
       setNumberOfImportant(res.data.numberOfImportantQuestions);
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    if (isOpen === false) getExamDetail();
+  useEffect(() => {
+    getExamDetail();
   }, [isOpen]);
 
   useEffect(() => {
-    const searchExamDetail = () => {
-      const res = examDetail.filter((question) => {
-        return question.Question.QuestionContent.toLowerCase().includes(
-          searchText.toLowerCase()
+    const search = () => {
+      if (!Array.isArray(examDetail)) {
+        console.log("exams not array", examDetail);
+        return [];
+      }
+
+      if (searchText === "") {
+        console.log("exams", examDetail);
+        return examDetail;
+      } else {
+        return examDetail.filter((item) =>
+          item.Question?.QuestionContent.toLowerCase().includes(
+            searchText.toLowerCase()
+          )
         );
-      });
-      setFilteredExamDetail(examDetail);
-      if (searchText) setFilteredExamDetail(res);
+      }
     };
-    searchExamDetail();
+    const searchResult = search();
+    setFilteredExamDetail(searchResult);
   }, [searchText]);
+
+  // useEffect(() => {
+  //   console.log("filteredExamDetailLog", filteredExamDetail);
+  // }, [filteredExamDetail]);
 
   const deleteCurrentExam = (index) => {
     dispatch(
@@ -142,7 +159,28 @@ function ExamDetail() {
         topMargin="mt-2"
         TopSideButtons={<TopSideButtons />}
       >
-        <SearchBar searchText={searchText} setSearchText={setSearchText} />
+        {/* <SearchBar searchText={searchText} setSearchText={setSearchText} /> */}
+        <section>
+          <div className="flex items-center">
+            <div className="flex">
+              <input
+                type="text"
+                className="input input-bordered w-full"
+                placeholder="Nhập từ khóa"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </div>
+            <div className="flex-initial ml-2">
+              <button className="btn btn-primary">
+                <span className="p-2 text-white">
+                  <MagnifyingGlassIcon className="w-4 h-4" />
+                </span>
+                Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </section>
         <div>
           <div className="flex flex-row justify-start py-4 gap-4">
             <div className="stats shadow">
@@ -176,9 +214,9 @@ function ExamDetail() {
               </tr>
             </thead>
             <tbody>
-              {filteredExamDetail?.map((l, k) => {
+              {filteredExamDetail.map((l, k) => {
                 return (
-                  <tr key={l.Question.Id}>
+                  <tr key={k}>
                     <td>
                       <div className="flex items-center space-x-3">
                         <div className="">{k + 1}</div>
