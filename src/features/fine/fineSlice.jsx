@@ -28,7 +28,7 @@ export const fineSlice = createSlice({
     },
 
     deleteFine: (state, action) => {
-      let { index } = action.payload;
+      let index = action.payload;
       state.fines.splice(index, 1);
     },
 

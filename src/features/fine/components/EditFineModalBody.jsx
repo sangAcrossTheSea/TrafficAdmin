@@ -5,37 +5,35 @@ import InputText from "../../../components/Input/InputText";
 import SelectBox from "../../../components/Input/SelectBox";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { addNewFine } from "../fineSlice";
+import { updateFine } from "../fineSlice";
 import axios from "axios";
 
-// {
-//   "Id": "string",
-//   "FineName": "string",
-//   "FineId": "string",
-//   "VehicleType": "string",
-//   "FineBehavior": "string",
-//   "FineContent": "string",
-//   "FineAdditional": "string",
-//   "FineNote": "string"
-// }
+// let INITIAL_LEAD_OBJ = {
+//   Id: "",
+//   FineName: "",
+//   FineTypeId: "",
+//   VehicleType: "",
+//   FineBehavior: "",
+//   FineContent: "",
+//   FineAdditional: "",
+//   FineNote: "",
+// };
 
-const INITIAL_LEAD_OBJ = {
-  Id: "string",
-  FineName: "",
-  FineTypeId: "",
-  VehicleType: "",
-  FineBehavior: "",
-  FineContent: "",
-  FineAdditional: "",
-  FineNote: "",
-};
-
-function AddFineModalBody({ closeModal }) {
+function EditFineModalBody({ closeModal, extraObject }) {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
+  const [leadObj, setLeadObj] = useState({
+    Id: extraObject.Id,
+    FineName: extraObject.FineName,
+    FineTypeId: extraObject.FineTypeId,
+    VehicleType: extraObject.VehicleType,
+    FineBehavior: extraObject.FineBehavior,
+    FineContent: extraObject.FineContent,
+    FineAdditional: extraObject.FineAdditional,
+    FineNote: extraObject.FineNote,
+  });
   const [fineTypes, setFineTypes] = useState([]);
 
   useEffect(() => {
@@ -60,7 +58,7 @@ function AddFineModalBody({ closeModal }) {
   const AddFine = async () => {
     setLoading(true);
     const newFineObj = {
-      Id: "string",
+      Id: extraObject.Id,
       FineName: leadObj.FineName,
       FineTypeId: leadObj.FineTypeId || fineTypes[0].value,
       VehicleType: leadObj.VehicleType || "motorbike",
@@ -69,15 +67,17 @@ function AddFineModalBody({ closeModal }) {
       FineAdditional: leadObj.FineAdditional,
       FineNote: leadObj.FineNote,
     };
-    const response = await axios.post(
-      "/trafficFine/createTrafficFine",
+    const response = await axios.put(
+      `/trafficFine/updateTrafficFine/${extraObject.Id}`,
       newFineObj
     );
     console.log("response", response);
     closeModal();
 
     if (response.data) {
-      dispatch(addNewFine(newFineObj));
+      dispatch(
+        updateFine({ index: extraObject.index, newLeadObj: newFineObj })
+      );
       // window.location.reload();
       dispatch(
         showNotification({ message: "Thêm mới thành công!", status: 1 })
@@ -209,4 +209,4 @@ function AddFineModalBody({ closeModal }) {
   );
 }
 
-export default AddFineModalBody;
+export default EditFineModalBody;

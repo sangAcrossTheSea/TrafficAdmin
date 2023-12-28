@@ -46,6 +46,18 @@ function Fine() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isChange, setIsChange] = useState(false);
+  const [legalGrounds, setLegalGrounds] = useState({
+    decree: "",
+    article: "",
+    clause: "",
+    point: "",
+  });
+  const [legalGroundsMore, setLegalGroundsMore] = useState({
+    decree: "",
+    article: "",
+    clause: "",
+    point: "",
+  });
 
   useEffect(() => {
     dispatch(getFinesContent());
@@ -59,7 +71,7 @@ function Fine() {
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
           message: `Bạn chắc chắn muốn xoá mức phạt này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.FINE_DELETE,
           _id,
           index,
         },
@@ -67,16 +79,31 @@ function Fine() {
     );
   };
 
-  const editCurrentDecree = (index, id, name, number) => {
+  const editCurrentDecree = (
+    index,
+    Id,
+    FineName,
+    FineTypeId,
+    VehicleType,
+    FineBehavior,
+    FineContent,
+    FineAdditional,
+    FineNote
+  ) => {
     dispatch(
       openModal({
-        title: "Chỉnh sửa nghị định",
-        bodyType: MODAL_BODY_TYPES.DECREE_EDIT,
+        title: "Chỉnh sửa mức phạt",
+        bodyType: MODAL_BODY_TYPES.FINE_EDIT,
         extraObject: {
-          id,
-          name,
-          number,
           index,
+          Id,
+          FineName,
+          FineTypeId,
+          VehicleType,
+          FineBehavior,
+          FineContent,
+          FineAdditional,
+          FineNote,
         },
       })
     );
@@ -96,6 +123,8 @@ function Fine() {
               <tr>
                 <th>Stt</th>
                 <th>Tên</th>
+                <th>Loại phương tiện</th>
+                <th>Hành vi</th>
                 <th></th>
               </tr>
             </thead>
@@ -108,7 +137,16 @@ function Fine() {
                         <div className="">{k + 1}</div>
                       </div>
                     </td>
-                    <td>{l.FineName}</td>
+                    <td className="truncate max-w-sm">{l.FineName}</td>
+                    <td>
+                      {/* {switchVehicleType(l.VehicleType)} */}
+                      {l.VehicleType === "motorbike"
+                        ? "Xe máy"
+                        : l.VehicleType === "car"
+                        ? "Ô tô"
+                        : "Khác"}
+                    </td>
+                    <td className="truncate max-w-sm">{l.FineBehavior}</td>
                     <td>
                       {/* <button
                         className="btn btn-square btn-ghost"
@@ -122,8 +160,13 @@ function Fine() {
                           editCurrentDecree(
                             k,
                             l.Id,
-                            l.DecreeName,
-                            l.DecreeNumber
+                            l.FineName,
+                            l.FineTypeId,
+                            l.VehicleType,
+                            l.FineBehavior,
+                            l.FineContent,
+                            l.FineAdditional,
+                            l.FineNote
                           )
                         }
                       >

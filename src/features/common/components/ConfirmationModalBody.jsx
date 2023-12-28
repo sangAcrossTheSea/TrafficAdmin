@@ -10,6 +10,7 @@ import { deleteSignType } from "../../signType/signTypeSlice";
 import { deleteSign } from "../../sign/signSlice";
 import { deleteExam } from "../../exam/examSlice";
 import { deleteQuestion } from "../../question/questionSlice";
+import { deleteFine } from "../../fine/fineSlice";
 
 function ConfirmationModalBody({ extraObject, closeModal }) {
   const dispatch = useDispatch();
@@ -42,6 +43,8 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         response = await axios.delete(`/examination/deleteExamination/${_id}`);
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.QUESTION_DELETE) {
         response = await axios.delete(`/question/deleteQuestion/${_id}`);
+      } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.FINE_DELETE) {
+        response = await axios.delete(`/fine/deleteFine/${_id}`);
       }
 
       if (response.data) {
@@ -65,6 +68,8 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
           dispatch(deleteExam(index));
         else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.QUESTION_DELETE)
           dispatch(deleteQuestion(index));
+        else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.FINE_DELETE)
+          dispatch(deleteFine(index));
       } else {
         dispatch(showNotification({ message: "Xoá thất bại!", status: 0 }));
       }
