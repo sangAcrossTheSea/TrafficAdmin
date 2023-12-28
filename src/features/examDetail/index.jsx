@@ -25,6 +25,7 @@ const TopSideButtons = () => {
     dispatch(
       openModal({
         title: "Thêm câu hỏi vào đề",
+        size: "lg",
         bodyType: MODAL_BODY_TYPES.EXAM_DETAIL_ADD_NEW,
       })
     );
@@ -64,7 +65,7 @@ function ExamDetail() {
       setFilteredExamDetail(dataRes);
     };
 
-    getExamDetail();
+    if (isOpen === false) getExamDetail();
   }, [isOpen]);
 
   useEffect(() => {

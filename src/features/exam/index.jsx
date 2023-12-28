@@ -147,7 +147,9 @@ function Examination() {
                       <button
                         className="btn btn-square btn-ghost"
                         onClick={() =>
-                          navigate(`/exam/${l.ExaminationName}/${l.Id}`)
+                          navigate(
+                            `/exam/${l.ExaminationName}/${l.Id}/${l.LicenseId}`
+                          )
                         }
                       >
                         <EyeIcon className="w-5 text-green-800" />

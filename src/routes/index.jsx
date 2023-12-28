@@ -43,7 +43,10 @@ export const router = createBrowserRouter(
         <Route path="news" element={<New />} />
         <Route path="new/:id" element={<NewContent />} />
         <Route path="exam" element={<Exam />} />
-        <Route path="exam/:examName/:examId" element={<ExamDetail />} />
+        <Route
+          path="exam/:examName/:examId/:licenseId"
+          element={<ExamDetail />}
+        />
       </Route>
 
       <Route path="login" element={<Login />} />
