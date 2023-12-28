@@ -46,6 +46,8 @@ const TopSideButtons = () => {
 function ExamDetail() {
   const { examName, examId } = useParams();
   const [examDetail, setExamDetail] = useState([]);
+  const [examDetailTotal, setExamDetailTotal] = useState(0);
+  const [numberOfImportant, setNumberOfImportant] = useState(0);
   const [filteredExamDetail, setFilteredExamDetail] = useState([]); // eslint-disable-line no-unused-vars
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
@@ -59,10 +61,11 @@ function ExamDetail() {
       );
       const dataRes = res.data.data;
 
-      console.table(dataRes);
-
       setExamDetail(dataRes);
       setFilteredExamDetail(dataRes);
+
+      setExamDetailTotal(res.data.total);
+      setNumberOfImportant(res.data.numberOfImportantQuestions);
     };
 
     if (isOpen === false) getExamDetail();
@@ -140,6 +143,24 @@ function ExamDetail() {
         TopSideButtons={<TopSideButtons />}
       >
         <SearchBar searchText={searchText} setSearchText={setSearchText} />
+        <div>
+          <div className="flex flex-row justify-start py-4 gap-4">
+            <div className="stats shadow">
+              <div className="stat">
+                <div className="stat-title">Tổng số câu hỏi</div>
+                <div className="stat-value">{examDetailTotal}</div>
+                {/* <div className="stat-desc">21% more than last month</div> */}
+              </div>
+            </div>
+            <div className="stats shadow">
+              <div className="stat">
+                <div className="stat-title">Số câu điểm liệt</div>
+                <div className="stat-value">{numberOfImportant}</div>
+                {/* <div className="stat-desc">21% more than last month</div> */}
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Leads List in table format loaded from slice after api call */}
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
