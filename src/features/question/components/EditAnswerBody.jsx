@@ -67,7 +67,6 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
       Result: result,
     });
     setSubmitType(false);
-    saveAnswer();
   };
 
   const deleteCurrentAnswer = async (answerId) => {
@@ -106,12 +105,12 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
               </span>
               <input
                 type={"checkbox"}
-                defaultValue={newAnswer.Result}
+                // defaultValue={newAnswer.Result}
                 checked={newAnswer.Result}
                 value={newAnswer.Result}
                 className="checkbox"
                 onClick={(e) =>
-                  setLeadObj({ ...newAnswer, Result: e.target.checked })
+                  setNewAnswer({ ...newAnswer, Result: e.target.checked })
                 }
               />
             </label>
