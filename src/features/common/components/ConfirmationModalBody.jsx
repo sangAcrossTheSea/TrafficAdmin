@@ -78,14 +78,14 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
 
       <div className="modal-action mt-12">
         <button className="btn btn-outline   " onClick={() => closeModal()}>
-          Cancel
+          Huỷ
         </button>
 
         <button
           className="btn btn-primary w-36"
           onClick={() => proceedWithYes()}
         >
-          Yes
+          Xoá
         </button>
       </div>
     </>
