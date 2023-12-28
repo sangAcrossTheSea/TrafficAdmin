@@ -87,16 +87,16 @@ function Examination() {
     );
   };
 
-  const editCurrentExamination = (index, id, name, number) => {
+  const editCurrentExamination = (index, Id, ExaminationName, LicenseId) => {
     setIsChange(!isChange);
     dispatch(
       openModal({
         title: "Chỉnh sửa nghị định",
         bodyType: MODAL_BODY_TYPES.EXAM_EDIT,
         extraObject: {
-          id,
-          name,
-          number,
+          Id,
+          ExaminationName,
+          LicenseId,
           index,
         },
       })
@@ -161,7 +161,7 @@ function Examination() {
                             k,
                             l.Id,
                             l.ExaminationName,
-                            l.ExaminationNumber
+                            l.LicenseId
                           )
                         }
                       >

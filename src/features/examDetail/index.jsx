@@ -91,7 +91,7 @@ function ExamDetail() {
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
           message: `Bạn chắc chắn muốn xoá câu hỏi này khỏi bài thi?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.ARTICLE_DELETE,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE,
           _id: index,
         },
       })

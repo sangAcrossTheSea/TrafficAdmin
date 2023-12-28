@@ -21,6 +21,7 @@ import AddSignModalBody from "../features/sign/components/AddSignModalBody";
 import EditSignModalBody from "../features/sign/components/EditSignModalBody";
 import AddFineModalBody from "../features/fine/components/AddFineModalBody";
 import AddExaminationModalBody from "../features/exam/components/AddExamModalBody";
+import EditExaminationModalBody from "../features/exam/components/EditExamModalBody";
 import AddExamDetailModalBody from "../features/examDetail/components/AddExamDetailModalBody";
 
 function ModalLayout() {
@@ -169,6 +170,13 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.EXAM_ADD_NEW]: (
                 <AddExaminationModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.EXAM_EDIT]: (
+                <EditExaminationModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />
