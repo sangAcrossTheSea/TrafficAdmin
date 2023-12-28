@@ -21,6 +21,7 @@ import AddSignModalBody from "../features/sign/components/AddSignModalBody";
 import EditSignModalBody from "../features/sign/components/EditSignModalBody";
 import AddFineModalBody from "../features/fine/components/AddFineModalBody";
 import AddExaminationModalBody from "../features/exam/components/AddExamModalBody";
+import AddExamDetailModalBody from "../features/examDetail/components/AddExamDetailModalBody";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -168,6 +169,13 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.EXAM_ADD_NEW]: (
                 <AddExaminationModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.EXAM_DETAIL_ADD_NEW]: (
+                <AddExamDetailModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

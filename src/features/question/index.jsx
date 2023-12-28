@@ -218,7 +218,6 @@ function Question() {
                       <button
                         className="btn btn-square btn-ghost"
                         onClick={() => {
-                          const id = l.Question.Id;
                           editCurrentLead(
                             k,
                             l.Question.Id,

@@ -146,7 +146,9 @@ function Examination() {
                     <td>
                       <button
                         className="btn btn-square btn-ghost"
-                        onClick={() => navigate(`/examination/${l.Id}`)}
+                        onClick={() =>
+                          navigate(`/exam/${l.ExaminationName}/${l.Id}`)
+                        }
                       >
                         <EyeIcon className="w-5 text-green-800" />
                       </button>
