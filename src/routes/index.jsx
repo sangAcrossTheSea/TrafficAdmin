@@ -24,6 +24,7 @@ const New = lazy(() => import("../pages/admin/New"));
 const NewContent = lazy(() => import("../pages/admin/NewContent"));
 const Exam = lazy(() => import("../pages/admin/Exam"));
 const ExamDetail = lazy(() => import("../pages/admin/ExamDetail"));
+const Account = lazy(() => import("../pages/admin/User"));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,6 +48,7 @@ export const router = createBrowserRouter(
           path="exam/:examName/:examId/:licenseId"
           element={<ExamDetail />}
         />
+        <Route path="account" element={<Account />} />
       </Route>
 
       <Route path="login" element={<Login />} />

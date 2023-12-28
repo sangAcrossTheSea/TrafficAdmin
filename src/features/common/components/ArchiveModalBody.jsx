@@ -4,6 +4,7 @@ import { ARCHIVE_MODAL_CLOSE_TYPES } from "../../../utils/globalConstantUtil";
 import axios from "axios";
 import { showNotification } from "../headerSlice";
 import { updateNewStatus } from "../../new/newSlice";
+import { updateUserActive } from "../../account/accountSlice";
 
 function ConfirmationModalBody({ extraObject, closeModal }) {
   const dispatch = useDispatch();
@@ -16,14 +17,23 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
       let response;
       if (type === ARCHIVE_MODAL_CLOSE_TYPES.NEW_ARCHIVE) {
         response = await axios.put(`/news/hideOrUnhideNews/${_id}`);
+      } else if (type === ARCHIVE_MODAL_CLOSE_TYPES.USER_ARCHIVE) {
+        response = await axios.put(`/user/activeOrInactiveUser/${_id}`);
       }
+
       if (response.data) {
         // window.location.reload();
-        dispatch(
-          showNotification({ message: "Lưu trữ thành công!", status: 1 })
-        );
-        if (type === ARCHIVE_MODAL_CLOSE_TYPES.NEW_ARCHIVE)
+        if (type === ARCHIVE_MODAL_CLOSE_TYPES.NEW_ARCHIVE) {
           dispatch(updateNewStatus({ index: index, IsHidden: !status }));
+          dispatch(
+            showNotification({ message: "Lưu trữ thành công!", status: 1 })
+          );
+        } else if (type === ARCHIVE_MODAL_CLOSE_TYPES.USER_ARCHIVE) {
+          dispatch(updateUserActive({ index: index, IsActive: !status }));
+          dispatch(
+            showNotification({ message: "Cập nhật thành công!", status: 1 })
+          );
+        }
       } else {
         dispatch(showNotification({ message: "Lưu trữ thất bại!", status: 0 }));
       }

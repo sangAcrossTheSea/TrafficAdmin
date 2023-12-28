@@ -91,7 +91,7 @@ function Examination() {
     setIsChange(!isChange);
     dispatch(
       openModal({
-        title: "Chỉnh sửa nghị định",
+        title: "Chỉnh sửa bài thi",
         bodyType: MODAL_BODY_TYPES.EXAM_EDIT,
         extraObject: {
           Id,

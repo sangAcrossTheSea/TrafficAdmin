@@ -21,6 +21,7 @@ import {
   DocumentIcon,
   ExclamationTriangleIcon,
   AcademicCapIcon,
+  UserCircleIcon,
 } from "@heroicons/react/20/solid";
 import ModalLayout from "./ModalLayout";
 import RightSidebar from "./RightSidebar";
@@ -252,6 +253,14 @@ const Layout = () => {
               className=""
             >
               <p>Bài báo</p>
+            </MenuItem>
+            <MenuItem
+              icon={<UserCircleIcon className="h-6 w-6 text-gray-300" />}
+              active
+              component={<Link to="/account" />}
+              className=""
+            >
+              <p>Tài khoản</p>
             </MenuItem>
 
             <div
