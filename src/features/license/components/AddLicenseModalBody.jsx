@@ -4,33 +4,37 @@ import { useDispatch } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { addNewFineType, getFineTypesContent } from "../fineTypeSlice";
+import { addNewLicense, getLicensesContent } from "../licenseSlice";
 import axios from "axios";
 
 const INITIAL_LEAD_OBJ = {
-  FineType: "",
+  LicenseName: "",
 };
 
-function AddFineTypeModalBody({ closeModal }) {
+function AddLicenseModalBody({ closeModal }) {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
 
-  const AddFineType = async () => {
+  const AddLicense = async () => {
     setLoading(true);
-    const newFineTypeObj = {
+    const newLicenseObj = {
       Id: "string",
-      FineType: leadObj.FineType,
+      LicenseName: leadObj.LicenseName,
     };
-    const response = await axios.post("/license/createLicense", newFineTypeObj);
+    const response = await axios.post("/license/createLicense", newLicenseObj);
     console.log("response", response);
     closeModal();
 
     if (response.data) {
-      dispatch(addNewFineType(newFineTypeObj));
-      dispatch(getFineTypesContent());
+      const newObj = {
+        Id: response.data.licenseId,
+        LicenseName: leadObj.LicenseName,
+      };
+      dispatch(addNewLicense(newObj));
+      dispatch(getLicensesContent());
       // window.location.reload();
       dispatch(
         showNotification({ message: "Thêm mới thành công!", status: 1 })
@@ -42,9 +46,10 @@ function AddFineTypeModalBody({ closeModal }) {
   };
 
   const saveNewLead = async () => {
-    if (leadObj.FineType.trim() === "") return setErrorMessage("Phải có tên!");
+    if (leadObj.LicenseName.trim() === "")
+      return setErrorMessage("Phải có tên!");
     else {
-      AddFineType();
+      AddLicense();
     }
   };
 
@@ -57,10 +62,10 @@ function AddFineTypeModalBody({ closeModal }) {
     <>
       <InputText
         type="text"
-        defaultValue={leadObj.FineType}
-        updateType="FineType"
+        defaultValue={leadObj.LicenseName}
+        updateType="LicenseName"
         containerStyle="mt-4"
-        labelTitle="Tên loại mức phạt"
+        labelTitle="Tên loại bằng lái"
         updateFormValue={updateFormValue}
       />
 
@@ -77,4 +82,4 @@ function AddFineTypeModalBody({ closeModal }) {
   );
 }
 
-export default AddFineTypeModalBody;
+export default AddLicenseModalBody;

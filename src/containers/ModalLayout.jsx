@@ -24,6 +24,8 @@ import EditFineModalBody from "../features/fine/components/EditFineModalBody";
 import AddExaminationModalBody from "../features/exam/components/AddExamModalBody";
 import EditExaminationModalBody from "../features/exam/components/EditExamModalBody";
 import AddExamDetailModalBody from "../features/examDetail/components/AddExamDetailModalBody";
+import AddLicenseModalBody from "../features/license/components/AddLicenseModalBody";
+import EditLicenseModalBody from "../features/license/components/EditLicenseModalBody";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -192,6 +194,20 @@ function ModalLayout() {
 
               [MODAL_BODY_TYPES.EXAM_DETAIL_ADD_NEW]: (
                 <AddExamDetailModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.LICENSE_ADD_NEW]: (
+                <AddLicenseModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
+              [MODAL_BODY_TYPES.LICENSE_EDIT]: (
+                <EditLicenseModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

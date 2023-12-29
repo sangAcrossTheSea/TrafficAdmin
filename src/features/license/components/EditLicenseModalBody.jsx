@@ -4,17 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import { showNotification } from "../../common/headerSlice";
-import { updateFineType } from "../fineTypeSlice";
+import { updateLicense } from "../licenseSlice";
 import axios from "axios";
 
 let INITIAL_LEAD_OBJ = {
-  FineType: "",
+  LicenseName: "",
 };
 
-function EditFineTypeModalBody({ closeModal, extraObject }) {
+function EditLicenseModalBody({ closeModal, extraObject }) {
   const dispatch = useDispatch();
   INITIAL_LEAD_OBJ = {
-    FineType: extraObject.name,
+    LicenseName: extraObject.name,
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -26,16 +26,19 @@ function EditFineTypeModalBody({ closeModal, extraObject }) {
     setLoading(true);
     let newDecreeObj = {
       Id: extraObject.id,
-      FineType: leadObj.FineType,
+      LicenseName: leadObj.LicenseName,
     };
     try {
       const response = await axios.put(
-        `/trafficFineType/updateTrafficFineType/${extraObject.id}`,
+        `/license/updateLicense/${extraObject.id}`,
         newDecreeObj
       );
       console.log("response", response);
       dispatch(
-        updateFineType({ index: extraObject.index, newLeadObj: newDecreeObj })
+        updateLicense({
+          index: extraObject.index,
+          newLeadObj: newDecreeObj,
+        })
       );
       // window.location.reload();
       dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
@@ -48,7 +51,8 @@ function EditFineTypeModalBody({ closeModal, extraObject }) {
   };
 
   const saveNewLead = async () => {
-    if (leadObj.FineType.trim() === "") return setErrorMessage("Phải có tên!");
+    if (leadObj.LicenseName.trim() === "")
+      return setErrorMessage("Phải có tên!");
     else {
       EditDecree();
     }
@@ -64,7 +68,7 @@ function EditFineTypeModalBody({ closeModal, extraObject }) {
       <InputText
         type="text"
         defaultValue={extraObject.name}
-        updateType="FineType"
+        updateType="LicenseName"
         containerStyle="mt-4"
         labelTitle="Tên loại mức phạt"
         updateFormValue={updateFormValue}
@@ -83,4 +87,4 @@ function EditFineTypeModalBody({ closeModal, extraObject }) {
   );
 }
 
-export default EditFineTypeModalBody;
+export default EditLicenseModalBody;
