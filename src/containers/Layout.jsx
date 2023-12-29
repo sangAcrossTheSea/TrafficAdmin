@@ -117,16 +117,6 @@ const Layout = () => {
                 />
                 {clpSidebar ? "" : <p className="text-lg">Traffic Learn</p>}
               </div>
-              <div
-                className="w-full text-white text-center cursor-pointer pt-4"
-                onClick={handleSidebar}
-              >
-                {arrow ? (
-                  <ArrowLeftCircleIcon className="w-8 h-8 inline-block text-white" />
-                ) : (
-                  <ArrowRightCircleIcon className="w-8 h-8 inline-block" />
-                )}
-              </div>
             </div>
           </aside>
           <Menu
@@ -269,6 +259,16 @@ const Layout = () => {
               <p>Tài khoản</p>
             </MenuItem>
           </Menu>
+          <div
+            className="w-full text-white text-center cursor-pointer pt-4"
+            onClick={handleSidebar}
+          >
+            {arrow ? (
+              <ArrowLeftCircleIcon className="w-8 h-8 inline-block text-white" />
+            ) : (
+              <ArrowRightCircleIcon className="w-8 h-8 inline-block" />
+            )}
+          </div>
         </Sidebar>
       </div>
 
