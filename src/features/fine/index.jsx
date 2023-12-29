@@ -24,6 +24,7 @@ const TopSideButtons = () => {
     dispatch(
       openModal({
         title: "Thêm mức phạt",
+        size: "lg",
         bodyType: MODAL_BODY_TYPES.FINE_ADD_NEW,
       })
     );
@@ -94,6 +95,7 @@ function Fine() {
       openModal({
         title: "Chỉnh sửa mức phạt",
         bodyType: MODAL_BODY_TYPES.FINE_EDIT,
+        size: "lg",
         extraObject: {
           index,
           Id,

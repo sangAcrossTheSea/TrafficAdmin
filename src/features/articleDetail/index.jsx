@@ -86,6 +86,7 @@ function ArticleDetail() {
       openModal({
         title: "Chỉnh sửa khoản",
         bodyType: MODAL_BODY_TYPES.CLAUSE_EDIT,
+        size: "lg",
         extraObject: {
           id,
           title,

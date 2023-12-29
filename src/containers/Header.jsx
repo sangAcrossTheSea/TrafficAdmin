@@ -51,12 +51,12 @@ export function Header() {
       <div className="navbar flex justify-between bg-base-100 z-999 shadow-md ">
         {/* Menu toogle for mobile view or small screen */}
         <div className="">
-          <label
+          {/* <label
             htmlFor="left-sidebar-drawer"
             className="btn btn-primary drawer-button lg:hidden"
           >
             <Bars3Icon className="h-5 inline-block w-5" />
-          </label>
+          </label> */}
           <h1 className="text-2xl font-semibold ml-2">{pageTitle}</h1>
         </div>
 
@@ -126,7 +126,7 @@ export function Header() {
               {/* <li className="">
                 <Link to={"/app/settings-billing"}>Bill History</Link>
               </li> */}
-              <div className="divider mt-0 mb-0"></div>
+              {/* <div className="divider mt-0 mb-0"></div> */}
               <li>
                 <a onClick={logoutUser}>Đăng xuất</a>
               </li>

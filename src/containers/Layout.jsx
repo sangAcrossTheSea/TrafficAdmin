@@ -107,7 +107,7 @@ const Layout = () => {
           <aside className="flex items-center justify-center text-white font-semibold">
             <div
               onClick={() => navigate("/")}
-              className="cursor-pointer mx-auto my-[30px]"
+              className="cursor-pointer mx-auto mt-[30px] mb-[20px]"
             >
               <div className="flex justify-center items-center gap-2 rounded-full pt-2">
                 <img
@@ -116,6 +116,16 @@ const Layout = () => {
                   className="h-10 w-18 rounded-full"
                 />
                 {clpSidebar ? "" : <p className="text-lg">Traffic Learn</p>}
+              </div>
+              <div
+                className="w-full text-white text-center cursor-pointer pt-4"
+                onClick={handleSidebar}
+              >
+                {arrow ? (
+                  <ArrowLeftCircleIcon className="w-8 h-8 inline-block text-white" />
+                ) : (
+                  <ArrowRightCircleIcon className="w-8 h-8 inline-block" />
+                )}
               </div>
             </div>
           </aside>
@@ -258,17 +268,6 @@ const Layout = () => {
             >
               <p>Tài khoản</p>
             </MenuItem>
-
-            <div
-              className=" absolute bottom-0 left-0 w-full text-white text-center py-2 cursor-pointer"
-              onClick={handleSidebar}
-            >
-              {arrow ? (
-                <ArrowLeftCircleIcon className="w-8 h-8 inline-block text-white" />
-              ) : (
-                <ArrowRightCircleIcon className="w-8 h-8 inline-block" />
-              )}
-            </div>
           </Menu>
         </Sidebar>
       </div>
