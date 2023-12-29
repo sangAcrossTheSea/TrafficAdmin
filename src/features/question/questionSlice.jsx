@@ -26,6 +26,11 @@ export const questionSlice = createSlice({
       state.questions = [...state.questions, newLeadObj];
     },
 
+    updateQuestion: (state, action) => {
+      let { index, newLeadObj } = action.payload;
+      state.questions[index] = newLeadObj;
+    },
+
     deleteQuestion: (state, action) => {
       let index = action.payload;
       state.questions.splice(index, 1);
@@ -48,6 +53,7 @@ export const questionSlice = createSlice({
   },
 });
 
-export const { addNewQuestion, deleteQuestion } = questionSlice.actions;
+export const { addNewQuestion, updateQuestion, deleteQuestion } =
+  questionSlice.actions;
 
 export default questionSlice.reducer;

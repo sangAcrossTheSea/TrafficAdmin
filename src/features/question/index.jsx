@@ -71,17 +71,7 @@ function Question() {
     );
   };
 
-  const editCurrentLead = (
-    index,
-    Id,
-    LicenseTitleId,
-    QuestionContent,
-    QuestionMedia,
-    Important,
-    Explanation,
-    LicenseId,
-    Answers
-  ) => {
+  const editCurrentLead = (index, infor) => {
     dispatch(
       openModal({
         title: "Sửa câu hỏi",
@@ -89,14 +79,7 @@ function Question() {
         size: "lg",
         extraObject: {
           index,
-          Id,
-          LicenseTitleId,
-          QuestionContent,
-          QuestionMedia,
-          Important,
-          Explanation,
-          LicenseId,
-          Answers,
+          infor,
         },
       })
     );
@@ -220,17 +203,7 @@ function Question() {
                           <button
                             className="btn btn-square btn-ghost"
                             onClick={() => {
-                              editCurrentLead(
-                                k,
-                                l.Question.Id,
-                                l.Question.LicenseTitleId,
-                                l.Question.QuestionContent,
-                                l.Question.QuestionMedia,
-                                l.Question.Important,
-                                l.Question.Explanation,
-                                l.License.Id,
-                                l.Answers
-                              );
+                              editCurrentLead(k, l);
                             }}
                           >
                             <PencilSquareIcon className="w-5" />

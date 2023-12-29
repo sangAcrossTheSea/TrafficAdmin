@@ -7,9 +7,17 @@ import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import SelectBox from "../../../components/Input/SelectBox";
 import EditAnswerBody from "./EditAnswerBody";
-import { addNewSign } from "../../sign/signSlice";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { openLoader } from "../../common/loaderSlice";
+import { updateQuestion } from "../questionSlice";
+
+// l.Question.Id,
+//   l.Question.LicenseTitleId,
+//   l.Question.QuestionContent,
+//   l.Question.QuestionMedia,
+//   l.Question.Important,
+//   l.Question.Explanation,
+//   l.License.Id,
 
 let INITIAL_LEAD_OBJ = {
   Id: "",
@@ -33,22 +41,24 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
   // };
 
   const dispatch = useDispatch();
+  const extraQuestion = extraObject.infor.Question;
+  const extraLicense = extraObject.infor.LicenseId;
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState({
-    Id: extraObject.Id,
-    LicenseTitleId: extraObject.LicenseTitleId,
-    QuestionContent: extraObject.QuestionContent,
-    QuestionMedia: extraObject.QuestionMedia,
-    Important: extraObject.Important,
-    Explanation: extraObject.Explanation,
-    LicenseId: extraObject.LicenseId,
+    Id: extraQuestion.Id,
+    LicenseTitleId: extraQuestion.LicenseTitleId,
+    QuestionContent: extraQuestion.QuestionContent,
+    QuestionMedia: extraQuestion.QuestionMedia,
+    Important: extraQuestion.Important,
+    Explanation: extraQuestion.Explanation,
+    LicenseId: extraLicense,
   });
 
   const [licenses, setLicenses] = useState([]);
   const [LicenseTitleId, setLicenseTitleId] = useState([]);
-  const [imageURL, setImageURL] = useState(extraObject.QuestionMedia);
+  const [imageURL, setImageURL] = useState(extraQuestion.QuestionMedia);
   const [imageFile, setImageFile] = useState(null);
   const [refreshPoint, setRefreshPoint] = useState(false);
   const [deleteImage, setDeleteImage] = useState(false);
@@ -61,8 +71,8 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
   });
 
   useEffect(() => {
-    setLeadObj({ ...leadObj, Important: extraObject.Important });
-  }, [extraObject.Important]);
+    setLeadObj({ ...leadObj, Important: extraQuestion.Important });
+  }, [extraQuestion.Important]);
 
   useEffect(() => {
     console.log("leadObj.Important", leadObj.Important);
@@ -70,7 +80,9 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
 
   useEffect(() => {
     const getAnswers = async () => {
-      const res = await axios.get(`/question/getAllAnswers/${extraObject.Id}`);
+      const res = await axios.get(
+        `/question/getAllAnswers/${extraQuestion.Id}`
+      );
       const dataRes = res.data;
       setAnswers(dataRes);
     };
@@ -156,7 +168,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
   const AddQuestion = async () => {
     setLoading(true);
     let newQuestionObj = {
-      Id: extraObject.Id,
+      Id: extraQuestion.Id,
       LicenseTitleId: leadObj.LicenseTitleId || LicenseTitleId[0]?.value,
       QuestionContent: leadObj.QuestionContent,
       QuestionMedia: deleteImage ? "string" : leadObj.QuestionMedia,
@@ -167,14 +179,14 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     console.table(newQuestionObj);
 
     const response = await axios.put(
-      `/question/updateQuestion/${extraObject.Id}`,
+      `/question/updateQuestion/${extraQuestion.Id}`,
       newQuestionObj
     );
     if (response) {
-      let newSignObj = newQuestionObj;
-      const questionId = extraObject.Id;
+      let newSignObj = extraObject.infor;
+      const questionId = extraQuestion.Id;
 
-      let response2;
+      let response2 = leadObj.QuestionMedia;
       if (imageFile !== null) {
         const imgURL = await uploadImage(questionId);
         response2 = imgURL;
@@ -182,34 +194,27 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
 
       newSignObj = {
         ...newSignObj,
-        QuestionMedia: response2,
+        Question: {
+          ...newSignObj.Question,
+          LicenseTitleId: leadObj.LicenseTitleId || LicenseTitleId[0]?.value,
+          QuestionContent: leadObj.QuestionContent,
+          QuestionMedia: response2,
+          Important: leadObj.Important,
+          Explanation: leadObj.Explanation,
+        },
       };
       closeModal();
 
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
+      dispatch(
+        updateQuestion({ index: extraObject.index, newLeadObj: newSignObj })
+      );
 
-      dispatch(openLoader());
       dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
-      window.location.reload();
       setLoading(false);
     } else {
       dispatch(showNotification({ message: "Sửa thất bại!", status: 0 }));
     }
-
+    closeModal();
     setLoading(false);
   };
 
@@ -233,7 +238,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     <>
       <InputText
         type="text"
-        defaultValue={extraObject.QuestionContent}
+        defaultValue={extraQuestion.QuestionContent}
         updateType="QuestionContent"
         containerStyle="mt-4"
         labelTitle="Nội dung câu hỏi"
@@ -243,7 +248,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
       <div className="flex flex-row gap-2">
         <SelectBox
           type="text"
-          defaultValue={extraObject.LicenseId}
+          defaultValue={extraQuestion.LicenseId}
           placeholder="Chọn loại bằng lái"
           options={licenses}
           updateType="LicenseId"
@@ -255,7 +260,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
           {licenses && (
             <SelectBox
               type="text"
-              defaultValue={extraObject.LicenseTitleId}
+              defaultValue={extraQuestion.LicenseTitleId}
               placeholder="Chọn loại câu hỏi"
               options={LicenseTitleId}
               updateType="LicenseTitleId"
@@ -291,7 +296,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
 
       <InputText
         type="text"
-        defaultValue={extraObject.Explanation}
+        defaultValue={extraQuestion.Explanation}
         updateType="Explanation"
         containerStyle="mt-4"
         labelTitle="Giải thích"
@@ -315,7 +320,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
 
       <div>
         <EditAnswerBody
-          questionId={extraObject.Id}
+          questionId={extraObject.infor.Question.Id}
           answers={answers}
           setRefreshPoint={setRefreshPoint}
         />

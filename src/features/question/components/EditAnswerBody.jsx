@@ -15,12 +15,23 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
   });
   const [submitType, setSubmitType] = useState(true);
 
+  useEffect(() => {
+    console.table({ newAnswer });
+  }, [newAnswer]);
+
   const saveAnswer = async () => {
     if (newAnswer.AnswerContent.trim() === "") {
       return;
     }
     if (submitType) {
-      const response = await axios.post(`/answer/createAnswer`, newAnswer);
+      const newAnswerObj = {
+        Id: "string",
+        QuestionId: questionId,
+        AnswerContent: newAnswer.AnswerContent,
+        Result: newAnswer.Result,
+      };
+
+      const response = await axios.post(`/answer/createAnswer`, newAnswerObj);
       if (response.data) {
         setNewAnswer({
           Id: "",
