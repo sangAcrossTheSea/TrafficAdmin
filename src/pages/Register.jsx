@@ -2,9 +2,9 @@ import Register from "../features/user/Register";
 
 function ExternalPage() {
   return (
-    <div className="">
+    <section className="">
       <Register />
-    </div>
+    </section>
   );
 }
 

@@ -70,7 +70,7 @@ function EditLicenseModalBody({ closeModal, extraObject }) {
         defaultValue={extraObject.name}
         updateType="LicenseName"
         containerStyle="mt-4"
-        labelTitle="Tên loại mức phạt"
+        labelTitle="Tên loại bằng lái"
         updateFormValue={updateFormValue}
       />
 

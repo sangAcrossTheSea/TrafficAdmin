@@ -11,9 +11,9 @@ function InternalPage() {
   }, [dispatch]);
 
   return (
-    <div className="">
+    <section className="">
       <Sign />
-    </div>
+    </section>
   );
 }
 

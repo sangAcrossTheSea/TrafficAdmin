@@ -2,9 +2,9 @@ import Login from "../features/user/Login";
 
 function ExternalPage() {
   return (
-    <div className="">
+    <section className="">
       <Login />
-    </div>
+    </section>
   );
 }
 
