@@ -16,6 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { showNotification } from "../common/headerSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -46,11 +47,35 @@ function Sign() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isChange, setIsChange] = useState(false);
+  const [signTypes, setSignTypes] = useState([]);
+  const [selectedSignType, setSelectedSignType] = useState("all");
+  const [filteredSigns, setFilteredSigns] = useState([]);
 
   useEffect(() => {
     dispatch(getSignsContent());
     console.log("signs", signs);
   }, [isChange]);
+
+  const getSignTypes = async () => {
+    const response = await axios.get("/trafficSignType/getAllTrafficSignTypes");
+    console.log("response", response);
+    if (response.data) {
+      setSignTypes(response.data);
+    }
+    console.log("signTypes", signTypes);
+  };
+
+  useEffect(() => {
+    getSignTypes();
+  }, [isChange]);
+
+  useEffect(() => {
+    if (selectedSignType === "all") {
+      setFilteredSigns(signs);
+    } else {
+      setFilteredSigns(signs.filter((f) => f.SignTypeId === selectedSignType));
+    }
+  }, [selectedSignType, signs]);
 
   const deleteCurrentDecree = (index, _id) => {
     dispatch(
@@ -99,6 +124,29 @@ function Sign() {
         TopSideButtons={<TopSideButtons />}
       >
         {/* Leads List in table format loaded from slice after api call */}
+        <div className="grid grid-cols-3">
+          <div className="flex gap-2 pb-4 items-center">
+            <p>Lọc theo</p>
+
+            <select
+              className="select select-bordered"
+              onChange={(e) => {
+                setSelectedSignType(e.target.value);
+              }}
+            >
+              <option value="all" key="all">
+                Tất cả
+              </option>
+              {signTypes?.map((f) => {
+                return (
+                  <option value={f.Id} key={f.Id}>
+                    {f.SignType}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
             <thead>
@@ -111,7 +159,7 @@ function Sign() {
               </tr>
             </thead>
             <tbody>
-              {signs?.map((l, k) => {
+              {filteredSigns?.map((l, k) => {
                 return (
                   <tr key={l.Id}>
                     <td>

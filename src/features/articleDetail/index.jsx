@@ -81,7 +81,7 @@ function ArticleDetail() {
     );
   };
 
-  const editCurrentDecree = (id, title) => {
+  const editCurrentDecree = (id, title, decreeId) => {
     dispatch(
       openModal({
         title: "Chỉnh sửa khoản",
@@ -90,6 +90,7 @@ function ArticleDetail() {
         extraObject: {
           id,
           title,
+          decreeId,
         },
       })
     );
@@ -118,6 +119,13 @@ function ArticleDetail() {
         {/* <SearchBar searchText={searchText} setSearchText={setSearchText} /> */}
         {/* Leads List in table format loaded from slice after api call */}
         <div className="py-6 grid grid-cols-1 gap-2">
+          {articleDetail?.length === 0 && (
+            <div className="flex justify-center items-center">
+              <p className="text-2xl font-medium text-neutral-500">
+                Không có khoản nào
+              </p>
+            </div>
+          )}
           {articleDetail?.map((item, index) => (
             <div
               tabIndex={0}
@@ -132,7 +140,8 @@ function ArticleDetail() {
                     onClick={() =>
                       editCurrentDecree(
                         item?.Clause?.Id,
-                        item?.Clause?.ClauseTitle
+                        item?.Clause?.ClauseTitle,
+                        article.DecreeId
                       )
                     }
                   >

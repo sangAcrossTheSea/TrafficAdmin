@@ -13,7 +13,7 @@ function InternalPage() {
   }, []);
 
   return (
-    <div className="hero bg-base-200 h-screen">
+    <section className="hero bg-base-200 h-screen">
       <div className="hero-content text-accent text-center text-black">
         <div className="max-w-md">
           <FaceFrownIcon className="h-48 w-48 inline-block" />
@@ -31,7 +31,7 @@ function InternalPage() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -112,55 +112,64 @@ function DecreeDetail() {
       >
         <SearchBar searchText={searchText} setSearchText={setSearchText} />
         {/* Leads List in table format loaded from slice after api call */}
-        <div className="overflow-x-auto w-full">
-          <table className="table w-full">
-            <thead>
-              <tr>
-                <th>Stt</th>
-                <th>Tên</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredArticles?.map((l, k) => {
-                return (
-                  <tr key={l.Id}>
-                    <td>
-                      <div className="flex items-center space-x-3">
-                        <div className="">{k + 1}</div>
-                      </div>
-                    </td>
-                    <td>{l.ArticleTitle}</td>
-                    <td>
-                      <div className="flex justify-end">
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() => navigate(`/article/${l.Id}`)}
-                        >
-                          <EyeIcon className="w-5 text-green-800" />
-                        </button>
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() =>
-                            editCurrentDecree(l.Id, l.ArticleTitle)
-                          }
-                        >
-                          <PencilSquareIcon className="w-5" />
-                        </button>
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() => deleteCurrentDecree(l.Id)}
-                        >
-                          <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        {filteredArticles?.length === 0 && (
+          <div className="flex justify-center items-center">
+            <p className="text-2xl font-medium text-neutral-500">
+              Chưa có điều luật nào, hãy bấm thêm để thêm điều luật
+            </p>
+          </div>
+        )}
+        {filteredArticles?.length > 0 && (
+          <div className="overflow-x-auto w-full">
+            <table className="table w-full">
+              <thead>
+                <tr>
+                  <th>Stt</th>
+                  <th>Tên</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredArticles?.map((l, k) => {
+                  return (
+                    <tr key={l.Id}>
+                      <td>
+                        <div className="flex items-center space-x-3">
+                          <div className="">{k + 1}</div>
+                        </div>
+                      </td>
+                      <td>{l.ArticleTitle}</td>
+                      <td>
+                        <div className="flex justify-end">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() => navigate(`/article/${l.Id}`)}
+                          >
+                            <EyeIcon className="w-5 text-green-800" />
+                          </button>
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() =>
+                              editCurrentDecree(l.Id, l.ArticleTitle)
+                            }
+                          >
+                            <PencilSquareIcon className="w-5" />
+                          </button>
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() => deleteCurrentDecree(l.Id)}
+                          >
+                            <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </TitleCard>
     </>
   );

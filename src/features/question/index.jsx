@@ -10,7 +10,7 @@ import {
   MODAL_BODY_TYPES,
 } from "../../utils/globalConstantUtil";
 import {
-  ArchiveBoxArrowDownIcon,
+  XCircleIcon,
   PencilSquareIcon,
   EyeIcon,
   MagnifyingGlassIcon,
@@ -216,32 +216,36 @@ function Question() {
                         <EyeIcon className="w-5 text-green-800" />
                       </button> */}
                       <div className="flex justify-end">
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() => {
-                            editCurrentLead(
-                              k,
-                              l.Question.Id,
-                              l.Question.LicenseTitleId,
-                              l.Question.QuestionContent,
-                              l.Question.QuestionMedia,
-                              l.Question.Important,
-                              l.Question.Explanation,
-                              l.License.Id,
-                              l.Answers
-                            );
-                          }}
-                        >
-                          <PencilSquareIcon className="w-5" />
-                        </button>
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() => {
-                            deleteCurrentLead(k, id);
-                          }}
-                        >
-                          <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
-                        </button>
+                        <div className="tooltip" data-tip="Sửa câu hỏi">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() => {
+                              editCurrentLead(
+                                k,
+                                l.Question.Id,
+                                l.Question.LicenseTitleId,
+                                l.Question.QuestionContent,
+                                l.Question.QuestionMedia,
+                                l.Question.Important,
+                                l.Question.Explanation,
+                                l.License.Id,
+                                l.Answers
+                              );
+                            }}
+                          >
+                            <PencilSquareIcon className="w-5" />
+                          </button>
+                        </div>
+                        <div className="tooltip" data-tip="Xoá câu hỏi">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() => {
+                              deleteCurrentLead(k, id);
+                            }}
+                          >
+                            <XCircleIcon className="w-5 text-red-700" />
+                          </button>
+                        </div>
                       </div>
                     </td>
                   </tr>

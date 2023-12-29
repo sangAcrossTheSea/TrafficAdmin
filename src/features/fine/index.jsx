@@ -16,6 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { showNotification } from "../common/headerSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -47,23 +48,43 @@ function Fine() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isChange, setIsChange] = useState(false);
-  const [legalGrounds, setLegalGrounds] = useState({
-    decree: "",
-    article: "",
-    clause: "",
-    point: "",
-  });
-  const [legalGroundsMore, setLegalGroundsMore] = useState({
-    decree: "",
-    article: "",
-    clause: "",
-    point: "",
-  });
+  const [selectedVehicleType, setSelectedVehicleType] = useState("all");
+  const [filteredFines, setFilteredFines] = useState([]);
+  const [fineTypes, setFineTypes] = useState([]); // {Id, FineType}
+  const [selectedFineType, setSelectedFineType] = useState("all"); // {Id, FineType}
 
   useEffect(() => {
     dispatch(getFinesContent());
-    console.log("fines", fines);
   }, [isChange]);
+
+  const getFineTypes = async () => {
+    const response = await axios.get("/trafficFineType/getAllTrafficFineTypes");
+    setFineTypes(response.data);
+  };
+
+  useEffect(() => {
+    getFineTypes();
+  }, [fines]);
+
+  useEffect(() => {
+    if (selectedVehicleType === "all" && selectedFineType === "all") {
+      setFilteredFines(fines);
+    } else if (selectedVehicleType === "all" || selectedFineType === "all") {
+      const filtered = fines.filter(
+        (f) =>
+          f.VehicleType === selectedVehicleType ||
+          f.FineTypeId === selectedFineType
+      );
+      setFilteredFines(filtered);
+    } else {
+      const filtered = fines.filter(
+        (f) =>
+          f.VehicleType === selectedVehicleType &&
+          f.FineTypeId === selectedFineType
+      );
+      setFilteredFines(filtered);
+    }
+  }, [selectedVehicleType, fines, selectedFineType]);
 
   const deleteCurrentDecree = (index, _id) => {
     dispatch(
@@ -119,6 +140,42 @@ function Fine() {
         TopSideButtons={<TopSideButtons />}
       >
         {/* Leads List in table format loaded from slice after api call */}
+        <div className="grid grid-cols-3">
+          <div className="flex gap-2 pb-4 items-center">
+            <div className="block">
+              <p className="min-w-[62px] w-full">Lọc theo</p>
+            </div>
+            <select
+              className="select select-bordered"
+              onChange={(e) => {
+                setSelectedVehicleType(e.target.value);
+              }}
+            >
+              <option value="all">Tất cả</option>
+              <option value="motorbike">Xe máy</option>
+              <option value="car">Ô tô</option>
+              <option value="other">Khác</option>
+            </select>
+
+            <select
+              className="select select-bordered"
+              onChange={(e) => {
+                setSelectedFineType(e.target.value);
+              }}
+            >
+              <option value="all" key="all">
+                Tất cả
+              </option>
+              {fineTypes?.map((f) => {
+                return (
+                  <option value={f.Id} key={f.Id}>
+                    {f.FineType}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
             <thead>
@@ -131,7 +188,7 @@ function Fine() {
               </tr>
             </thead>
             <tbody>
-              {fines?.map((l, k) => {
+              {filteredFines?.map((l, k) => {
                 return (
                   <tr key={l.Id}>
                     <td>

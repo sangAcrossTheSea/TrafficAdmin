@@ -241,30 +241,34 @@ function ExamDetail() {
                       >
                         <EyeIcon className="w-5 text-green-800" />
                       </button> */}
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() =>
-                          editCurrentExam(
-                            k,
-                            l.Question.Id,
-                            l.Question.LicenseTitleId,
-                            l.Question.QuestionContent,
-                            l.Question.QuestionMedia,
-                            l.Question.Important,
-                            l.Question.Explanation,
-                            l.License.Id,
-                            l.Answers
-                          )
-                        }
-                      >
-                        <PencilSquareIcon className="w-5" />
-                      </button>
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentExam(l.Id)}
-                      >
-                        <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
-                      </button>
+                      <div className="tooltip" data-tip="Sửa câu hỏi">
+                        <button
+                          className="btn btn-square btn-ghost"
+                          onClick={() =>
+                            editCurrentExam(
+                              k,
+                              l.Question.Id,
+                              l.Question.LicenseTitleId,
+                              l.Question.QuestionContent,
+                              l.Question.QuestionMedia,
+                              l.Question.Important,
+                              l.Question.Explanation,
+                              l.License.Id,
+                              l.Answers
+                            )
+                          }
+                        >
+                          <PencilSquareIcon className="w-5" />
+                        </button>
+                      </div>
+                      <div className="tooltip" data-tip="Xoá khỏi bài thi">
+                        <button
+                          className="btn btn-square btn-ghost"
+                          onClick={() => deleteCurrentExam(l.Id)}
+                        >
+                          <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );

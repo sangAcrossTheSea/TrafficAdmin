@@ -145,37 +145,43 @@ function Examination() {
                     <td>{l.ExaminationName}</td>
                     <td>
                       <div className="flex justify-end">
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() =>
-                            navigate(
-                              `/exam/${l.ExaminationName}/${l.Id}/${l.LicenseId}`
-                            )
-                          }
-                        >
-                          <EyeIcon className="w-5 text-green-800" />
-                        </button>
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() =>
-                            editCurrentExamination(
-                              k,
-                              l.Id,
-                              l.ExaminationName,
-                              l.LicenseId
-                            )
-                          }
-                        >
-                          <PencilSquareIcon className="w-5" />
-                        </button>
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() => {
-                            deleteCurrentExamination(k, l.Id);
-                          }}
-                        >
-                          <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
-                        </button>
+                        <div className="tooltip" data-tip="Xem bài thi">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() =>
+                              navigate(
+                                `/exam/${l.ExaminationName}/${l.Id}/${l.LicenseId}`
+                              )
+                            }
+                          >
+                            <EyeIcon className="w-5 text-green-800" />
+                          </button>
+                        </div>
+                        <div className="tooltip" data-tip="Sửa bài thi">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() =>
+                              editCurrentExamination(
+                                k,
+                                l.Id,
+                                l.ExaminationName,
+                                l.LicenseId
+                              )
+                            }
+                          >
+                            <PencilSquareIcon className="w-5" />
+                          </button>
+                        </div>
+                        <div className="tooltip" data-tip="Xoá bài thi">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() => {
+                              deleteCurrentExamination(k, l.Id);
+                            }}
+                          >
+                            <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
+                          </button>
+                        </div>
                       </div>
                     </td>
                   </tr>

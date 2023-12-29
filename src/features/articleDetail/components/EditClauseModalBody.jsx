@@ -13,13 +13,17 @@ import {
 } from "@heroicons/react/24/outline";
 
 let INITIAL_LEAD_OBJ = {
-  ArticleTitle: "",
+  Id: "",
+  ArticleId: "",
+  ClauseTitle: "",
 };
 
 function EditArticleModalBody({ closeModal, extraObject }) {
   const dispatch = useDispatch();
   INITIAL_LEAD_OBJ = {
-    ArticleTitle: extraObject.title,
+    Id: extraObject.id,
+    ArticleId: extraObject.decreeId,
+    ClauseTitle: extraObject.title,
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -27,7 +31,7 @@ function EditArticleModalBody({ closeModal, extraObject }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
   const [points, setPoints] = useState([]);
-  const { decreeId } = useParams();
+  const { articleId } = useParams();
   const [newPoint, setNewPoint] = useState({
     PointTitle: "",
     PointContent: "",
@@ -50,12 +54,12 @@ function EditArticleModalBody({ closeModal, extraObject }) {
     setLoading(true);
     let newDecreeObj = {
       Id: extraObject.id,
-      DecreeId: decreeId,
-      ArticleTitle: leadObj.ArticleTitle,
+      ArticleId: articleId,
+      ClauseTitle: leadObj.ClauseTitle,
     };
     try {
       const response = await axios.put(
-        `/article/updateArticle/${extraObject.id}`,
+        `/clause/updateClause/${extraObject.id}`,
         newDecreeObj
       );
       dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
@@ -68,7 +72,7 @@ function EditArticleModalBody({ closeModal, extraObject }) {
   };
 
   const saveNewLead = async () => {
-    if (leadObj.ArticleTitle.trim() === "")
+    if (leadObj.ClauseTitle.trim() === "")
       return setErrorMessage("Phải có tên!");
     else {
       EditDecree();
@@ -164,7 +168,7 @@ function EditArticleModalBody({ closeModal, extraObject }) {
       <InputText
         type="text"
         defaultValue={extraObject.title}
-        updateType="ArticleTitle"
+        updateType="ClauseTitle"
         containerStyle="mt-4"
         labelTitle="Tên khoản"
         updateFormValue={updateFormValue}
