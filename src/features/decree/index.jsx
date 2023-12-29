@@ -131,33 +131,35 @@ function Decree() {
                       {new Date(l.DecreeDate).toLocaleDateString("vi-VN")}
                     </td>
                     <td>
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() => navigate(`/decree/${l.Id}`)}
-                      >
-                        <EyeIcon className="w-5 text-green-800" />
-                      </button>
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() =>
-                          editCurrentDecree(
-                            k,
-                            l.Id,
-                            l.DecreeName,
-                            l.DecreeNumber
-                          )
-                        }
-                      >
-                        <PencilSquareIcon className="w-5" />
-                      </button>
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() => {
-                          deleteCurrentDecree(k, l.Id);
-                        }}
-                      >
-                        <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
-                      </button>
+                      <div className="flex justify-end">
+                        <button
+                          className="btn btn-square btn-ghost"
+                          onClick={() => navigate(`/decree/${l.Id}`)}
+                        >
+                          <EyeIcon className="w-5 text-green-800" />
+                        </button>
+                        <button
+                          className="btn btn-square btn-ghost"
+                          onClick={() =>
+                            editCurrentDecree(
+                              k,
+                              l.Id,
+                              l.DecreeName,
+                              l.DecreeNumber
+                            )
+                          }
+                        >
+                          <PencilSquareIcon className="w-5" />
+                        </button>
+                        <button
+                          className="btn btn-square btn-ghost"
+                          onClick={() => {
+                            deleteCurrentDecree(k, l.Id);
+                          }}
+                        >
+                          <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );

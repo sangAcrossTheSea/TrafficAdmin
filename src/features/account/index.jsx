@@ -174,22 +174,20 @@ function User() {
                     <td>{l.UserPhoneNumber}</td>
                     <td>{l.IsVerified ? "Đã xác nhận" : ""}</td>
                     <td>
-                      {/* <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentLead(k)}
-                      >
-                        <EyeIcon className="w-5 text-green-800" />
-                      </button> */}
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() => archiveCurrentLead(l.Id, k, l.IsActive)}
-                      >
-                        {l.IsActive ? (
-                          <ArchiveBoxXMarkIcon className="w-5 text-gray-400" />
-                        ) : (
-                          <ArchiveBoxArrowDownIcon className="w-5 text-yellow-700" />
-                        )}
-                      </button>
+                      <div className="flex justify-end">
+                        <button
+                          className="btn btn-square btn-ghost"
+                          onClick={() =>
+                            archiveCurrentLead(l.Id, k, l.IsActive)
+                          }
+                        >
+                          {l.IsActive ? (
+                            <ArchiveBoxXMarkIcon className="w-5 text-gray-400" />
+                          ) : (
+                            <ArchiveBoxArrowDownIcon className="w-5 text-yellow-700" />
+                          )}
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );
