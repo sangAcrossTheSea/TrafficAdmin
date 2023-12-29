@@ -77,8 +77,13 @@ function AddFineModalBody({ closeModal }) {
     closeModal();
 
     if (response.data) {
-      dispatch(addNewFine(newFineObj));
+      const newObj = {
+        ...newFineObj,
+        Id: response.data.fineId,
+      };
+
       // window.location.reload();
+      dispatch(addNewFine(newObj));
       dispatch(
         showNotification({ message: "Thêm mới thành công!", status: 1 })
       );
@@ -146,14 +151,30 @@ function AddFineModalBody({ closeModal }) {
         updateFormValue={updateFormValue}
       />
 
-      <InputText
+      {/* <InputText
         type="text"
         defaultValue={leadObj.FineBehavior}
         updateType="FineBehavior"
         containerStyle="mt-4"
         labelTitle="Hành vi vi phạm"
         updateFormValue={updateFormValue}
-      />
+      /> */}
+
+      <div className="mt-4">
+        <label className="label">
+          <span className={"label-text text-base-content "}>
+            Hành vi vi phạm
+          </span>
+        </label>
+        <textarea
+          className="textarea textarea-bordered w-full"
+          placeholder="Nội dung"
+          value={leadObj.FineBehavior}
+          onChange={(e) =>
+            setLeadObj({ ...leadObj, FineBehavior: e.target.value })
+          }
+        ></textarea>
+      </div>
 
       <div className="mt-4">
         <label className="label">

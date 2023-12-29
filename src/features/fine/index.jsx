@@ -87,6 +87,8 @@ function Fine() {
   }, [selectedVehicleType, fines, selectedFineType]);
 
   const deleteCurrentDecree = (index, _id) => {
+    setIsChange(!isChange);
+
     dispatch(
       openModal({
         title: "Xác nhận",
@@ -112,6 +114,8 @@ function Fine() {
     FineAdditional,
     FineNote
   ) => {
+    setIsChange(!isChange);
+
     dispatch(
       openModal({
         title: "Chỉnh sửa mức phạt",
