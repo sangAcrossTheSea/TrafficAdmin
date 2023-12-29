@@ -144,7 +144,7 @@ function Examination() {
                     <td>{getLicenseName(l.LicenseId)}</td>
                     <td>{l.ExaminationName}</td>
                     <td>
-                      <div className="flex justify-end">
+                      <div className="flex justify-end pr-4">
                         <div className="tooltip" data-tip="Xem bài thi">
                           <button
                             className="btn btn-square btn-ghost"

@@ -215,7 +215,7 @@ function Question() {
                       >
                         <EyeIcon className="w-5 text-green-800" />
                       </button> */}
-                      <div className="flex justify-end">
+                      <div className="flex justify-end pr-1">
                         <div className="tooltip" data-tip="Sửa câu hỏi">
                           <button
                             className="btn btn-square btn-ghost"
@@ -240,7 +240,7 @@ function Question() {
                           <button
                             className="btn btn-square btn-ghost"
                             onClick={() => {
-                              deleteCurrentLead(k, id);
+                              deleteCurrentLead(k, l.Question.Id);
                             }}
                           >
                             <XCircleIcon className="w-5 text-red-700" />

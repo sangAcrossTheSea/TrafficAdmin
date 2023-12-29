@@ -164,53 +164,55 @@ function New() {
                       {new Date(l.NewsDate).toLocaleDateString("vi-VN")}
                     </td>
                     <td>
-                      <div className="tooltip" data-tip="Xem bài viết">
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() => navigate("/new/" + l.Id)}
-                        >
-                          <EyeIcon className="w-5 text-green-800" />
-                        </button>
-                      </div>
-                      <div className="tooltip" data-tip="Sửa bài viết">
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() =>
-                            editCurrentLead(
-                              l.Id,
-                              l.NewsTitle,
-                              l.NewsClarify,
-                              l.NewsContent,
-                              l.NewsThumbnail,
-                              l.IsHidden,
-                              k
-                            )
-                          }
-                        >
-                          <PencilSquareIcon className="w-5" />
-                        </button>
-                      </div>
-                      <div className="tooltip" data-tip="Ẩn bài viết">
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() =>
-                            archiveCurrentLead(l.Id, k, l.IsHidden)
-                          }
-                        >
-                          {l.IsHidden ? (
-                            <ArchiveBoxXMarkIcon className="w-5 text-gray-400" />
-                          ) : (
-                            <ArchiveBoxArrowDownIcon className="w-5 text-yellow-700" />
-                          )}
-                        </button>
-                      </div>
-                      <div className="tooltip" data-tip="Xoá bài viết">
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() => deleteCurrentLead(l.Id, k)}
-                        >
-                          <XCircleIcon className="w-5 text-red-700" />
-                        </button>
+                      <div className="pr-1">
+                        <div className="tooltip" data-tip="Xem bài viết">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() => navigate("/new/" + l.Id)}
+                          >
+                            <EyeIcon className="w-5 text-green-800" />
+                          </button>
+                        </div>
+                        <div className="tooltip" data-tip="Sửa bài viết">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() =>
+                              editCurrentLead(
+                                l.Id,
+                                l.NewsTitle,
+                                l.NewsClarify,
+                                l.NewsContent,
+                                l.NewsThumbnail,
+                                l.IsHidden,
+                                k
+                              )
+                            }
+                          >
+                            <PencilSquareIcon className="w-5" />
+                          </button>
+                        </div>
+                        <div className="tooltip" data-tip="Ẩn bài viết">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() =>
+                              archiveCurrentLead(l.Id, k, l.IsHidden)
+                            }
+                          >
+                            {l.IsHidden ? (
+                              <ArchiveBoxXMarkIcon className="w-5 text-gray-400" />
+                            ) : (
+                              <ArchiveBoxArrowDownIcon className="w-5 text-yellow-700" />
+                            )}
+                          </button>
+                        </div>
+                        <div className="tooltip" data-tip="Xoá bài viết">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() => deleteCurrentLead(l.Id, k)}
+                          >
+                            <XCircleIcon className="w-5 text-red-700" />
+                          </button>
+                        </div>
                       </div>
                     </td>
                   </tr>

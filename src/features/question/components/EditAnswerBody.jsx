@@ -15,14 +15,14 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
   });
   const [submitType, setSubmitType] = useState(true);
 
-  // useEffect(() => {
-  //   const getAnswers = async () => {
-  //     const res = await axios.get(`/question/getAnswers/${questionId}`);
-  //     const dataRes = res.data;
-  //     setAnswers(dataRes);
-  //   };
-  //   getAnswers();
-  // }, []);
+  useEffect(() => {
+    const getAnswers = async () => {
+      const res = await axios.get(`/question/getAnswers/${questionId}`);
+      const dataRes = res.data;
+      setAnswers(dataRes);
+    };
+    getAnswers();
+  }, []);
 
   const saveAnswer = async () => {
     if (newAnswer.AnswerContent.trim() === "") {
@@ -50,9 +50,9 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
           AnswerContent: "",
         });
         setRefreshPoint((prev) => !prev);
+        setSubmitType((prev) => !prev);
       }
     }
-    setSubmitType((prev) => !prev);
   };
 
   const saveCurrentAnswer = () => {
@@ -173,7 +173,10 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
                     </button>
                     <button
                       className="btn btn-square btn-ghost"
-                      onClick={() => deleteCurrentAnswer(answer?.Id)}
+                      onClick={() => {
+                        console.log("answer", answer?.Id);
+                        deleteCurrentAnswer(answer?.Id);
+                      }}
                     >
                       <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
                     </button>
