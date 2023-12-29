@@ -136,6 +136,7 @@ function User() {
           <table className="table w-full">
             <thead>
               <tr>
+                <th>Stt</th>
                 <th>Mail</th>
                 <th>Học tên</th>
                 <th>Ngày sinh</th>
@@ -147,11 +148,11 @@ function User() {
             </thead>
             <tbody>
               {userList?.map((l, k) => {
-                if (
-                  l.UserLastName === l.UserFirstName &&
-                  l.UserLastName === "Admin"
-                )
-                  return null;
+                // if (
+                //   l.UserLastName === l.UserFirstName &&
+                //   l.UserLastName === "Admin"
+                // )
+                //   return null;
                 return (
                   <tr key={l.Id}>
                     {/* <td>
@@ -161,6 +162,7 @@ function User() {
                         </div>
                       </div>
                     </td> */}
+                    <td>{k + 1}</td>
                     <td>{l.UserEmail}</td>
 
                     <td className="truncate max-w-md">
