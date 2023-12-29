@@ -15,15 +15,6 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
   });
   const [submitType, setSubmitType] = useState(true);
 
-  useEffect(() => {
-    const getAnswers = async () => {
-      const res = await axios.get(`/question/getAnswers/${questionId}`);
-      const dataRes = res.data;
-      setAnswers(dataRes);
-    };
-    getAnswers();
-  }, []);
-
   const saveAnswer = async () => {
     if (newAnswer.AnswerContent.trim() === "") {
       return;
@@ -105,7 +96,6 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
               </span>
               <input
                 type={"checkbox"}
-                // defaultValue={newAnswer.Result}
                 checked={newAnswer.Result}
                 value={newAnswer.Result}
                 className="checkbox"
@@ -146,7 +136,7 @@ const EditAnswerBody = ({ questionId, answers, setRefreshPoint }) => {
           <div className="">
             {answers?.length > 0 &&
               answers?.map((answer, index) => (
-                <div className="grid grid-cols-12 items-center">
+                <div key={answer.Id} className="grid grid-cols-12 items-center">
                   <div className="col-span-9 grid grid-cols-6">
                     <span className="">{index + 1}.</span>
                     <span className="ml-2">{answer?.AnswerContent}</span>

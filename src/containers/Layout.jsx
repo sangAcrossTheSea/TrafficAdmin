@@ -222,7 +222,7 @@ const Layout = () => {
               component={<Link to="/exam" />}
               className=""
             >
-              <p>Bài thi</p>
+              <p>Đề thi</p>
             </MenuItem>
             <SubMenu
               label="Câu hỏi"

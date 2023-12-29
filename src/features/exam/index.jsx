@@ -24,7 +24,7 @@ const TopSideButtons = () => {
   const openAddNewLeadModal = () => {
     dispatch(
       openModal({
-        title: "Thêm bài thi",
+        title: "Thêm đề thi",
         bodyType: MODAL_BODY_TYPES.EXAM_ADD_NEW,
       })
     );
@@ -100,7 +100,7 @@ function Examination() {
         title: "Xác nhận",
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
-          message: `Bạn chắc chắn muốn xoá bài thi này?`,
+          message: `Bạn chắc chắn muốn xoá đề thi này?`,
           type: CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DELETE,
           _id,
           index,
@@ -113,7 +113,7 @@ function Examination() {
     setIsChange(!isChange);
     dispatch(
       openModal({
-        title: "Chỉnh sửa bài thi",
+        title: "Chỉnh sửa đề thi",
         bodyType: MODAL_BODY_TYPES.EXAM_EDIT,
         extraObject: {
           Id,
@@ -128,7 +128,7 @@ function Examination() {
   return (
     <>
       <TitleCard
-        title="Danh sách bài thi"
+        title="Danh sách đề thi"
         topMargin="mt-2"
         TopSideButtons={<TopSideButtons />}
       >
@@ -190,7 +190,7 @@ function Examination() {
                     <td>{l.ExaminationName}</td>
                     <td>
                       <div className="flex justify-end pr-4">
-                        <div className="tooltip" data-tip="Xem bài thi">
+                        <div className="tooltip" data-tip="Xem đề thi">
                           <button
                             className="btn btn-square btn-ghost"
                             onClick={() =>
@@ -202,7 +202,7 @@ function Examination() {
                             <EyeIcon className="w-5 text-green-800" />
                           </button>
                         </div>
-                        <div className="tooltip" data-tip="Sửa bài thi">
+                        <div className="tooltip" data-tip="Sửa đề thi">
                           <button
                             className="btn btn-square btn-ghost"
                             onClick={() =>
@@ -217,7 +217,7 @@ function Examination() {
                             <PencilSquareIcon className="w-5" />
                           </button>
                         </div>
-                        <div className="tooltip" data-tip="Xoá bài thi">
+                        <div className="tooltip" data-tip="Xoá đề thi">
                           <button
                             className="btn btn-square btn-ghost"
                             onClick={() => {

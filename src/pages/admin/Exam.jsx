@@ -7,13 +7,13 @@ function InternalPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setPageTitle({ title: "Bài thi" }));
+    dispatch(setPageTitle({ title: "Đề thi" }));
   }, [dispatch]);
 
   return (
-    <div className="">
+    <section className="">
       <Exam />
-    </div>
+    </section>
   );
 }
 

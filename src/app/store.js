@@ -23,11 +23,13 @@ import signTypeSlice from "../features/signType/signTypeSlice";
 import examSlice from "../features/exam/examSlice";
 import userSlice from "../features/account/accountSlice";
 import licenseSlice from "../features/license/licenseSlice";
+import loaderSlice from "../features/common/loaderSlice";
 
 // Define your root reducer
 const rootReducer = combineReducers({
   header: headerSlice,
   modal: modalSlice,
+  loader: loaderSlice,
   rightDrawer: rightDrawerSlice,
   decree: decreeSlice,
   question: questionSlice,

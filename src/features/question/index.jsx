@@ -16,6 +16,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { showNotification } from "../common/headerSlice";
+import { set } from "react-hook-form";
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const TopSideButtons = () => {
 
 function Question() {
   const { questions } = useSelector((state) => state.question);
+  const { isLoading } = useSelector((state) => state.loader);
   const [questionList, setQuestionList] = useState(questions); //[{id: 1, name: "abc"}, {id: 2, name: "xyz"}
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
@@ -51,12 +53,10 @@ function Question() {
 
   useEffect(() => {
     dispatch(getQuestionsContent());
-    console.table("questionList", questionList);
     setQq(questions.Question);
   }, []);
 
   const deleteCurrentLead = (index, _id) => {
-    console.log("deleteCurrentLead", index, _id);
     dispatch(
       openModal({
         title: "Xác nhận",

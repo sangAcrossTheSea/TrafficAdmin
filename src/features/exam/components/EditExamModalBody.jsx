@@ -64,7 +64,7 @@ function AddExaminationModalBody({ closeModal, extraObject }) {
         Id: response.data.examinationId,
       };
       console.log("newObj", newObj);
-      dispatch(updateExam(newObj));
+      dispatch(updateExam({ newLeadObj: newObj, index: extraObject.index }));
 
       dispatch(
         showNotification({ message: "Thêm mới thành công!", status: 1 })

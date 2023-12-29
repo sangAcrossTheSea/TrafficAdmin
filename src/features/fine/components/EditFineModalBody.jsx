@@ -79,12 +79,10 @@ function EditFineModalBody({ closeModal, extraObject }) {
         updateFine({ index: extraObject.index, newLeadObj: newFineObj })
       );
       // window.location.reload();
-      dispatch(
-        showNotification({ message: "Thêm mới thành công!", status: 1 })
-      );
+      dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
       setLoading(false);
     } else {
-      dispatch(showNotification({ message: "Thêm mới thất bại!", status: 0 }));
+      dispatch(showNotification({ message: "Sửa thất bại!", status: 0 }));
     }
   };
 

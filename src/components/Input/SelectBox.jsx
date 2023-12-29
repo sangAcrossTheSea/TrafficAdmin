@@ -40,7 +40,6 @@ function SelectBox(props) {
       <select
         className="select select-bordered w-full"
         value={value}
-        defaultValue={defaultValue}
         onChange={(e) => updateValue(e.target.value)}
       >
         <option disabled value="PLACEHOLDER">

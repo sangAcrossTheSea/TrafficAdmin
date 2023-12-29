@@ -217,30 +217,34 @@ function Fine() {
                       >
                         <EyeIcon className="w-5 text-green-800" />
                       </button> */}
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() =>
-                          editCurrentDecree(
-                            k,
-                            l.Id,
-                            l.FineName,
-                            l.FineTypeId,
-                            l.VehicleType,
-                            l.FineBehavior,
-                            l.FineContent,
-                            l.FineAdditional,
-                            l.FineNote
-                          )
-                        }
-                      >
-                        <PencilSquareIcon className="w-5" />
-                      </button>
-                      <button
-                        className="btn btn-square btn-ghost"
-                        onClick={() => deleteCurrentDecree(k, l.Id)}
-                      >
-                        <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
-                      </button>
+                      <div className="tooltip" data-tip="Sủa mức phạt">
+                        <button
+                          className="btn btn-square btn-ghost"
+                          onClick={() =>
+                            editCurrentDecree(
+                              k,
+                              l.Id,
+                              l.FineName,
+                              l.FineTypeId,
+                              l.VehicleType,
+                              l.FineBehavior,
+                              l.FineContent,
+                              l.FineAdditional,
+                              l.FineNote
+                            )
+                          }
+                        >
+                          <PencilSquareIcon className="w-5" />
+                        </button>
+                      </div>
+                      <div className="tooltip" data-tip="Xoá mức phạt">
+                        <button
+                          className="btn btn-square btn-ghost"
+                          onClick={() => deleteCurrentDecree(k, l.Id)}
+                        >
+                          <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );

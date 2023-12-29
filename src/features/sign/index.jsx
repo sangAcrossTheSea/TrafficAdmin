@@ -183,28 +183,32 @@ function Sign() {
                       >
                         <EyeIcon className="w-5 text-green-800" />
                       </button> */}
-                      <div className="flex justify-end">
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() =>
-                            editCurrentDecree(
-                              k,
-                              l.Id,
-                              l.SignName,
-                              l.SignTypeId,
-                              l.SignImage,
-                              l.SignExplanation
-                            )
-                          }
-                        >
-                          <PencilSquareIcon className="w-5" />
-                        </button>
-                        <button
-                          className="btn btn-square btn-ghost"
-                          onClick={() => deleteCurrentDecree(k, l.Id)}
-                        >
-                          <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
-                        </button>
+                      <div className="flex justify-end mr-2">
+                        <div className="tooltip" data-tip="Sủa biển báo">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() =>
+                              editCurrentDecree(
+                                k,
+                                l.Id,
+                                l.SignName,
+                                l.SignTypeId,
+                                l.SignImage,
+                                l.SignExplanation
+                              )
+                            }
+                          >
+                            <PencilSquareIcon className="w-5" />
+                          </button>
+                        </div>
+                        <div className="tooltip" data-tip="Xoá biển báo">
+                          <button
+                            className="btn btn-square btn-ghost"
+                            onClick={() => deleteCurrentDecree(k, l.Id)}
+                          >
+                            <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
+                          </button>
+                        </div>
                       </div>
                     </td>
                   </tr>

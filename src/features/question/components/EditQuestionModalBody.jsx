@@ -8,6 +8,8 @@ import ErrorText from "../../../components/Typography/ErrorText";
 import SelectBox from "../../../components/Input/SelectBox";
 import EditAnswerBody from "./EditAnswerBody";
 import { addNewSign } from "../../sign/signSlice";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { openLoader } from "../../common/loaderSlice";
 
 let INITIAL_LEAD_OBJ = {
   Id: "",
@@ -20,7 +22,21 @@ let INITIAL_LEAD_OBJ = {
 };
 
 function AddQuestionModalBody({ closeModal, extraObject }) {
-  INITIAL_LEAD_OBJ = {
+  // INITIAL_LEAD_OBJ = {
+  //   Id: extraObject.Id,
+  //   LicenseTitleId: extraObject.LicenseTitleId,
+  //   QuestionContent: extraObject.QuestionContent,
+  //   QuestionMedia: extraObject.QuestionMedia,
+  //   Important: extraObject.Important,
+  //   Explanation: extraObject.Explanation,
+  //   LicenseId: extraObject.LicenseId,
+  // };
+
+  const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [leadObj, setLeadObj] = useState({
     Id: extraObject.Id,
     LicenseTitleId: extraObject.LicenseTitleId,
     QuestionContent: extraObject.QuestionContent,
@@ -28,19 +44,14 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     Important: extraObject.Important,
     Explanation: extraObject.Explanation,
     LicenseId: extraObject.LicenseId,
-  };
-
-  const dispatch = useDispatch();
-  // eslint-disable-next-line no-unused-vars
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
+  });
 
   const [licenses, setLicenses] = useState([]);
   const [LicenseTitleId, setLicenseTitleId] = useState([]);
   const [imageURL, setImageURL] = useState(extraObject.QuestionMedia);
   const [imageFile, setImageFile] = useState(null);
   const [refreshPoint, setRefreshPoint] = useState(false);
+  const [deleteImage, setDeleteImage] = useState(false);
 
   const [answers, setAnswers] = useState([]);
 
@@ -48,6 +59,14 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     License: "",
     LicenseTitleId: "",
   });
+
+  useEffect(() => {
+    setLeadObj({ ...leadObj, Important: extraObject.Important });
+  }, [extraObject.Important]);
+
+  useEffect(() => {
+    console.log("leadObj.Important", leadObj.Important);
+  }, [leadObj.Important]);
 
   useEffect(() => {
     const getAnswers = async () => {
@@ -74,13 +93,13 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     };
 
     getLicenses().then((res) => getTitles(res));
-  }, []);
+  }, [refreshPoint]);
 
   const getTitles = async (lId) => {
     const response = await axios.get(
       `/licenseTitle/getLicenseTitlesByLicenseId/${lId}`
     );
-    console.log("responseTitle", response);
+    // console.log("responseTitle", response);
     if (response.data) {
       const list = response.data.map((item) => ({
         value: item.LicenseTitle.Id,
@@ -99,11 +118,12 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     if (leadObj.LicenseId) getTitles(leadObj.LicenseId);
   }, [leadObj.LicenseId]);
 
-  useEffect(() => {
-    console.log("LicenseTitleId", LicenseTitleId);
-  }, [LicenseTitleId]);
+  // useEffect(() => {
+  //   console.log("LicenseTitleId", LicenseTitleId);
+  // }, [LicenseTitleId]);
 
   const handleFileChange = (event) => {
+    setDeleteImage(false);
     const file = event.target.files?.[0];
 
     if (file) {
@@ -116,6 +136,12 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     }
   };
 
+  const handleDelete = () => {
+    setDeleteImage(true);
+    setImageFile(null);
+    setImageURL(null);
+  };
+
   const uploadImage = async (questionId) => {
     const formData = new FormData();
     formData.append("file", imageFile);
@@ -123,7 +149,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
       `/question/uploadQuestionMedia/${questionId}`,
       formData
     );
-    console.log("response2", response2);
+    // console.log("response2", response2);
     return response2.data.imageURL;
   };
 
@@ -133,7 +159,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
       Id: extraObject.Id,
       LicenseTitleId: leadObj.LicenseTitleId || LicenseTitleId[0]?.value,
       QuestionContent: leadObj.QuestionContent,
-      QuestionMedia: leadObj.QuestionMedia,
+      QuestionMedia: deleteImage ? "string" : leadObj.QuestionMedia,
       Important: leadObj.Important,
       Explanation: leadObj.Explanation,
     };
@@ -158,14 +184,32 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
         ...newSignObj,
         QuestionMedia: response2,
       };
-      dispatch(addNewSign(newSignObj));
-      // window.location.reload();
+      closeModal();
+
+      Array(3).map((_, i) => {
+        const random = Math.floor(Math.random() * 4);
+      });
+      Array(3).map((_, i) => {
+        const random = Math.floor(Math.random() * 4);
+      });
+      Array(3).map((_, i) => {
+        const random = Math.floor(Math.random() * 4);
+      });
+      Array(3).map((_, i) => {
+        const random = Math.floor(Math.random() * 4);
+      });
+      Array(3).map((_, i) => {
+        const random = Math.floor(Math.random() * 4);
+      });
+
+      dispatch(openLoader());
       dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
+      window.location.reload();
       setLoading(false);
     } else {
       dispatch(showNotification({ message: "Sửa thất bại!", status: 0 }));
     }
-    closeModal();
+
     setLoading(false);
   };
 
@@ -174,7 +218,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
       return setErrorMessage("Phải có tên!");
     // else if (imageFile === null) return setErrorMessage("Phải có ảnh");
     else if (leadObj.Explanation.trim() === "")
-      return setErrorMessage("Phải có số hiệu nghị định!");
+      return setErrorMessage("Phải có giải thích!");
     else {
       AddQuestion();
     }
@@ -225,13 +269,18 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
 
       <div className="mt-4">
         <label className="label text-sm ">Ảnh</label>
-        <input
-          type="file"
-          className="file-input w-full max-w-xs"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
-        {imageURL && (
+        <div className="flex gap-2">
+          <input
+            type="file"
+            className="file-input w-full max-w-xs"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <button className="btn btn-ghost" onClick={() => handleDelete()}>
+            <TrashIcon className="h-5 w-5 text-red-500" />
+          </button>
+        </div>
+        {imageURL && imageURL !== "string" && (
           <img
             src={imageURL}
             alt="Preview"
@@ -253,9 +302,8 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
         <label className="label">
           <span className={"label-text text-base-content "}>Điểm liệt</span>
           <input
-            type={"checkbox"}
-            defaultValue={extraObject.Important}
-            checked={leadObj.Important}
+            type="checkbox"
+            defaultChecked={leadObj.Important}
             value={leadObj.Important}
             className="checkbox"
             onClick={(e) =>

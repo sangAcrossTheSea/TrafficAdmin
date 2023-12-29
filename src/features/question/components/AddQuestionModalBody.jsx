@@ -6,7 +6,9 @@ import { showNotification } from "../../common/headerSlice";
 import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import SelectBox from "../../../components/Input/SelectBox";
-import { set } from "react-hook-form";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { addNewQuestion } from "../questionSlice";
+import { openLoader } from "../../common/loaderSlice";
 
 const INITIAL_LEAD_OBJ = {
   Id: "",
@@ -28,6 +30,7 @@ function AddQuestionModalBody({ closeModal }) {
   const [LicenseTitleId, setLicenseTitleId] = useState([]);
   const [imageURL, setImageURL] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [deleteImage, setDeleteImage] = useState(false);
 
   const [licenseAndTitle, setLicenseAndTitle] = useState({
     License: "",
@@ -75,11 +78,12 @@ function AddQuestionModalBody({ closeModal }) {
     if (leadObj.License) getTitles(leadObj.License);
   }, [leadObj.License]);
 
-  useEffect(() => {
-    console.log("LicenseTitleId", LicenseTitleId);
-  }, [LicenseTitleId]);
+  // useEffect(() => {
+  //   console.log("LicenseTitleId", LicenseTitleId);
+  // }, [LicenseTitleId]);
 
   const handleFileChange = (event) => {
+    setDeleteImage(false);
     const file = event.target.files?.[0];
 
     if (file) {
@@ -90,6 +94,12 @@ function AddQuestionModalBody({ closeModal }) {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleDelete = () => {
+    setImageFile(null);
+    setImageURL(null);
+    setDeleteImage(true);
   };
 
   const uploadImage = async (questionId) => {
@@ -134,8 +144,11 @@ function AddQuestionModalBody({ closeModal }) {
         Id: questionId,
         QuestionMedia: response2,
       };
-      // dispatch(addNewSign(newSignObj));
-      // window.location.reload();
+
+      closeModal();
+      dispatch(openLoader());
+      // dispatch(addNewQuestion(newSignObj));
+      window.location.reload();
       dispatch(
         showNotification({ message: "Thêm mới thành công!", status: 1 })
       );
@@ -143,16 +156,15 @@ function AddQuestionModalBody({ closeModal }) {
     } else {
       dispatch(showNotification({ message: "Thêm mới thất bại!", status: 0 }));
     }
-    closeModal();
+    // closeModal();
     setLoading(false);
   };
 
   const saveNewLead = async () => {
     if (leadObj.QuestionContent.trim() === "")
       return setErrorMessage("Phải có tên!");
-    else if (imageFile === null) return setErrorMessage("Phải có ảnh");
     else if (leadObj.Explanation.trim() === "")
-      return setErrorMessage("Phải có số hiệu nghị định!");
+      return setErrorMessage("Phải có giải thích!");
     else {
       AddQuestion();
     }
@@ -203,12 +215,17 @@ function AddQuestionModalBody({ closeModal }) {
 
       <div className="mt-4">
         <label className="label text-sm ">Ảnh</label>
-        <input
-          type="file"
-          className="file-input w-full max-w-xs"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
+        <div className="flex gap-2">
+          <input
+            type="file"
+            className="file-input w-full max-w-xs"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <button className="btn btn-ghost" onClick={() => handleDelete()}>
+            <TrashIcon className="h-5 w-5 text-red-500" />
+          </button>
+        </div>
         {imageURL && (
           <img
             src={imageURL}
@@ -232,7 +249,7 @@ function AddQuestionModalBody({ closeModal }) {
           <span className={"label-text text-base-content "}>Điểm liệt</span>
           <input
             type={"checkbox"}
-            checked={leadObj.Important}
+            // checked={leadObj.Important}
             value={leadObj.Important}
             className="checkbox"
             onClick={(e) =>
