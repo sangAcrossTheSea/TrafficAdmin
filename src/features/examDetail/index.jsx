@@ -101,7 +101,7 @@ function ExamDetail() {
   //   console.log("filteredExamDetailLog", filteredExamDetail);
   // }, [filteredExamDetail]);
 
-  const deleteCurrentExam = (index) => {
+  const deleteCurrentExam = (_id) => {
     dispatch(
       openModal({
         title: "Xác nhận",
@@ -109,23 +109,13 @@ function ExamDetail() {
         extraObject: {
           message: `Bạn chắc chắn muốn xoá câu hỏi này khỏi bài thi?`,
           type: CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE,
-          _id: index,
+          _id: _id,
         },
       })
     );
   };
 
-  const editCurrentExam = (
-    index,
-    Id,
-    LicenseTitleId,
-    QuestionContent,
-    QuestionMedia,
-    Important,
-    Explanation,
-    LicenseId,
-    Answers
-  ) => {
+  const editCurrentExam = (index, l) => {
     dispatch(
       openModal({
         title: "Sửa câu hỏi",
@@ -133,14 +123,7 @@ function ExamDetail() {
         size: "lg",
         extraObject: {
           index,
-          Id,
-          LicenseTitleId,
-          QuestionContent,
-          QuestionMedia,
-          Important,
-          Explanation,
-          LicenseId,
-          Answers,
+          infor: l,
         },
       })
     );
@@ -148,7 +131,9 @@ function ExamDetail() {
 
   const showImportant = (index) => {
     if (index === true)
-      return <div className="badge badge-neutral">Điểm liệt</div>;
+      return (
+        <div className="badge badge-neutral py-5 text-center">Điểm liệt</div>
+      );
     else return <div></div>;
   };
 
@@ -222,16 +207,25 @@ function ExamDetail() {
                         <div className="">{k + 1}</div>
                       </div>
                     </td>
-                    <td>{l.Question.QuestionContent}</td>
+                    <td className="max-w-lg break-words">
+                      {l.Question.QuestionContent}
+                    </td>
                     <td>
-                      <img
-                        src={l.Question.QuestionMedia}
-                        alt="sign"
-                        className="h-24 w-24 object-cover"
-                      />
+                      {l.Question.QuestionMedia &&
+                      l.Question.QuestionMedia !== "string" ? (
+                        <img
+                          src={l.Question.QuestionMedia}
+                          alt="Question Media"
+                          className="w-20 h-20"
+                        />
+                      ) : (
+                        <div>N/A</div>
+                      )}
                     </td>
                     <td>{l.Title.TitleName}</td>
-                    <td className="max-w-sm">{l.Question.Explanation}</td>
+                    <td className="max-w-sm truncate">
+                      {l.Question.Explanation}
+                    </td>
                     <td> {showImportant(l.Question.Important)}</td>
 
                     <td>
@@ -244,19 +238,7 @@ function ExamDetail() {
                       <div className="tooltip" data-tip="Sửa câu hỏi">
                         <button
                           className="btn btn-square btn-ghost"
-                          onClick={() =>
-                            editCurrentExam(
-                              k,
-                              l.Question.Id,
-                              l.Question.LicenseTitleId,
-                              l.Question.QuestionContent,
-                              l.Question.QuestionMedia,
-                              l.Question.Important,
-                              l.Question.Explanation,
-                              l.License.Id,
-                              l.Answers
-                            )
-                          }
+                          onClick={() => editCurrentExam(k, l)}
                         >
                           <PencilSquareIcon className="w-5" />
                         </button>

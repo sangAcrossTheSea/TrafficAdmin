@@ -17,6 +17,28 @@ function AddLicenseModalBody({ closeModal }) {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
+  // const [titles, setTitles] = useState([]);
+
+  const addTitlesToLicense = async (licenseId, titleId) => {
+    const licenseTitle = {
+      Id: "string",
+      LicenseId: licenseId,
+      TitleId: titleId,
+    };
+    const res = await axios.post(
+      `/licenseTitle/createLicenseTitle`,
+      licenseTitle
+    );
+    console.log(res);
+  };
+
+  const getTitles = async (licenseId) => {
+    const res = await axios.get("/title/getAllTitles");
+    const titles = res.data;
+    titles.forEach((title) => {
+      addTitlesToLicense(licenseId, title.Id);
+    });
+  };
 
   const AddLicense = async () => {
     setLoading(true);
@@ -29,6 +51,7 @@ function AddLicenseModalBody({ closeModal }) {
     closeModal();
 
     if (response.data) {
+      getTitles(response.data.licenseId);
       const newObj = {
         Id: response.data.licenseId,
         LicenseName: leadObj.LicenseName,

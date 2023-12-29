@@ -46,7 +46,7 @@ const TopSideButtons = () => {
 function Question() {
   const { questions } = useSelector((state) => state.question);
   const { isLoading } = useSelector((state) => state.loader);
-  const [questionList, setQuestionList] = useState(questions); //[{id: 1, name: "abc"}, {id: 2, name: "xyz"}
+  const [questionList, setQuestionList] = useState(questions);
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
   const [qq, setQq] = useState(questions.Question);

@@ -19,6 +19,8 @@ function AddArticleModalBody({ closeModal }) {
   const { examId, licenseId } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
   const [leadObj, setLeadObj] = useState(INITIAL_LEAD_OBJ);
+  const [questionList, setQuestionList] = useState(questions);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -30,9 +32,39 @@ function AddArticleModalBody({ closeModal }) {
     fetchQuestions();
   }, []);
 
+  const onSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const search = () => {
+    if (!Array.isArray(questions)) {
+      return [];
+    }
+
+    if (searchTerm === "") {
+      return questions;
+    } else {
+      return questions.filter((item) =>
+        item.Question?.QuestionContent.toLowerCase().includes(
+          searchTerm.toLowerCase()
+        )
+      );
+    }
+  };
+
+  useEffect(() => {
+    setQuestionList(search());
+  }, [searchTerm]);
+
+  useEffect(() => {
+    setQuestionList(questions);
+  }, [questions]);
+
   const showImportant = (index) => {
     if (index === true)
-      return <div className="badge badge-neutral">Điểm liệt</div>;
+      return (
+        <div className="badge badge-neutral py-5 text-center">Điểm liệt</div>
+      );
     else return <div></div>;
   };
 
@@ -109,6 +141,19 @@ function AddArticleModalBody({ closeModal }) {
         labelTitle="Tên điều luật"
         updateFormValue={updateFormValue}
       /> */}
+      <section>
+        <div className="flex items-center">
+          <div className="flex">
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              placeholder="Nhập từ khóa"
+              value={searchTerm}
+              onChange={onSearch}
+            />
+          </div>
+        </div>
+      </section>
 
       <div className="overflow-x-auto w-full">
         <table className="table w-full">
@@ -123,7 +168,7 @@ function AddArticleModalBody({ closeModal }) {
             </tr>
           </thead>
           <tbody>
-            {questions?.map((l, k) => {
+            {questionList?.map((l, k) => {
               return (
                 <tr key={k}>
                   <td>
@@ -174,8 +219,8 @@ function AddArticleModalBody({ closeModal }) {
         <button className="btn btn-ghost" onClick={() => closeModal()}>
           Huỷ
         </button>
-        <button className="btn btn-primary px-6" onClick={() => saveNewLead()}>
-          Lưu
+        <button className="btn btn-primary px-6" onClick={() => closeModal()}>
+          Xong
         </button>
       </div>
     </>

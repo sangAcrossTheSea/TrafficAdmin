@@ -10,6 +10,7 @@ import EditAnswerBody from "./EditAnswerBody";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { openLoader } from "../../common/loaderSlice";
 import { updateQuestion } from "../questionSlice";
+import { useLocation } from "react-router-dom";
 
 // l.Question.Id,
 //   l.Question.LicenseTitleId,
@@ -42,7 +43,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
 
   const dispatch = useDispatch();
   const extraQuestion = extraObject.infor.Question;
-  const extraLicense = extraObject.infor.LicenseId;
+  const extraLicense = extraObject.infor.License.Id;
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -248,7 +249,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
       <div className="flex flex-row gap-2">
         <SelectBox
           type="text"
-          defaultValue={extraQuestion.LicenseId}
+          defaultValue={extraLicense}
           placeholder="Chọn loại bằng lái"
           options={licenses}
           updateType="LicenseId"

@@ -101,7 +101,7 @@ function Examination() {
         bodyType: MODAL_BODY_TYPES.CONFIRMATION,
         extraObject: {
           message: `Bạn chắc chắn muốn xoá đề thi này?`,
-          type: CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DELETE,
+          type: CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE,
           _id,
           index,
         },
@@ -187,7 +187,9 @@ function Examination() {
                       </div>
                     </td>
                     <td>{getLicenseName(l.LicenseId)}</td>
-                    <td>{l.ExaminationName}</td>
+                    <td className="break-words max-w-xs w-full truncate">
+                      {l.ExaminationName}
+                    </td>
                     <td>
                       <div className="flex justify-end pr-4">
                         <div className="tooltip" data-tip="Xem đề thi">

@@ -42,6 +42,10 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         response = await axios.delete(`/trafficSign/deleteTrafficSign/${_id}`);
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DELETE) {
         response = await axios.delete(`/examination/deleteExamination/${_id}`);
+      } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE) {
+        response = await axios.delete(
+          `/examinationQuestion/deleteExaminationQuestion/${_id}`
+        );
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.QUESTION_DELETE) {
         response = await axios.delete(`/question/deleteQuestion/${_id}`);
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.FINE_DELETE) {
@@ -50,7 +54,7 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         response = await axios.delete(`/license/deleteLicense/${_id}`);
       }
 
-      if (response.data) {
+      if (response) {
         // window.location.reload();
         dispatch(showNotification({ message: "Xoá thành công!", status: 1 }));
         if (type === CONFIRMATION_MODAL_CLOSE_TYPES.DECREE_DELETE)
@@ -69,7 +73,12 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
           dispatch(deleteSign(index));
         else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DELETE)
           dispatch(deleteExam(index));
-        else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.QUESTION_DELETE)
+        else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE) {
+          closeModal();
+          setTimeout(() => {
+            dispatch(window.location.reload());
+          }, 1000);
+        } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.QUESTION_DELETE)
           dispatch(deleteQuestion(index));
         else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.FINE_DELETE)
           dispatch(deleteFine(index));
