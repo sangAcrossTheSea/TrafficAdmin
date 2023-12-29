@@ -9,7 +9,7 @@ function InternalPage() {
     dispatch(setPageTitle({ title: "Trang chủ" }));
   }, [dispatch]);
 
-  return <div className="">Trang chủ</div>;
+  return <section className="">Trang chủ</section>;
 }
 
 export default InternalPage;

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import moment from "moment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleCard from "../../components/Cards/TitleCard";
 import { openModal } from "../common/modalSlice";
@@ -14,6 +14,8 @@ import {
   ArchiveBoxArrowDownIcon,
   PencilSquareIcon,
   EyeIcon,
+  ArrowLongDownIcon,
+  ArrowLongUpIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ArchiveBoxXMarkIcon } from "@heroicons/react/20/solid";
@@ -52,11 +54,33 @@ function New() {
   const { news } = useSelector((state) => state.new);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [sortNews, setSortNews] = useState(news || []);
+  const [sortByDate, setSortByDate] = useState("desc");
 
   useEffect(() => {
     dispatch(getNewsContent());
+    setSortNews(news);
     console.log("News", news);
   }, []);
+
+  useEffect(() => {
+    if (!news) {
+      return;
+    }
+    if (sortByDate === "desc") {
+      setSortNews(
+        [...news].sort((a, b) => {
+          return new Date(b.NewsDate) - new Date(a.NewsDate);
+        })
+      );
+    } else {
+      setSortNews(
+        [...news].sort((a, b) => {
+          return new Date(a.NewsDate) - new Date(b.NewsDate);
+        })
+      );
+    }
+  }, [sortByDate, news]);
 
   const archiveCurrentLead = (_id, index, status) => {
     dispatch(
@@ -74,6 +98,14 @@ function New() {
         },
       })
     );
+  };
+
+  const handleSortByDate = () => {
+    if (sortByDate === "desc") {
+      setSortByDate("asc");
+    } else {
+      setSortByDate("desc");
+    }
   };
 
   const deleteCurrentLead = (_id, index) => {
@@ -133,12 +165,30 @@ function New() {
                 <th>Stt</th>
                 <th>Tiêu đề</th>
                 <th>Mô tả</th>
-                <th>Chỉnh sửa lần cuối</th>
+                <th
+                  className="flex gap-1 cursor-pointer"
+                  onClick={() => {
+                    handleSortByDate();
+                  }}
+                >
+                  <p>Chỉnh sửa cuối</p>
+                  <div>
+                    {sortByDate ? (
+                      sortByDate === "desc" ? (
+                        <ArrowLongDownIcon className="w-5" />
+                      ) : (
+                        <ArrowLongUpIcon className="w-5" />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {news?.map((l, k) => {
+              {sortNews?.map((l, k) => {
                 return (
                   <tr key={l.Id}>
                     <td>

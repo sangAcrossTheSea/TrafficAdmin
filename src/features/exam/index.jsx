@@ -48,6 +48,28 @@ function Examination() {
   const navigate = useNavigate();
   const [isChange, setIsChange] = useState(false);
   const [licenses, setLicenses] = useState([]);
+  const [selectedLicense, setSelectedLicense] = useState("all");
+  const [filteredExam, setFilteredExam] = useState([]);
+
+  useEffect(() => {
+    const getLicenses = async () => {
+      const response = await axios.get("/license/getAllLicenses");
+      if (response.data) {
+        setLicenses(response.data);
+      }
+      return response.data[0].Id;
+    };
+
+    getLicenses();
+  }, []);
+
+  useEffect(() => {
+    if (selectedLicense === "all") {
+      setFilteredExam(exams);
+    } else {
+      setFilteredExam(exams.filter((f) => f.LicenseId === selectedLicense));
+    }
+  }, [selectedLicense, exams]);
 
   useEffect(() => {
     dispatch(getExaminationsContent());
@@ -111,6 +133,29 @@ function Examination() {
         TopSideButtons={<TopSideButtons />}
       >
         {/* Leads List in table format loaded from slice after api call */}
+        <div className="grid grid-cols-3">
+          <div className="flex gap-2 pb-4 items-center">
+            <p>Lọc theo</p>
+
+            <select
+              className="select select-bordered"
+              onChange={(e) => {
+                setSelectedLicense(e.target.value);
+              }}
+            >
+              <option value="all" key="all">
+                Tất cả
+              </option>
+              {licenses?.map((f) => {
+                return (
+                  <option value={f.Id} key={f.Id}>
+                    {f.LicenseName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
             <thead>
@@ -122,7 +167,7 @@ function Examination() {
               </tr>
             </thead>
             <tbody>
-              {exams?.map((l, k) => {
+              {filteredExam?.map((l, k) => {
                 return (
                   <tr key={l.Id}>
                     <td>
