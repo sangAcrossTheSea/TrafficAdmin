@@ -146,22 +146,10 @@ function AddQuestionModalBody({ closeModal }) {
       };
 
       closeModal();
-      dispatch(openLoader());
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
-      Array(3).map((_, i) => {
-        const random = Math.floor(Math.random() * 4);
-      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
       // dispatch(addNewQuestion(newSignObj));
       window.location.reload();
       dispatch(
