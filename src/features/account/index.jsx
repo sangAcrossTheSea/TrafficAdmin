@@ -138,7 +138,7 @@ function User() {
               <tr>
                 <th>Stt</th>
                 <th>Mail</th>
-                <th>Học tên</th>
+                <th>Họ tên</th>
                 <th>Ngày sinh</th>
                 <th>Giới tính</th>
                 <th>Số điện thoại</th>

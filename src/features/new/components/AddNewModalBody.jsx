@@ -144,7 +144,7 @@ function AddNewModalBody({ closeModal }) {
         defaultValue={leadObj.NewsTitle}
         updateType="NewsTitle"
         containerStyle="mt-4"
-        labelTitle="Tiều đề bài báo"
+        labelTitle="Tiêu đề bài báo"
         updateFormValue={updateFormValue}
       />
 

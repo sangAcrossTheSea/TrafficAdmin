@@ -17,7 +17,7 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
   const dispatch = useDispatch();
 
   // eslint-disable-next-line no-unused-vars
-  const { message, type, _id, index } = extraObject;
+  const { message, type, _id, index, list } = extraObject;
 
   const proceedWithYes = async () => {
     if (type) {
@@ -43,9 +43,12 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DELETE) {
         response = await axios.delete(`/examination/deleteExamination/${_id}`);
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE) {
-        response = await axios.delete(
-          `/examinationQuestion/deleteExaminationQuestion/${_id}`
-        );
+        list?.map(async (item) => {
+          item.ExaminationId === _id &&
+            (response = await axios.delete(
+              `/examinationQuestion/deleteExaminationQuestion/${item.Id}`
+            ));
+        });
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.QUESTION_DELETE) {
         response = await axios.delete(`/question/deleteQuestion/${_id}`);
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.FINE_DELETE) {
@@ -85,7 +88,14 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
         else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.LICENSE_DELETE)
           dispatch(deleteLicense(index));
       } else {
-        dispatch(showNotification({ message: "Xoá thất bại!", status: 0 }));
+        if (type !== CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE)
+          dispatch(showNotification({ message: "Xoá thất bại!", status: 0 }));
+        else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE) {
+          closeModal();
+          setTimeout(() => {
+            dispatch(window.location.reload());
+          }, 1000);
+        }
       }
     }
     closeModal();

@@ -17,7 +17,6 @@ import { showNotification } from "@/features/common/headerSlice";
 import SearchBar from "@/components/Input/SearchBar";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { set } from "react-hook-form";
 
 const TopSideButtons = () => {
   const dispatch = useDispatch();
@@ -101,7 +100,12 @@ function ExamDetail() {
   //   console.log("filteredExamDetailLog", filteredExamDetail);
   // }, [filteredExamDetail]);
 
-  const deleteCurrentExam = (_id) => {
+  const deleteCurrentExam = async (_id) => {
+    const res = await axios.get(
+      `/examinationQuestion/getAllExaminationQuestionsByQuestionId/${_id}`
+    );
+    const dataRes = res.data;
+
     dispatch(
       openModal({
         title: "Xác nhận",
@@ -109,7 +113,8 @@ function ExamDetail() {
         extraObject: {
           message: `Bạn chắc chắn muốn xoá câu hỏi này khỏi bài thi?`,
           type: CONFIRMATION_MODAL_CLOSE_TYPES.EXAM_DETAIL_DELETE,
-          _id: _id,
+          _id: examId,
+          list: dataRes,
         },
       })
     );
@@ -246,7 +251,7 @@ function ExamDetail() {
                       <div className="tooltip" data-tip="Xoá khỏi bài thi">
                         <button
                           className="btn btn-square btn-ghost"
-                          onClick={() => deleteCurrentExam(l.Id)}
+                          onClick={() => deleteCurrentExam(l.Question.Id)}
                         >
                           <ArchiveBoxArrowDownIcon className="w-5 text-red-700" />
                         </button>
