@@ -7,6 +7,7 @@ import InputText from "../../../components/Input/InputText";
 import ErrorText from "../../../components/Typography/ErrorText";
 import SelectBox from "../../../components/Input/SelectBox";
 import EditAnswerBody from "./EditAnswerBody";
+import { addNewSign } from "../../sign/signSlice";
 
 let INITIAL_LEAD_OBJ = {
   Id: "",
@@ -15,7 +16,6 @@ let INITIAL_LEAD_OBJ = {
   QuestionMedia: "",
   Important: false,
   Explanation: "",
-  License: "",
   LicenseId: "",
 };
 
@@ -27,7 +27,6 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
     QuestionMedia: extraObject.QuestionMedia,
     Important: extraObject.Important,
     Explanation: extraObject.Explanation,
-    License: extraObject.License,
     LicenseId: extraObject.LicenseId,
   };
 
@@ -97,8 +96,8 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
   };
 
   useEffect(() => {
-    if (leadObj.License) getTitles(leadObj.License);
-  }, [leadObj.License]);
+    if (leadObj.LicenseId) getTitles(leadObj.LicenseId);
+  }, [leadObj.LicenseId]);
 
   useEffect(() => {
     console.log("LicenseTitleId", LicenseTitleId);
@@ -131,39 +130,40 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
   const AddQuestion = async () => {
     setLoading(true);
     let newQuestionObj = {
-      Id: "string",
+      Id: extraObject.Id,
       LicenseTitleId: leadObj.LicenseTitleId || LicenseTitleId[0]?.value,
       QuestionContent: leadObj.QuestionContent,
-      QuestionMedia: "string",
+      QuestionMedia: leadObj.QuestionMedia,
       Important: leadObj.Important,
       Explanation: leadObj.Explanation,
     };
 
     console.table(newQuestionObj);
 
-    const response = await axios.post(
+    const response = await axios.put(
       `/question/updateQuestion/${extraObject.Id}`,
       newQuestionObj
     );
-    if (response.data && imageFile !== null) {
+    if (response) {
       let newSignObj = newQuestionObj;
-      const questionId = response.data.questionId;
+      const questionId = extraObject.Id;
 
-      const imgURL = await uploadImage(questionId);
-      const response2 = imgURL;
+      let response2;
+      if (imageFile !== null) {
+        const imgURL = await uploadImage(questionId);
+        response2 = imgURL;
+      }
 
       newSignObj = {
         ...newSignObj,
         QuestionMedia: response2,
       };
-      // dispatch(addNewSign(newSignObj));
+      dispatch(addNewSign(newSignObj));
       // window.location.reload();
-      dispatch(
-        showNotification({ message: "Thêm mới thành công!", status: 1 })
-      );
+      dispatch(showNotification({ message: "Sửa thành công!", status: 1 }));
       setLoading(false);
     } else {
-      dispatch(showNotification({ message: "Thêm mới thất bại!", status: 0 }));
+      dispatch(showNotification({ message: "Sửa thất bại!", status: 0 }));
     }
     closeModal();
     setLoading(false);
@@ -172,7 +172,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
   const saveNewLead = async () => {
     if (leadObj.QuestionContent.trim() === "")
       return setErrorMessage("Phải có tên!");
-    else if (imageFile === null) return setErrorMessage("Phải có ảnh");
+    // else if (imageFile === null) return setErrorMessage("Phải có ảnh");
     else if (leadObj.Explanation.trim() === "")
       return setErrorMessage("Phải có số hiệu nghị định!");
     else {
@@ -202,7 +202,7 @@ function AddQuestionModalBody({ closeModal, extraObject }) {
           defaultValue={extraObject.LicenseId}
           placeholder="Chọn loại bằng lái"
           options={licenses}
-          updateType="License"
+          updateType="LicenseId"
           containerStyle="mt-4"
           labelTitle="Loại bằng lái"
           updateFormValue={updateFormValue}

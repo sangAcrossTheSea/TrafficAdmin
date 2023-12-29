@@ -123,9 +123,11 @@ function AddQuestionModalBody({ closeModal }) {
     if (response.data) {
       let newSignObj = newQuestionObj;
       const questionId = response.data.questionId;
-
-      const imgURL = await uploadImage(questionId);
-      const response2 = imgURL;
+      let response2;
+      if (imageFile) {
+        const imgURL = await uploadImage(questionId);
+        response2 = imgURL;
+      }
 
       newSignObj = {
         ...newSignObj,

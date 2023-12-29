@@ -98,10 +98,10 @@ function AddFineModalBody({ closeModal }) {
       return setErrorMessage("Phải có hành vi vi phạm!");
     if (leadObj.FineContent.trim() === "")
       return setErrorMessage("Phải có nội dung!");
-    if (leadObj.FineAdditional.trim() === "")
-      return setErrorMessage("Phải có thông tin thêm!");
-    if (leadObj.FineNote.trim() === "")
-      return setErrorMessage("Phải có ghi chú!");
+    // if (leadObj.FineAdditional.trim() === "")
+    //   return setErrorMessage("Phải có thông tin thêm!");
+    // if (leadObj.FineNote.trim() === "")
+    //   return setErrorMessage("Phải có ghi chú!");
     else {
       AddFine();
     }
@@ -172,7 +172,7 @@ function AddFineModalBody({ closeModal }) {
       <div className="mt-4">
         <label className="label">
           <span className={"label-text text-base-content "}>
-            Thông tin thêm
+            Mức phạt bổ sung
           </span>
         </label>
         <textarea

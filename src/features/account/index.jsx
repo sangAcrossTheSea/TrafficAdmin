@@ -109,7 +109,7 @@ function User() {
 
   return (
     <>
-      <TitleCard title="Danh sách câu hỏi" topMargin="mt-2">
+      <TitleCard title="Danh sách người dùng" topMargin="mt-2">
         {/* Leads List in table format loaded from slice after api call */}
         <section>
           <div className="flex items-center">

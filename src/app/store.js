@@ -22,6 +22,7 @@ import signSlice from "../features/sign/signSlice";
 import signTypeSlice from "../features/signType/signTypeSlice";
 import examSlice from "../features/exam/examSlice";
 import userSlice from "../features/account/accountSlice";
+import licenseSlice from "../features/license/licenseSlice";
 
 // Define your root reducer
 const rootReducer = combineReducers({
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   signType: signTypeSlice,
   exam: examSlice,
   user: userSlice,
+  license: licenseSlice,
 });
 
 // Define your persist config

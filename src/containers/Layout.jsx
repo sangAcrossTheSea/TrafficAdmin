@@ -196,7 +196,7 @@ const Layout = () => {
                 <p>Loại biển báo</p>
               </MenuItem>
             </SubMenu>
-            <MenuItem
+            {/* <MenuItem
               icon={
                 <QuestionMarkCircleIcon className="h-6 w-6 text-gray-300" />
               }
@@ -205,7 +205,7 @@ const Layout = () => {
               className=""
             >
               <p>Câu hỏi</p>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               icon={<AcademicCapIcon className="h-6 w-6 text-gray-300" />}
               active
@@ -214,7 +214,7 @@ const Layout = () => {
             >
               <p>Bài thi</p>
             </MenuItem>
-            {/* <SubMenu
+            <SubMenu
               label="Câu hỏi"
               rootStyles={{
                 ["& > ." + menuClasses.button]: {
@@ -231,21 +231,17 @@ const Layout = () => {
               <MenuItem active component={<Link to="/question" />} className="">
                 <p>Câu hỏi</p>
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 active
                 component={<Link to="/question-group" />}
                 className=""
               >
-                <p>Nhóm câu hỏi</p>
-              </MenuItem>
-              <MenuItem
-                active
-                component={<Link to="/sign-type" />}
-                className=""
-              >
+                <p>Loại câu hỏi</p>
+              </MenuItem> */}
+              <MenuItem active component={<Link to="/license" />} className="">
                 <p>Bằng lái</p>
-              </MenuItem> 
-            </SubMenu> */}
+              </MenuItem>
+            </SubMenu>
             <MenuItem
               icon={<NewspaperIcon className="h-6 w-6 text-gray-300" />}
               active

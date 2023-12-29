@@ -94,7 +94,7 @@ function AddSignModalBody({ closeModal }) {
         Id: trafficSignId,
         SignImage: response2,
       };
-      dispatch(addNewSign(newSignObj));
+      dispatch(addNewSign({ newLeadObj: newSignObj }));
       // window.location.reload();
       dispatch(
         showNotification({ message: "Thêm mới thành công!", status: 1 })

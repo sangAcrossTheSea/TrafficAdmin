@@ -44,7 +44,7 @@ function ConfirmationModalBody({ extraObject, closeModal }) {
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.QUESTION_DELETE) {
         response = await axios.delete(`/question/deleteQuestion/${_id}`);
       } else if (type === CONFIRMATION_MODAL_CLOSE_TYPES.FINE_DELETE) {
-        response = await axios.delete(`/fine/deleteFine/${_id}`);
+        response = await axios.delete(`/trafficFine/deleteTrafficFine/${_id}`);
       }
 
       if (response.data) {

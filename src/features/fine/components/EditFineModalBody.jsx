@@ -98,10 +98,10 @@ function EditFineModalBody({ closeModal, extraObject }) {
       return setErrorMessage("Phải có hành vi vi phạm!");
     if (leadObj.FineContent.trim() === "")
       return setErrorMessage("Phải có nội dung!");
-    if (leadObj.FineAdditional.trim() === "")
-      return setErrorMessage("Phải có thông tin thêm!");
-    if (leadObj.FineNote.trim() === "")
-      return setErrorMessage("Phải có ghi chú!");
+    // if (leadObj.FineAdditional.trim() === "")
+    //   return setErrorMessage("Phải có thông tin thêm!");
+    // if (leadObj.FineNote.trim() === "")
+    //   return setErrorMessage("Phải có ghi chú!");
     else {
       AddFine();
     }
@@ -124,7 +124,7 @@ function EditFineModalBody({ closeModal, extraObject }) {
       />
       <SelectBox
         type="text"
-        defaultValue={fineTypes[0]}
+        defaultValue={extraObject.FineTypeId}
         options={fineTypes}
         updateType="FineTypeId"
         containerStyle="mt-4"
@@ -134,7 +134,7 @@ function EditFineModalBody({ closeModal, extraObject }) {
       <div></div>
       <SelectBox
         type="text"
-        defaultValue={[{ value: "motorbike", name: "Xe máy" }]}
+        defaultValue={leadObj.VehicleType}
         options={[
           { value: "motorbike", name: "Xe máy" },
           { value: "car", name: "Ô tô" },
@@ -172,7 +172,7 @@ function EditFineModalBody({ closeModal, extraObject }) {
       <div className="mt-4">
         <label className="label">
           <span className={"label-text text-base-content "}>
-            Thông tin thêm
+            Mức phạt bổ sung
           </span>
         </label>
         <textarea
