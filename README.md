@@ -4,8 +4,18 @@
 
 Admin project for learning traffic laws
 
-## List of teammate
+## Tech
 
-- Nguyen Hoang Phuc 20521767
-- Nguyen Thanh Sang 20521833
-- Tran Minh Quang 20521812
+- React
+- Tailwind
+- DaisyUI
+
+## Template I used
+
+daisyui-admin-dashboard-template
+https://github.com/robbins23/daisyui-admin-dashboard-template
+
+## How to use
+
+- Mail: admin@gmail.com
+- Password: admin12345
