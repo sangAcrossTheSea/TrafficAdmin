@@ -49,6 +49,20 @@ function AddSignModalBody({ closeModal }) {
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
 
+    //check if file is not image
+    if (file && file.type.split("/")[0] !== "image") {
+      //clear file input
+      event.target.value = null;
+
+      dispatch(
+        showNotification({
+          message: "File không hợp lệ!",
+          status: 0,
+        })
+      );
+      return;
+    }
+
     if (file) {
       setImageFile(file);
       const reader = new FileReader();

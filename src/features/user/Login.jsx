@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LandingIntro from "./LandingIntro";
 import ErrorText from "../../components/Typography/ErrorText";
@@ -8,8 +8,8 @@ import axios from "axios";
 
 function Login() {
   const INITIAL_LOGIN_OBJ = {
-    password: "",
-    emailId: "",
+    password: "admin12345",
+    emailId: "admin@gmail.com",
   };
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

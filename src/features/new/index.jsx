@@ -67,7 +67,7 @@ function New() {
     if (!news) {
       return;
     }
-    if (sortByDate === "desc") {
+    if (sortByDate === "des.c") {
       setSortNews(
         [...news].sort((a, b) => {
           return new Date(b.NewsDate) - new Date(a.NewsDate);
